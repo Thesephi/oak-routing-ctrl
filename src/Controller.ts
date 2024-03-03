@@ -8,6 +8,9 @@ export abstract class BaseController {
 
 export type Controller = new () => BaseController;
 
+/**
+ * Decorator that should be used on the Controller Class
+ */
 export const Controller =
   (pathPrefix: string = "") =>
   (target: Controller, context: ClassDecoratorContext) => {

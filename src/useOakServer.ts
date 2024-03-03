@@ -6,6 +6,10 @@ import { store } from "./Store.ts";
 
 const oakRouter: Router = new Router({});
 
+/**
+ * entry method to supercharge an `oak` application with routing-controllers -like
+ * capabilities (i.e. Controller Class and Method Decorators)
+ */
 export const useOakServer = (
   app: Application,
   Controllers: Controller[],

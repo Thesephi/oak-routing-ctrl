@@ -1,6 +1,11 @@
 import { debug } from "./utils/logger.ts";
 import { Context, RouteContext } from "../deps.ts";
 
+/**
+ * Decorator that should be used on the Controller Class Method
+ * when we need to refer to request body, params, etc. in the
+ * method body
+ */
 export const ControllerActionArgs =
   (...desirableParams: string[]) =>
   (target: Function, context: ClassMethodDecoratorContext): any => {

@@ -1,6 +1,10 @@
 import { debug } from "./utils/logger.ts";
 import { register } from "./Store.ts";
 
+/**
+ * Decorator that should be used on the Controller Class Method
+ * for GET endpoints
+ */
 export const Get =
   (path: string = "") =>
   (target: Function, context: ClassMethodDecoratorContext) => {
