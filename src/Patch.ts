@@ -3,14 +3,14 @@ import { register } from "./Store.ts";
 
 /**
  * Decorator that should be used on the Controller Class Method
- * for PUT endpoints
+ * for PATCH endpoints
  */
-export const Put = (path: string = "") =>
+export const Patch = (path: string = "") =>
 // deno-lint-ignore ban-types
 (target: Function, context: ClassMemberDecoratorContext) => {
   debug(
-    `invoking Put MethodDecorator for ${target.name} with pathPrefix ${path}`,
+    `invoking Patch MethodDecorator for ${target.name} with pathPrefix ${path}`,
     context,
   );
-  register("put", path, target.name);
+  register("patch", path, target.name);
 };
