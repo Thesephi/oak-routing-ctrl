@@ -14,5 +14,4 @@ export const Post = (path: string = "") =>
     // target.constructor[Symbol.metadata],
   );
   register("post", path, target.name);
-  // return target;
 };
