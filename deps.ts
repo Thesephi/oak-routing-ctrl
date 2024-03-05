@@ -5,11 +5,11 @@ export {
   Context,
   RouteContext,
   Router,
-} from "jsr:@oak/oak@^14.1.1";
+} from "jsr:@oak/oak@^14.2.0";
 
 export type {
   Next,
   RouteParams,
   RouterMiddleware,
   State,
-} from "jsr:@oak/oak@^14.1.1";
+} from "jsr:@oak/oak@^14.2.0";
