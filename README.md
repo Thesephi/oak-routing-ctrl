@@ -1,6 +1,19 @@
 # oak-routing-ctrl
 
-routing-controllers -like library for `jsr:@oak/oak` (https://jsr.io/@oak/oak)
+[![Built with the Deno Standard Library](https://raw.githubusercontent.com/denoland/deno_std/main/badge.svg)](https://jsr.io/@std)
+
+routing-controllers -like library for the [Oak](https://jsr.io/@oak/oak)
+framework (`jsr:@oak/oak`) 🚗 🐿️ 🦕
+
+```ts
+@Controller("/api/v1/pokemon")
+class MyPokedex {
+  @Get("/:id")
+  viewEntry(ctx) {
+    if (ctx.params.id === "0025") return "Pikachu";
+  }
+}
+```
 
 ## Forewords
 
@@ -14,6 +27,15 @@ replacement for routing-controllers, as it attempts to conform to
 [doesn't support Method Parameter Decorator](https://github.com/tc39/proposal-decorators?tab=readme-ov-file#comparison-with-typescript-experimental-decorators)
 yet. There's currently no plan to support TypeScript "experimental" decorators,
 but if you feel strongly for it, please feel free to fork this repo!
+
+## Installation
+
+Prerequisite:
+[Deno](https://docs.deno.com/runtime/manual/getting_started/installation)
+
+```bash
+deno add @dklab/oak-routing-ctrl
+```
 
 ## Example Usage
 
