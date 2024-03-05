@@ -1,6 +1,6 @@
-name: Publish
+name: Pull Request
 on:
-  push:
+  pull_request:
     branches:
       - main
 
@@ -10,7 +10,6 @@ jobs:
 
     permissions:
       contents: read
-      id-token: write
 
     steps:
       - uses: actions/checkout@v4
@@ -28,6 +27,3 @@ jobs:
 
       - name: Run tests
         run: deno test -A
-
-      - name: Publish package
-        run: npx jsr publish
