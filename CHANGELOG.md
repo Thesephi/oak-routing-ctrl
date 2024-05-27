@@ -1,3 +1,10 @@
+## [0.3.0] - 2024-05-26
+
+### Changed
+
+- upgraded dependencies (`@oak/oak@16.0.0`, `@std/path@^0.225.1`,
+  `@std/assert@^0.225.3`, `@std/testing@^0.224.0`)
+
 ## [0.2.0] - 2024-03-05
 
 ### Changed

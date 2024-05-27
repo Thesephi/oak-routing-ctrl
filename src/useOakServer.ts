@@ -34,6 +34,7 @@ export const useOakServer = (
               Ctrl.prototype,
               propName,
             )?.value;
+            // @TODO consider the case where user already assigned ctx.response.body?
             ctx.response.body = await handler(ctx);
           }) as RouterMiddleware<string, RouteParams<string>, State>,
         );
