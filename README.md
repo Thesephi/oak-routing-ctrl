@@ -1,6 +1,7 @@
 # oak-routing-ctrl
 
 [![Built with the Deno Standard Library](https://raw.githubusercontent.com/denoland/deno_std/main/badge.svg)](https://jsr.io/@std)
+[![Known Vulnerabilities](https://snyk.io/test/github/thesephi/oak-routing-ctrl/badge.svg)](https://snyk.io/test/github/thesephi/oak-routing-ctrl)
 
 routing-controllers -like library for the [Oak](https://jsr.io/@oak/oak)
 framework (`jsr:@oak/oak`) 🚗 🐿️ 🦕
