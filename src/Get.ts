@@ -7,7 +7,7 @@ import { register } from "./Store.ts";
  */
 export const Get = (path: string = "") =>
 // deno-lint-ignore ban-types
-(target: Function, context: ClassMethodDecoratorContext) => {
+(target: Function, context: ClassMethodDecoratorContext): void => {
   debug(
     `invoking Get MethodDecorator for ${target.name} with pathPrefix ${path}`,
     context,

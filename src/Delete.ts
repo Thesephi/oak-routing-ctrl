@@ -7,7 +7,7 @@ import { register } from "./Store.ts";
  */
 export const Delete = (path: string = "") =>
 // deno-lint-ignore ban-types
-(target: Function, context: ClassMethodDecoratorContext) => {
+(target: Function, context: ClassMethodDecoratorContext): void => {
   debug(
     `invoking Delete MethodDecorator for ${target.name} with pathPrefix ${path}`,
     context,

@@ -7,7 +7,7 @@ import { register } from "./Store.ts";
  */
 export const Patch = (path: string = "") =>
 // deno-lint-ignore ban-types
-(target: Function, context: ClassMemberDecoratorContext) => {
+(target: Function, context: ClassMemberDecoratorContext): void => {
   debug(
     `invoking Patch MethodDecorator for ${target.name} with pathPrefix ${path}`,
     context,

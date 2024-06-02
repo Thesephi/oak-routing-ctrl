@@ -1,8 +1,8 @@
 name: Publish
 on:
   push:
-    branches:
-      - main
+    tags:
+      - v*
 
 jobs:
   publish:
@@ -28,6 +28,9 @@ jobs:
 
       - name: Run tests
         run: deno test -A
+
+      - name: Check publishing requirements
+        run: npx jsr publish --dry-run
 
       - name: Publish package
         run: npx jsr publish
