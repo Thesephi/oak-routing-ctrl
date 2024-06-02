@@ -1,0 +1,41 @@
+export const snapshot = {};
+
+snapshot[`useOakServer 1`] = `
+[
+  {
+    methods: [
+      "HEAD",
+      "GET",
+    ],
+    middleware: [
+      [AsyncFunction (anonymous)],
+    ],
+    options: {
+      end: undefined,
+      ignoreCaptures: undefined,
+      sensitive: undefined,
+      strict: undefined,
+    },
+    paramNames: [],
+    path: "/test/foo",
+    regexp: /^\\/test\\/foo[\\/#\\?]?\$/i,
+  },
+  {
+    methods: [
+      "POST",
+    ],
+    middleware: [
+      [AsyncFunction (anonymous)],
+    ],
+    options: {
+      end: undefined,
+      ignoreCaptures: undefined,
+      sensitive: undefined,
+      strict: undefined,
+    },
+    paramNames: [],
+    path: "/test/bar",
+    regexp: /^\\/test\\/bar[\\/#\\?]?\$/i,
+  },
+]
+`;

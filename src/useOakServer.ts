@@ -45,3 +45,5 @@ export const useOakServer = (
   app.use(oakRouter.routes());
   app.use(oakRouter.allowedMethods());
 };
+
+export const _internal = { oakRouter };

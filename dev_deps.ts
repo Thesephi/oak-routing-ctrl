@@ -1,4 +1,11 @@
-export { assert, assertEquals } from "jsr:@std/assert@^0.225.3";
+export {
+  assert,
+  assertEquals,
+  assertInstanceOf,
+  assertObjectMatch,
+} from "jsr:@std/assert@^0.225.3";
+
+export { testing as oakTesting } from "jsr:@oak/oak@^16.0.0";
 
 export {
   assertSpyCall,
@@ -6,6 +13,8 @@ export {
   spy,
   stub,
 } from "jsr:@std/testing@^0.224.0/mock";
+
+export { assertSnapshot } from "jsr:@std/testing@^0.224.0/snapshot";
 
 export {
   afterEach,
