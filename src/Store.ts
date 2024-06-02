@@ -1,4 +1,4 @@
-type SupportedVerb = "get" | "post" | "put" | "delete" | "patch";
+export type SupportedVerb = "get" | "post" | "put" | "delete" | "patch";
 
 export const store: Map<string, Map<SupportedVerb, string>> = new Map();
 

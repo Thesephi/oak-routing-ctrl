@@ -1,3 +1,19 @@
+## [0.4.0] - 2024-06-02
+
+### Changed
+
+- consolidated (documented) enums for `@ControllerActionArgs` decorator
+  arguments: `param`, `body`, `query`
+
+### Added
+
+- tests for `useOakServer`
+
+### Fixed
+
+- respect response body if it's assigned to `ctx.response.body` inside the
+  handler function just as when it's returned by the handler function itself
+
 ## [0.3.0] - 2024-05-26
 
 ### Changed

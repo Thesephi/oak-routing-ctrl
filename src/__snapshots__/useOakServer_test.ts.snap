@@ -1,0 +1,116 @@
+export const snapshot = {};
+
+snapshot[`useOakServer 1`] = `
+[
+  {
+    methods: [
+      "HEAD",
+      "GET",
+    ],
+    middleware: [
+      [AsyncFunction (anonymous)],
+    ],
+    options: {
+      end: undefined,
+      ignoreCaptures: undefined,
+      sensitive: undefined,
+      strict: undefined,
+    },
+    paramNames: [],
+    path: "/test/foo",
+    regexp: /^\\/test\\/foo[\\/#\\?]?\$/i,
+  },
+  {
+    methods: [
+      "POST",
+    ],
+    middleware: [
+      [AsyncFunction (anonymous)],
+    ],
+    options: {
+      end: undefined,
+      ignoreCaptures: undefined,
+      sensitive: undefined,
+      strict: undefined,
+    },
+    paramNames: [],
+    path: "/test/bar",
+    regexp: /^\\/test\\/bar[\\/#\\?]?\$/i,
+  },
+  {
+    methods: [
+      "HEAD",
+      "GET",
+    ],
+    middleware: [
+      [AsyncFunction (anonymous)],
+    ],
+    options: {
+      end: undefined,
+      ignoreCaptures: undefined,
+      sensitive: undefined,
+      strict: undefined,
+    },
+    paramNames: [
+      "zaz",
+    ],
+    path: "/test/baz/:zaz",
+    regexp: /^\\/test\\/baz(?:\\/([^\\/#\\?]+?))[\\/#\\?]?\$/i,
+  },
+  {
+    methods: [
+      "PUT",
+    ],
+    middleware: [
+      [AsyncFunction (anonymous)],
+    ],
+    options: {
+      end: undefined,
+      ignoreCaptures: undefined,
+      sensitive: undefined,
+      strict: undefined,
+    },
+    paramNames: [
+      "someId",
+    ],
+    path: "/test/taz/:someId",
+    regexp: /^\\/test\\/taz(?:\\/([^\\/#\\?]+?))[\\/#\\?]?\$/i,
+  },
+  {
+    methods: [
+      "DELETE",
+    ],
+    middleware: [
+      [AsyncFunction (anonymous)],
+    ],
+    options: {
+      end: undefined,
+      ignoreCaptures: undefined,
+      sensitive: undefined,
+      strict: undefined,
+    },
+    paramNames: [],
+    path: "/test/raz/",
+    regexp: /^\\/test\\/raz\\/[\\/#\\?]?\$/i,
+  },
+  {
+    methods: [
+      "PATCH",
+    ],
+    middleware: [
+      [AsyncFunction (anonymous)],
+    ],
+    options: {
+      end: undefined,
+      ignoreCaptures: undefined,
+      sensitive: undefined,
+      strict: undefined,
+    },
+    paramNames: [
+      "whatever",
+    ],
+    path: "/test/yaz/:whatever",
+    regexp: /^\\/test\\/yaz(?:\\/([^\\/#\\?]+?))[\\/#\\?]?\$/i,
+  },
+]
+`;
