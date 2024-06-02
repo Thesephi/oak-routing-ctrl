@@ -1,3 +1,11 @@
+## [0.5.0] - 2024-06-02
+
+### Changed
+
+- renaming exported symbols:
+  - `SupportedControllerMethodArgs` => `ControllerMethodArg`
+  - `ControllerActionArgs` => `ControllerMethodArgs`
+
 ## [0.4.0] - 2024-06-02
 
 ### Changed

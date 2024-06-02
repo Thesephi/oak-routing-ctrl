@@ -9,13 +9,13 @@ import {
 } from "../dev_deps.ts";
 import {
   Controller,
-  ControllerActionArgs,
+  type ControllerMethodArg,
+  ControllerMethodArgs,
   Delete,
   Get,
   Patch,
   Post,
   Put,
-  type SupportedControllerActionArgs,
   useOakServer,
 } from "../mod.ts";
 import { _internal as useOakServerInternal } from "./useOakServer.ts";
@@ -28,7 +28,7 @@ class TestController {
     ctx.response.body = "hello, sync foo";
   }
   @Post("/bar")
-  @ControllerActionArgs("body", "query")
+  @ControllerMethodArgs("body", "query")
   bar(body: { saz: string }, query: { maz: string }) {
     // we can also simply return something, which will automatically
     // get assigned as `response.body` later by the framework
@@ -39,12 +39,12 @@ class TestController {
     });
   }
   @Get("/baz/:zaz")
-  @ControllerActionArgs("query", "param")
+  @ControllerMethodArgs("query", "param")
   baz(query: Record<string, string>, param: Record<string, string>) {
     return `hello, path /baz/${param.zaz} with query ${query.someKey}`;
   }
   @Put("/taz/:someId")
-  @ControllerActionArgs("body")
+  @ControllerMethodArgs("body")
   taz(body: ArrayBuffer, ctx: RouteContext<"/taz/:someId">) {
     const td = new TextDecoder();
     return `hello, path param ${ctx.params.someId} with someBlob=${
@@ -56,7 +56,9 @@ class TestController {
     return { status: 204 };
   }
   @Patch("/yaz/:whatever")
-  @ControllerActionArgs("whatever" as SupportedControllerActionArgs)
+  // using arbitrary controller method args is supported
+  // but discouraged (hence we have to type-cast)
+  @ControllerMethodArgs("whatever" as ControllerMethodArg)
   yaz(whatever: string) {
     return `hello, ${whatever}`;
   }
