@@ -5,7 +5,9 @@ export {
   assertObjectMatch,
 } from "jsr:@std/assert@^0.225.3";
 
-export { testing as oakTesting } from "jsr:@oak/oak@^16.0.0";
+export { Request, testing as oakTesting } from "jsr:@oak/oak@^16.0.0";
+
+export type { BodyType } from "jsr:@oak/oak@^16.0.0";
 
 export {
   assertSpyCall,

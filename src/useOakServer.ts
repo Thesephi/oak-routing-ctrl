@@ -1,11 +1,5 @@
 import { debug } from "./utils/logger.ts";
-import {
-  Application,
-  RouteParams,
-  Router,
-  RouterMiddleware,
-  State,
-} from "../deps.ts";
+import { Application, Router } from "../deps.ts";
 import type { ControllerClass } from "./Controller.ts";
 import { store } from "./Store.ts";
 
@@ -29,14 +23,18 @@ export const useOakServer = (
       for (const [verb, path] of pair) {
         oakRouter[verb](
           path,
-          (async (ctx) => {
+          async (ctx) => {
             const handler = Object.getOwnPropertyDescriptor(
               Ctrl.prototype,
               propName,
             )?.value;
-            // @TODO consider the case where user already assigned ctx.response.body?
-            ctx.response.body = await handler(ctx);
-          }) as RouterMiddleware<string, RouteParams<string>, State>,
+            const handlerRetVal = await handler(ctx);
+            // some developers set body within the handler,
+            // some developers return something from the handler
+            // and expect that it gets assigned to the response,
+            // so by doing the following, we satisfy both use cases
+            ctx.response.body = ctx.response.body ?? handlerRetVal;
+          },
         );
         debug(`mapping route [${verb}] ${path} -> ${propName}`);
       }
