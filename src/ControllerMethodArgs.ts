@@ -2,24 +2,26 @@ import { debug } from "./utils/logger.ts";
 import { Context, RouteContext } from "../deps.ts";
 
 /**
- * literal keywords that can be used as arguments for the `@ControllerActionArgs`
+ * literal keywords that can be used as arguments for the `@ControllerMethodArgs`
  * decorator; these keywords **MUST** appear in the same order that their counterpart
  * arguments show up in the actual (decorated) handler function
  * @example
- * (@)ControllerActionArgs("query", "body")
- * doSomething(query: Record<string, string>, body: Record<string, string>) {
+ * ```ts
+ * (@)ControllerMethodArgs("query", "body")
+ * doSomething(query, body) {
  *   console.log(query, body);
  * }
+ * ```
  */
-export type SupportedControllerActionArgs =
+export type ControllerMethodArg =
   | "param"
   | "body"
   | "query";
 
 /**
- * Decorator that should be used on the Controller Class Method
- * when we need to refer to request body, params, etc. in the
- * method body
+ * Decorator that should be used on the Controller Method
+ * when we need to refer to the request body, param, query, etc.
+ * in the Method Body
  * @returns a function with the signature (arguments) matching that
  * of the provided `desirableParams`, which can then be **decorated**
  * with one of the Class Method decorators (e.g. `Get`, `Post`, etc.)
@@ -28,7 +30,7 @@ export type SupportedControllerActionArgs =
  * (@)Controller("/api/v1")
  * class MyClass {
  *   (@)Post("/:resource")
- *   (@)ControllerActionArgs("body", "query", "param")
+ *   (@)ControllerMethodArgs("body", "query", "param")
  *   doSomething(body, query, param, ctx): void {
  *     console.log(`endpoint called: /api/v1/${ctx.params.resource}`);
  *     console.log(`now let's do something with`, body, query, param);
@@ -36,15 +38,15 @@ export type SupportedControllerActionArgs =
  * }
  * ```
  */
-export const ControllerActionArgs =
-  (...desirableParams: SupportedControllerActionArgs[]) =>
+export const ControllerMethodArgs =
+  (...desirableParams: ControllerMethodArg[]) =>
   (
     // deno-lint-ignore ban-types
     target: Function,
     context: ClassMethodDecoratorContext,
     // deno-lint-ignore no-explicit-any
   ): any => {
-    debug(`invoking ControllerActionArgs Decorator`, target);
+    debug(`invoking ControllerMethodArgs Decorator`, target);
 
     const methodName = context.name;
 

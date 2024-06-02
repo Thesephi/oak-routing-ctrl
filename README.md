@@ -57,14 +57,14 @@ await app.listen({ port: 1993 });
 
 import {
   Controller,
-  ControllerActionArgs,
+  ControllerMethodArgs,
   Post,
 } from "jsr:@dklab/oak-routing-ctrl";
 
 @Controller()
 export class MyController {
   @Post("/tell/:whom")
-  @ControllerActionArgs("body")
+  @ControllerMethodArgs("body")
   say(body, ctx) {
     const { note } = body;
     console.log(`telling ${ctx.params.whom} that "${note}"`);
