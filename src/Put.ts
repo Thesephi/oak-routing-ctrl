@@ -14,3 +14,5 @@ export const Put = (path: string = "") =>
   );
   register("put", path, target.name);
 };
+
+export const _internal = { Put };

@@ -14,3 +14,5 @@ export const Delete = (path: string = "") =>
   );
   register("delete", path, target.name);
 };
+
+export const _internal = { Delete };

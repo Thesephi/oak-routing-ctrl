@@ -1,7 +1,10 @@
 # oak-routing-ctrl
 
+[![JSR](https://jsr.io/badges/@dklab/oak-routing-ctrl)](https://jsr.io/@dklab/oak-routing-ctrl)
+[![JSR Score](https://jsr.io/badges/@dklab/oak-routing-ctrl/score)](https://jsr.io/@dklab/oak-routing-ctrl)
 [![Built with the Deno Standard Library](https://raw.githubusercontent.com/denoland/deno_std/main/badge.svg)](https://jsr.io/@std)
 [![Known Vulnerabilities](https://snyk.io/test/github/thesephi/oak-routing-ctrl/badge.svg)](https://snyk.io/test/github/thesephi/oak-routing-ctrl)
+[![codecov](https://codecov.io/github/Thesephi/oak-routing-ctrl/graph/badge.svg?token=BA3M9P6410)](https://codecov.io/github/Thesephi/oak-routing-ctrl)
 
 routing-controllers -like library for the [Oak](https://jsr.io/@oak/oak)
 framework (`jsr:@oak/oak`) 🚗 🐿️ 🦕
@@ -75,4 +78,11 @@ export class MyController {
 ```bash
 deno run -A main.ts
 curl localhost:1993/tell/Alice -d'{"note": "Bob is waiting"}'
+```
+
+## Tests
+
+```bash
+deno test -A --coverage=cov_profile
+deno coverage cov_profile
 ```

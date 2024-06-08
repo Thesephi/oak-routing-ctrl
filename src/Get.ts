@@ -14,3 +14,5 @@ export const Get = (path: string = "") =>
   );
   register("get", path, target.name);
 };
+
+export const _internal = { Get };
