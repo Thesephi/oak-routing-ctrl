@@ -7,6 +7,7 @@
   "exclude": [
     "**/*_test.ts",
     "cov_profile",
+    "cov_profile.lcov",
     "dev_deps.ts",
     "**/__snapshots__",
     ".github",
