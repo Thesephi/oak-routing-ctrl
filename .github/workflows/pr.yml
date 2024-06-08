@@ -26,7 +26,9 @@ jobs:
         run: deno lint --ignore=\*\*\/\*_test.ts
 
       - name: Run tests
-        run: deno test -A
+        run: |
+          deno test -A --coverage=cov_profile
+          deno coverage cov_profile --lcov --output=cov_profile.lcov
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4.0.1
