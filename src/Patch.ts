@@ -14,3 +14,5 @@ export const Patch = (path: string = "") =>
   );
   register("patch", path, target.name);
 };
+
+export const _internal = { Patch };

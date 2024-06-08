@@ -15,3 +15,5 @@ export const Post = (path: string = "") =>
   );
   register("post", path, target.name);
 };
+
+export const _internal = { Post };

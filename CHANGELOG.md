@@ -1,3 +1,12 @@
+## [0.5.1] - 2024-06-08
+
+### Added
+
+- unit tests
+- README updates
+- upgraded dependencies (`@std/testing@^0.225.1`)
+- Codecov integration
+
 ## [0.5.0] - 2024-06-02
 
 ### Changed
