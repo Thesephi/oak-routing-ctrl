@@ -1,6 +1,6 @@
 export const snapshot = {};
 
-snapshot[`useOakServer 1`] = `
+snapshot[`useOakServer - fully decorated Controller 1`] = `
 [
   {
     methods: [

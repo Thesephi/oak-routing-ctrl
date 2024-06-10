@@ -3,11 +3,17 @@ export {
   assertEquals,
   assertInstanceOf,
   assertObjectMatch,
+  assertStringIncludes,
+  assertThrows,
 } from "jsr:@std/assert@^0.225.3";
 
-export { Request, testing as oakTesting } from "jsr:@oak/oak@^16.0.0";
+export {
+  type BodyType,
+  Request,
+  testing as oakTesting,
+} from "jsr:@oak/oak@^16.0.0";
 
-export type { BodyType } from "jsr:@oak/oak@^16.0.0";
+export { Body } from "jsr:@oak/oak@^16.0.0/body";
 
 export {
   assertSpyCall,
@@ -21,9 +27,13 @@ export {
 
 export { assertSnapshot } from "jsr:@std/testing@^0.225.1/snapshot";
 
+export { Buffer } from "jsr:@std/io@^0.224.1";
+
 export {
   afterEach,
   beforeEach,
   describe,
   it,
 } from "jsr:@std/testing@^0.225.1/bdd";
+
+export { createMockContext } from "jsr:@oak/oak@^16.0.0/testing";

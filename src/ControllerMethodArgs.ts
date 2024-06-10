@@ -1,5 +1,6 @@
 import { debug } from "./utils/logger.ts";
 import { Context, RouteContext } from "../deps.ts";
+import { ERR_UNSUPPORTED_CLASS_METHOD_DECORATOR_RUNTIME_BEHAVIOR } from "./Constants.ts";
 
 /**
  * literal keywords that can be used as arguments for the `@ControllerMethodArgs`
@@ -42,88 +43,148 @@ export const ControllerMethodArgs =
   (...desirableParams: ControllerMethodArg[]) =>
   (
     // deno-lint-ignore ban-types
-    target: Function,
-    context: ClassMethodDecoratorContext,
+    arg1: Function | object,
+    arg2: ClassMethodDecoratorContext | string,
+    // deno-lint-ignore no-explicit-any
+    ...rest: any[]
     // deno-lint-ignore no-explicit-any
   ): any => {
-    debug(`invoking ControllerMethodArgs Decorator`, target);
-
-    const methodName = context.name;
-
-    // deno-lint-ignore no-explicit-any
-    async function retVal(this: ThisType<unknown>, ...args: any[]) {
-      // original args passed in by the framework: (ctx)
-      const ctx: Context & RouteContext<string> = args.shift();
-
-      let parsedReqBody: unknown;
-      try {
-        parsedReqBody = await parseOakReqBody(ctx);
-      } catch (e) {
-        return ctx.throw(400, `Unable to parse request body: ${e.message}`, {
-          stack: e.stack,
-        });
-      }
-
-      const parsedReqSearchParams: Record<string, string> = {};
-      try {
-        ctx.request.url.searchParams.forEach((value, key) =>
-          parsedReqSearchParams[key] = value
-        );
-      } catch (e) {
-        return ctx.throw(
-          400,
-          `Unable to parse request search params: ${e.message}`,
-          {
-            stack: e.stack,
-          },
-        );
-      }
-
-      const decoratedArgs: unknown[] = [];
-      // expected (decorated) args are "extracted" from `ctx`
-      // per `desirableParams`
-      for (const p of desirableParams) {
-        switch (true) {
-          case p === "param":
-            // path param
-            decoratedArgs.push(ctx.params);
-            break;
-          case p === "body":
-            // body to be handled separately
-            decoratedArgs.push(parsedReqBody);
-            break;
-          case p === "query":
-            // search query a.k.a URLSearchParams
-            decoratedArgs.push(parsedReqSearchParams);
-            break;
-          case ["ctx", "context"].includes(p):
-            // `ctx` or `context` is supported by default (as the last argument)
-            // but can also be declared explicitly
-            decoratedArgs.push(ctx);
-            break;
-          default:
-            // otherwise assume it's all from ctx params
-            decoratedArgs.push(ctx.params[p]);
-            // @TODO consider if it's also desirable to extract the arg
-            // from `parsedReqBody` as an automatic "fallback" after `ctx.params`
-        }
-      }
-
-      // squeze ctx at the end anyways, as many users might be familiar
-      // with it being last (and also people often forget to declare `ctx` explicitly
-      // when using the Decorator)
-      decoratedArgs.push(ctx);
-
-      return await target.call(this, ...decoratedArgs);
+    if (typeof arg1 === "function" && typeof arg2 === "object") {
+      return _internal.decorateClassMethodTypeStandard(
+        arg1,
+        arg2,
+        ...desirableParams,
+      );
     }
 
-    Object.defineProperty(retVal, "name", {
-      value: methodName,
-      writable: false,
-    });
+    if (typeof arg1 === "object" && typeof arg2 === "string") {
+      const methodDescriptor: PropertyDescriptor = rest[0];
+      return _internal.decorateClassMethodTypeCloudflareWorker(
+        arg1,
+        arg2,
+        methodDescriptor,
+        ...desirableParams,
+      );
+    }
 
-    return retVal;
+    throw new Error(ERR_UNSUPPORTED_CLASS_METHOD_DECORATOR_RUNTIME_BEHAVIOR);
   };
+
+function decorateClassMethodTypeStandard(
+  // deno-lint-ignore ban-types
+  target: Function,
+  context: ClassMethodDecoratorContext,
+  ...consumerDesirableParams: ControllerMethodArg[]
+) {
+  debug(
+    `invoking ControllerMethodArgs Decorator with Standard strategy`,
+    context.name,
+  );
+  return _internal.getEnhancedHandler(target, ...consumerDesirableParams);
+}
+
+function decorateClassMethodTypeCloudflareWorker(
+  _target: object,
+  context: string, // from observations, this is the method name itself
+  methodDescriptor: PropertyDescriptor,
+  ...consumerDesirableParams: ControllerMethodArg[]
+) {
+  debug(
+    `invoking ControllerMethodArgs Decorator with CloudflareWorker strategy`,
+    context,
+  );
+  const consumerSuppliedHandler = methodDescriptor.value;
+  const enhancedHandler = _internal.getEnhancedHandler(
+    consumerSuppliedHandler,
+    ...consumerDesirableParams,
+  );
+  methodDescriptor.value = enhancedHandler;
+}
+
+function getEnhancedHandler(
+  // deno-lint-ignore ban-types
+  consumerSuppliedHandler: Function,
+  ...consumerDesirableParams: ControllerMethodArg[]
+) {
+  const methodName = consumerSuppliedHandler.name;
+
+  // deno-lint-ignore no-explicit-any
+  async function retVal(this: ThisType<unknown>, ...args: any[]) {
+    // original args passed in by the framework: (ctx)
+    const ctx: Context & RouteContext<string> = args.shift();
+
+    let parsedReqBody: unknown;
+    try {
+      parsedReqBody = await _internal.parseOakReqBody(ctx);
+    } catch (e) {
+      return ctx.throw(400, `Unable to parse request body: ${e.message}`, {
+        stack: e.stack,
+      });
+    }
+
+    const parsedReqSearchParams: Record<string, string> = {};
+    try {
+      ctx.request.url.searchParams.forEach((value, key) =>
+        parsedReqSearchParams[key] = value
+      );
+    } catch (e) {
+      return ctx.throw(
+        400,
+        `Unable to parse request search params: ${e.message}`,
+        {
+          stack: e.stack,
+        },
+      );
+    }
+
+    const decoratedArgs: unknown[] = [];
+    // expected (decorated) args are "extracted" from `ctx`
+    // per `consumerDesirableParams`
+    for (const p of consumerDesirableParams) {
+      switch (true) {
+        case p === "param":
+          // path param
+          decoratedArgs.push(ctx.params);
+          break;
+        case p === "body":
+          // body to be handled separately
+          decoratedArgs.push(parsedReqBody);
+          break;
+        case p === "query":
+          // search query a.k.a URLSearchParams
+          decoratedArgs.push(parsedReqSearchParams);
+          break;
+        case ["ctx", "context"].includes(p):
+          // `ctx` or `context` is supported by default (as the last argument)
+          // but can also be declared explicitly
+          decoratedArgs.push(ctx);
+          break;
+        default:
+          // otherwise assume it's all from ctx params
+          decoratedArgs.push(ctx.params[p]);
+          // @TODO consider if it's also desirable to extract the arg
+          // from `parsedReqBody` as an automatic "fallback" after `ctx.params`
+      }
+    }
+
+    // squeze ctx at the end anyways, as many users might be familiar
+    // with it being last (and also people often forget to declare `ctx` explicitly
+    // when using the Decorator)
+    decoratedArgs.push(ctx);
+
+    return await consumerSuppliedHandler.call(
+      consumerSuppliedHandler,
+      ...decoratedArgs,
+    );
+  }
+
+  Object.defineProperty(retVal, "name", {
+    value: methodName,
+    writable: false,
+  });
+
+  return retVal;
+}
 
 async function parseOakReqBody(
   ctx: Context & RouteContext<string>,
@@ -152,3 +213,10 @@ async function parseOakReqBody(
   }
   return retVal;
 }
+
+export const _internal = {
+  parseOakReqBody,
+  getEnhancedHandler,
+  decorateClassMethodTypeStandard,
+  decorateClassMethodTypeCloudflareWorker,
+};

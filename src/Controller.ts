@@ -13,7 +13,11 @@ export type ControllerClass = new (args?: unknown) => unknown;
 export const Controller =
   (pathPrefix: string = "") =>
   (target: ControllerClass, context: ClassDecoratorContext): void => {
-    debug(`invoking ControllerDecorator for ${target.name}`, context);
+    debug(
+      `invoking ControllerDecorator for ${target.name} -`,
+      "runtime provides context:",
+      context,
+    );
     const fnNames: string[] = Object.getOwnPropertyNames(target.prototype);
     for (const fnName of fnNames) {
       const pair = store.get(fnName);

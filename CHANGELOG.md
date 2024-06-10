@@ -1,3 +1,14 @@
+## [0.6.0] - 2024-06-10
+
+### Added
+
+- compatibilities with Cloudflare Workers
+
+### Changed
+
+- in `useOakServer` internal request handler logic, `next()` is also called at
+  the end
+
 ## [0.5.1] - 2024-06-08
 
 ### Added

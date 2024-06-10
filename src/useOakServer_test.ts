@@ -20,6 +20,15 @@ import {
 } from "../mod.ts";
 import { _internal as useOakServerInternal } from "./useOakServer.ts";
 
+@Controller("/noop")
+class NoopController {
+  noop() {}
+}
+
+class UndecoratedController {
+  noop() {}
+}
+
 @Controller("/test")
 class TestController {
   @Get("/foo")
@@ -62,6 +71,9 @@ class TestController {
   yaz(whatever: string) {
     return `hello, ${whatever}`;
   }
+  justRandom() {
+    return "this is returned from a non-decorated function";
+  }
 }
 
 type MockRequestBodyDefinition = {
@@ -84,14 +96,36 @@ type TestCaseDefinition = {
   expectedResponse: unknown;
 };
 
+Deno.test("useOakServer - noop Controller", () => {
+  const ctx = oakTesting.createMockContext();
+  useOakServer(ctx.app, [NoopController]);
+  const routes = Array.from(useOakServerInternal.oakRouter.values());
+  assertEquals(routes.length, 0);
+});
+
+Deno.test("useOakServer - undecorated Controller", () => {
+  const ctx = oakTesting.createMockContext();
+  useOakServer(ctx.app, [UndecoratedController]);
+  const routes = Array.from(useOakServerInternal.oakRouter.values());
+  assertEquals(routes.length, 0);
+});
+
 Deno.test({
-  name: "useOakServer",
+  name: "useOakServer - fully decorated Controller",
   async fn(t) {
     await t.step("router snapshot", async () => {
       const ctx = oakTesting.createMockContext();
       useOakServer(ctx.app, [TestController]);
       const routes = Array.from(useOakServerInternal.oakRouter.values());
+
       await assertSnapshot(t, routes);
+
+      assertEquals(
+        routes.length,
+        // most methods in TestController are decorated, except Ctor and a no-op random fn
+        Object.getOwnPropertyNames(TestController.prototype).length - 2,
+        "number of generated routes must match number of decorated ControllerClass methods",
+      );
     });
 
     const routeTestCases: TestCaseDefinition[] = [
