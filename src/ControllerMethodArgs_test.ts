@@ -17,16 +17,6 @@ import {
 } from "./ControllerMethodArgs.ts";
 
 Deno.test("ControllerMethodArgs Decorator - unsupported strategy - declaring body, param, query", () => {
-  const spyDecorateClassMethodTypeCloudflareWorker = spy(
-    _internal,
-    "decorateClassMethodTypeCloudflareWorker",
-  );
-  const spyDecorateClassMethodTypeStandard = spy(
-    _internal,
-    "decorateClassMethodTypeStandard",
-  );
-  const spyGetEnhancedHandler = spy(_internal, "getEnhancedHandler");
-
   assertThrows(
     () =>
       // calling decorator with inputs that don't match any known strategy
@@ -39,13 +29,6 @@ Deno.test("ControllerMethodArgs Decorator - unsupported strategy - declaring bod
     Error,
     ERR_UNSUPPORTED_CLASS_METHOD_DECORATOR_RUNTIME_BEHAVIOR,
   );
-
-  assertSpyCalls(spyDecorateClassMethodTypeCloudflareWorker, 0);
-  assertSpyCalls(spyDecorateClassMethodTypeStandard, 0);
-  assertSpyCalls(spyGetEnhancedHandler, 0);
-  spyDecorateClassMethodTypeCloudflareWorker.restore();
-  spyDecorateClassMethodTypeStandard.restore();
-  spyGetEnhancedHandler.restore();
 });
 
 Deno.test("ControllerMethodArgs Decorator - unsupported strategy - declaring param, body", () => {
@@ -109,15 +92,6 @@ Deno.test("ControllerMethodArgs Decorator - unsupported strategy - declaring not
 });
 
 Deno.test("ControllerMethodArgs Decorator - Standard strategy - declaring body, param, query", async () => {
-  const spyDecorateClassMethodTypeStandard = spy(
-    _internal,
-    "decorateClassMethodTypeStandard",
-  );
-  const spyDecorateClassMethodTypeCloudflareWorker = spy(
-    _internal,
-    "decorateClassMethodTypeCloudflareWorker",
-  );
-  const spyGetEnhancedHandler = spy(_internal, "getEnhancedHandler");
   let enhancedHandler;
   let enhancedHandlerRetVal;
   try {
@@ -148,13 +122,6 @@ Deno.test("ControllerMethodArgs Decorator - Standard strategy - declaring body, 
   }
 
   assertEquals(enhancedHandlerRetVal, { "i.am": "deep" });
-
-  assertSpyCalls(spyDecorateClassMethodTypeStandard, 1);
-  assertSpyCalls(spyGetEnhancedHandler, 1);
-  assertSpyCalls(spyDecorateClassMethodTypeCloudflareWorker, 0);
-  spyDecorateClassMethodTypeStandard.restore();
-  spyGetEnhancedHandler.restore();
-  spyDecorateClassMethodTypeCloudflareWorker.restore();
 });
 
 Deno.test("ControllerMethodArgs Decorator - Standard strategy - declaring param, body", async () => {
@@ -288,16 +255,6 @@ Deno.test("ControllerMethodArgs Decorator - Standard strategy - declaring nothin
 });
 
 Deno.test("ControllerMethodArgs Decorator - CloudflareWorker strategy - faulty runtime behavior", () => {
-  const spyDecorateClassMethodTypeCloudflareWorker = spy(
-    _internal,
-    "decorateClassMethodTypeCloudflareWorker",
-  );
-  const spyDecorateClassMethodTypeStandard = spy(
-    _internal,
-    "decorateClassMethodTypeStandard",
-  );
-  const spyGetEnhancedHandler = spy(_internal, "getEnhancedHandler");
-
   assertThrows(
     () =>
       ControllerMethodArgs("body", "param", "query")(
@@ -308,25 +265,9 @@ Deno.test("ControllerMethodArgs Decorator - CloudflareWorker strategy - faulty r
     Error,
     "Cannot read properties of null (reading 'value')",
   );
-
-  assertSpyCalls(spyDecorateClassMethodTypeCloudflareWorker, 1);
-  assertSpyCalls(spyGetEnhancedHandler, 0);
-  assertSpyCalls(spyDecorateClassMethodTypeStandard, 0);
-  spyDecorateClassMethodTypeCloudflareWorker.restore();
-  spyGetEnhancedHandler.restore();
-  spyDecorateClassMethodTypeStandard.restore();
 });
 
 Deno.test("ControllerMethodArgs Decorator - CloudflareWorker strategy - declaring body, param, query", async () => {
-  const spyDecorateClassMethodTypeCloudflareWorker = spy(
-    _internal,
-    "decorateClassMethodTypeCloudflareWorker",
-  );
-  const spyDecorateClassMethodTypeStandard = spy(
-    _internal,
-    "decorateClassMethodTypeStandard",
-  );
-  const spyGetEnhancedHandler = spy(_internal, "getEnhancedHandler");
   const methodDescriptor = {
     value: function testHandler() {
       return { "i.am": "deep.too" };
@@ -363,13 +304,6 @@ Deno.test("ControllerMethodArgs Decorator - CloudflareWorker strategy - declarin
   }
 
   assertEquals(enhancedHandlerRetVal, { "i.am": "deep.too" });
-
-  assertSpyCalls(spyDecorateClassMethodTypeCloudflareWorker, 1);
-  assertSpyCalls(spyGetEnhancedHandler, 1);
-  assertSpyCalls(spyDecorateClassMethodTypeStandard, 0);
-  spyDecorateClassMethodTypeCloudflareWorker.restore();
-  spyGetEnhancedHandler.restore();
-  spyDecorateClassMethodTypeStandard.restore();
 });
 
 Deno.test("ControllerMethodArgs Decorator - CloudflareWorker strategy - declaring param, body", async () => {

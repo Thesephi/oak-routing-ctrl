@@ -19,6 +19,13 @@ export type ControllerMethodArg =
   | "body"
   | "query";
 
+// an enhanced version of a (decorated) method which
+// is declared in the (decorated) Controller Class
+type EnhancedHandler = (
+  this: ThisType<unknown>,
+  ...args: unknown[]
+) => Promise<unknown>;
+
 /**
  * Decorator that should be used on the Controller Method
  * when we need to refer to the request body, param, query, etc.
@@ -50,7 +57,7 @@ export const ControllerMethodArgs =
     // deno-lint-ignore no-explicit-any
   ): any => {
     if (typeof arg1 === "function" && typeof arg2 === "object") {
-      return _internal.decorateClassMethodTypeStandard(
+      return decorateClassMethodTypeStandard(
         arg1,
         arg2,
         ...desirableParams,
@@ -59,7 +66,7 @@ export const ControllerMethodArgs =
 
     if (typeof arg1 === "object" && typeof arg2 === "string") {
       const methodDescriptor: PropertyDescriptor = rest[0];
-      return _internal.decorateClassMethodTypeCloudflareWorker(
+      return decorateClassMethodTypeCloudflareWorker(
         arg1,
         arg2,
         methodDescriptor,
@@ -75,12 +82,12 @@ function decorateClassMethodTypeStandard(
   target: Function,
   context: ClassMethodDecoratorContext,
   ...consumerDesirableParams: ControllerMethodArg[]
-) {
+): EnhancedHandler {
   debug(
     `invoking ControllerMethodArgs Decorator with Standard strategy`,
     context.name,
   );
-  return _internal.getEnhancedHandler(target, ...consumerDesirableParams);
+  return getEnhancedHandler(target, ...consumerDesirableParams);
 }
 
 function decorateClassMethodTypeCloudflareWorker(
@@ -88,13 +95,13 @@ function decorateClassMethodTypeCloudflareWorker(
   context: string, // from observations, this is the method name itself
   methodDescriptor: PropertyDescriptor,
   ...consumerDesirableParams: ControllerMethodArg[]
-) {
+): void {
   debug(
     `invoking ControllerMethodArgs Decorator with CloudflareWorker strategy`,
     context,
   );
   const consumerSuppliedHandler = methodDescriptor.value;
-  const enhancedHandler = _internal.getEnhancedHandler(
+  const enhancedHandler = getEnhancedHandler(
     consumerSuppliedHandler,
     ...consumerDesirableParams,
   );
@@ -105,11 +112,14 @@ function getEnhancedHandler(
   // deno-lint-ignore ban-types
   consumerSuppliedHandler: Function,
   ...consumerDesirableParams: ControllerMethodArg[]
-) {
+): EnhancedHandler {
   const methodName = consumerSuppliedHandler.name;
 
-  // deno-lint-ignore no-explicit-any
-  async function retVal(this: ThisType<unknown>, ...args: any[]) {
+  async function retVal(
+    this: ThisType<unknown>,
+    // deno-lint-ignore no-explicit-any
+    ...args: any[]
+  ): Promise<unknown> {
     // original args passed in by the framework: (ctx)
     const ctx: Context & RouteContext<string> = args.shift();
 
@@ -217,6 +227,6 @@ async function parseOakReqBody(
 export const _internal = {
   parseOakReqBody,
   getEnhancedHandler,
-  decorateClassMethodTypeStandard,
-  decorateClassMethodTypeCloudflareWorker,
+  // decorateClassMethodTypeStandard,
+  // decorateClassMethodTypeCloudflareWorker,
 };

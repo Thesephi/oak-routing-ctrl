@@ -1,3 +1,9 @@
+## [0.6.1] - 2024-06-10
+
+### Changed
+
+- avoiding "slow types" in exported JSR lib
+
 ## [0.6.0] - 2024-06-10
 
 ### Added
