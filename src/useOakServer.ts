@@ -23,7 +23,7 @@ export const useOakServer = (
       for (const [verb, path] of pair) {
         oakRouter[verb](
           path,
-          async (ctx) => {
+          async (ctx, next): Promise<void> => {
             const handler = Object.getOwnPropertyDescriptor(
               Ctrl.prototype,
               propName,
@@ -34,6 +34,7 @@ export const useOakServer = (
             // and expect that it gets assigned to the response,
             // so by doing the following, we satisfy both use cases
             ctx.response.body = ctx.response.body ?? handlerRetVal;
+            await next();
           },
         );
         debug(`mapping route [${verb}] ${path} -> ${propName}`);

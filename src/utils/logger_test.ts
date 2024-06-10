@@ -30,11 +30,31 @@ describe("debug logger", () => {
     }
   });
 
-  it("behaves with DEBUG env var", () => {
+  it("behaves with DEBUG env var set to true", () => {
     const stubbedGetDebugEnv = stubGetEnv("DEBUG", "true");
     try {
       debug("bar");
       assertSpyCall(stubConsoleDebug, 0, { args: ["bar"] });
+    } finally {
+      stubbedGetDebugEnv.restore();
+    }
+  });
+
+  it("behaves with DEBUG env var set to oak-routing-ctrl", () => {
+    const stubbedGetDebugEnv = stubGetEnv("DEBUG", "oak-routing-ctrl");
+    try {
+      debug("bar");
+      assertSpyCall(stubConsoleDebug, 0, { args: ["bar"] });
+    } finally {
+      stubbedGetDebugEnv.restore();
+    }
+  });
+
+  it("behaves eith DEBUG env var set to an arbitrary unexpected value", () => {
+    const stubbedGetDebugEnv = stubGetEnv("DEBUG", "foobar");
+    try {
+      debug("foo");
+      assertSpyCalls(stubConsoleDebug, 0);
     } finally {
       stubbedGetDebugEnv.restore();
     }

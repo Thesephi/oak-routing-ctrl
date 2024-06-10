@@ -3,7 +3,11 @@
  * env var is declared
  */
 export const debug = (...data: unknown[]): void => {
-  if (Deno.env.get("DEBUG")) {
+  const potentialDebugEnv = globalThis.Deno?.env.get("DEBUG")?.toLowerCase();
+  if (
+    potentialDebugEnv === "true" ||
+    potentialDebugEnv?.includes("oak-routing-ctrl")
+  ) {
     console.debug(...data);
   }
 };

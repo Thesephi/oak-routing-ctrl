@@ -43,6 +43,8 @@ deno add @dklab/oak-routing-ctrl
 
 ## Example Usage
 
+### Standard Deno app
+
 ```ts
 // main.ts
 
@@ -78,6 +80,37 @@ export class MyController {
 ```bash
 deno run -A main.ts
 curl localhost:1993/tell/Alice -d'{"note": "Bob is waiting"}'
+```
+
+### Cloudflare Worker
+
+```ts
+import { Application } from "@oak/oak/application";
+import {
+  Controller,
+  ControllerMethodArgs,
+  Get,
+  useOakServer,
+} from "@dklab/oak-routing-ctrl";
+
+@Controller()
+class MyCloudflareWorkerController {
+  @Get("/hello/:name")
+  @ControllerMethodArgs("param")
+  hello(param: { name: string }) {
+    return `hello, ${param.name}`;
+  }
+}
+
+const app = new Application();
+
+useOakServer(app, [MyCloudflareWorkerController]);
+
+export default { fetch: app.fetch };
+```
+
+```bash
+curl http://{your-cloudflare-worker-domain}/hello/world # prints: "hello, world"
 ```
 
 ## Tests
