@@ -5,15 +5,15 @@ export {
   assertObjectMatch,
   assertStringIncludes,
   assertThrows,
-} from "jsr:@std/assert@^0.225.3";
+} from "jsr:@std/assert@^0.226.0";
 
 export {
   type BodyType,
   Request,
   testing as oakTesting,
-} from "jsr:@oak/oak@^16.0.0";
+} from "jsr:@oak/oak@^16.1.0";
 
-export { Body } from "jsr:@oak/oak@^16.0.0/body";
+export { Body } from "jsr:@oak/oak@^16.1.0/body";
 
 export {
   assertSpyCall,
@@ -36,4 +36,4 @@ export {
   it,
 } from "jsr:@std/testing@^0.225.1/bdd";
 
-export { createMockContext } from "jsr:@oak/oak@^16.0.0/testing";
+export { createMockContext } from "jsr:@oak/oak@^16.1.0/testing";

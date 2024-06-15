@@ -1,3 +1,12 @@
+## [Unreleased]
+
+### Changed
+
+- upgraded dependencies: `@oak/oak@16.1.0`, `@oak/std@0.225.2`,
+  `@std/assert@^0.226.0`
+- `Application` is exported from `mod.ts` in case developers don't want to
+  "bring their own `@oak/oak`"
+
 ## [0.6.1] - 2024-06-10
 
 ### Changed
