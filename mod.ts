@@ -9,3 +9,8 @@ export { Post } from "./src/Post.ts";
 export { Put } from "./src/Put.ts";
 export { Patch } from "./src/Patch.ts";
 export { Delete } from "./src/Delete.ts";
+
+// expore Application from @oak/oak in case
+// developers wish to use the exact same `oak` version
+// referenced by `oak-routing-ctrl`
+export { Application } from "./deps.ts";
