@@ -52,6 +52,8 @@ deno add @oak/oak @dklab/oak-routing-ctrl
 ```
 
 ```ts
+// main.ts
+
 import { Application } from "@oak/oak/application";
 import {
   Controller,
@@ -78,7 +80,9 @@ await app.listen({ port: 1993 });
 
 ```bash
 deno run --allow-env --allow-net main.ts
+```
 
+```bash
 # in another terminal
 curl localhost:1993/v1/hello/world # prints: hello, world
 ```
@@ -188,6 +192,8 @@ curl -H"x-foo: lorem" localhost:1993/foo/bar
 ```
 
 </details>
+
+---
 
 ### Other runtimes
 
@@ -315,7 +321,14 @@ curl http://localhost:1993/hello/world # prints: hello, world
 
 </details>
 
-## Developer Resources
+---
+
+## Documentation
+
+Documentation is hosted on the Javascript Registry:
+https://jsr.io/@dklab/oak-routing-ctrl/doc
+
+## Contributor Resources
 
 ### Tests
 
