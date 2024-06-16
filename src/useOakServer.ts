@@ -1,5 +1,5 @@
 import { debug } from "./utils/logger.ts";
-import { Application, Router } from "../deps.ts";
+import { type Application, Router } from "../deps.ts";
 import type { ControllerClass } from "./Controller.ts";
 import { store } from "./Store.ts";
 

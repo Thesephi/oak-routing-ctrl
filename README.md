@@ -32,18 +32,22 @@ replacement for routing-controllers, as it attempts to conform to
 yet. There's currently no plan to support TypeScript "experimental" decorators,
 but if you feel strongly for it, please feel free to fork this repo!
 
-## Installation
+## Example Usages
+
+### Heads up
+
+For easy reading, the examples below do not specify any explicit version when
+installing library dependencies. But in your production code, it's advisable to
+pin every dependency to a specific version.
+
+### Deno runtime
 
 Prerequisite:
 [Deno](https://docs.deno.com/runtime/manual/getting_started/installation)
 
 ```bash
-deno add @dklab/oak-routing-ctrl
+deno add @oak/oak @dklab/oak-routing-ctrl
 ```
-
-## Example Usage
-
-### Standard Deno app
 
 ```ts
 // main.ts
@@ -82,7 +86,58 @@ deno run -A main.ts
 curl localhost:1993/tell/Alice -d'{"note": "Bob is waiting"}'
 ```
 
-### Cloudflare Worker
+### Other runtimes
+
+<details>
+  <summary>Node.js</summary>
+
+```bash
+npm i @jsr/oak__oak "@jsr/dklab__oak-routing-ctrl
+
+# note that `npx jsr i {package}` also works, but
+# installing directly from the `@jsr` scope may result
+# in better dependency resolutions
+```
+
+```ts
+// alternatively imported from "@oak/oak/application"
+import { Application } from "@jsr/oak__oak/application";
+
+// alternatively imported from "@dklab/oak-routing-ctrl"
+import {
+  Controller,
+  ControllerMethodArgs,
+  Get,
+  useOakServer,
+} from "@jsr/dklab__oak-routing-ctrl";
+
+@Controller("/v1")
+export class MyController {
+  @Get("/hello/:name")
+  @ControllerMethodArgs("param")
+  hello(param: Record<string, string>) {
+    return `hello, ${param.name}`;
+  }
+}
+
+const app = new Application();
+
+useOakServer(app, [MyController]);
+await app.listen({ port: 1993 });
+```
+
+```bash
+curl http://localhost:1993/hello/world # prints: "hello, world"
+```
+
+</details>
+
+<details>
+  <summary>Cloudflare Workers</summary>
+
+```bash
+npx jsr add @oak/oak @dklab/oak-routing-ctrl
+```
 
 ```ts
 import { Application } from "@oak/oak/application";
@@ -112,6 +167,44 @@ export default { fetch: app.fetch };
 ```bash
 curl http://{your-cloudflare-worker-domain}/hello/world # prints: "hello, world"
 ```
+
+</details>
+
+<details>
+  <summary>Bun</summary>
+
+```bash
+bunx jsr i @oak/oak @dklab/oak-routing-ctrl
+```
+
+```ts
+import { Application } from "@oak/oak/application";
+
+import {
+  Controller,
+  ControllerMethodArgs,
+  Get,
+  useOakServer,
+} from "@dklab/oak-routing-ctrl";
+
+@Controller("/v1")
+class MyController {
+  @Get("/hello/:name")
+  hello(ctx) {
+    return `hello, ${ctx.params.name}`;
+  }
+}
+
+const app = new Application();
+useOakServer(app, [MyController]);
+await app.listen({ port: 1993 });
+```
+
+```bash
+curl http://localhost:1993/hello/world # prints: "hello, world"
+```
+
+</details>
 
 ## Tests
 
