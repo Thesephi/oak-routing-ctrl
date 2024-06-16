@@ -83,6 +83,8 @@ export class MyController {
 
 ```bash
 deno run -A main.ts
+
+# in another terminal
 curl localhost:1993/tell/Alice -d'{"note": "Bob is waiting"}'
 ```
 
@@ -92,7 +94,7 @@ curl localhost:1993/tell/Alice -d'{"note": "Bob is waiting"}'
   <summary>Node.js</summary>
 
 ```bash
-npm i @jsr/oak__oak "@jsr/dklab__oak-routing-ctrl
+npm i @jsr/oak__oak @jsr/dklab__oak-routing-ctrl
 
 # note that `npx jsr i {package}` also works, but
 # installing directly from the `@jsr` scope may result
