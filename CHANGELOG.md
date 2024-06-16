@@ -1,3 +1,9 @@
+## [0.7.1] - 2024-06-17
+
+### Added
+
+- Organized example usages in README
+
 ## [0.7.0] - 2024-06-16
 
 ### Changed
