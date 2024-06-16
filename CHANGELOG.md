@@ -1,10 +1,14 @@
-## [Unreleased]
+## [0.7.0] - 2024-06-16
 
 ### Changed
 
 - upgraded dependencies: `@oak/oak@16.1.0`, `@oak/std@0.225.2`,
   `@std/assert@^0.226.0`
 - removed unnecessarily exported code from `dep.ts`
+
+### Added
+
+- Examples for other runtimes (`Node.js`, `bun`)
 
 ## [0.6.1] - 2024-06-10
 
