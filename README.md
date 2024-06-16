@@ -87,7 +87,7 @@ deno run --allow-env --allow-net main.ts
 curl localhost:1993/v1/hello/world # prints: hello, world
 ```
 
-##### Other examples
+#### Other examples
 
 ##### Retrieving path parameters and request body
 
