@@ -45,53 +45,156 @@ pin every dependency to a specific version.
 Prerequisite:
 [Deno](https://docs.deno.com/runtime/manual/getting_started/installation)
 
+#### Example: Retrieving path parameters
+
 ```bash
 deno add @oak/oak @dklab/oak-routing-ctrl
 ```
 
 ```ts
-// main.ts
-
-import { Application } from "jsr:@oak/oak";
-import { useOakServer } from "jsr:@dklab/oak-routing-ctrl";
-import { MyController } from "./MyController.ts";
+import { Application } from "@oak/oak/application";
+import {
+  Controller,
+  ControllerMethodArgs,
+  Get,
+  useOakServer,
+} from "@dklab/oak-routing-ctrl";
 
 const app = new Application();
+
+@Controller("/v1")
+class MyController {
+  @Get("/hello/:name")
+  @ControllerMethodArgs("param")
+  hello(param) {
+    return `hello, ${param.name}`;
+  }
+}
+
 useOakServer(app, [MyController]);
+
 await app.listen({ port: 1993 });
 ```
 
-```ts
-// MyController.ts
+```bash
+deno run --allow-env --allow-net main.ts
 
+# in another terminal
+curl localhost:1993/v1/hello/world # prints: hello, world
+```
+
+##### Other examples
+
+##### Retrieving path parameters and request body
+
+<details>
+<summary>View Example</summary>
+
+```ts
+import { Application } from "@oak/oak/application";
 import {
   Controller,
   ControllerMethodArgs,
   Post,
-} from "jsr:@dklab/oak-routing-ctrl";
+  useOakServer,
+} from "@dklab/oak-routing-ctrl";
+const app = new Application();
 
-@Controller()
-export class MyController {
-  @Post("/tell/:whom")
-  @ControllerMethodArgs("body")
-  say(body, ctx) {
-    const { note } = body;
-    console.log(`telling ${ctx.params.whom} that "${note}"`);
+@Controller("/v1")
+class MyController {
+  @Post("/tell/:name")
+  @ControllerMethodArgs("param", "body")
+  tell(param, body) {
+    return `telling ${param.name} that "${body.message}"`;
   }
 }
+
+useOakServer(app, [MyController]);
+
+await app.listen({ port: 1993 });
 ```
 
 ```bash
-deno run -A main.ts
-
-# in another terminal
-curl localhost:1993/tell/Alice -d'{"note": "Bob is waiting"}'
+curl -H"Content-Type: application/json" localhost:1993/v1/tell/alice -d'{"message": "all we need is love"}'
+# prints: telling alice that "all we need is love"
 ```
+
+</details>
+
+##### Retrieving request query and path parameters
+
+<details>
+<summary>View Example</summary>
+
+```ts
+import { Application } from "@oak/oak/application";
+import {
+  Controller,
+  ControllerMethodArgs,
+  Get,
+  useOakServer,
+} from "@dklab/oak-routing-ctrl";
+const app = new Application();
+
+@Controller("/v1")
+class MyController {
+  @Get("/books/:category")
+  @ControllerMethodArgs("query", "param")
+  search(query, param) {
+    return `searching for books in category "${param.category}" with query "page=${query.page}"`;
+  }
+}
+
+useOakServer(app, [MyController]);
+
+await app.listen({ port: 1993 });
+```
+
+```bash
+curl localhost:1993/v1/books/thriller\?page=2
+# prints: searching for books in category "thriller" with query "page=2"
+```
+
+</details>
+
+##### Accessing underlying context object
+
+<details>
+<summary>View Example</summary>
+
+```ts
+import { Application } from "@oak/oak/application";
+import { Controller, Get, useOakServer } from "@dklab/oak-routing-ctrl";
+const app = new Application();
+
+@Controller()
+class MyController {
+  @Get("/foo/bar")
+  fooBar(ctx) {
+    return `request header x-foo has value "${
+      ctx.request.headers.get("x-foo")
+    }"`;
+  }
+}
+
+useOakServer(app, [MyController]);
+
+await app.listen({ port: 1993 });
+```
+
+```bash
+curl -H"x-foo: lorem" localhost:1993/foo/bar
+# prints: request header x-foo has value "lorem"
+```
+
+</details>
 
 ### Other runtimes
 
+#### Node.js
+
 <details>
-  <summary>Node.js</summary>
+<summary>View Example</summary>
 
 ```bash
 npm i @jsr/oak__oak @jsr/dklab__oak-routing-ctrl
@@ -129,13 +232,15 @@ await app.listen({ port: 1993 });
 ```
 
 ```bash
-curl http://localhost:1993/hello/world # prints: "hello, world"
+curl http://localhost:1993/hello/world # prints: hello, world
 ```
 
 </details>
 
+#### Cloudflare Workers
+
 <details>
-  <summary>Cloudflare Workers</summary>
+<summary>View Example</summary>
 
 ```bash
 npx jsr add @oak/oak @dklab/oak-routing-ctrl
@@ -167,13 +272,15 @@ export default { fetch: app.fetch };
 ```
 
 ```bash
-curl http://{your-cloudflare-worker-domain}/hello/world # prints: "hello, world"
+curl http://{your-cloudflare-worker-domain}/hello/world # prints: hello, world
 ```
 
 </details>
 
+#### Bun
+
 <details>
-  <summary>Bun</summary>
+<summary>View Example</summary>
 
 ```bash
 bunx jsr i @oak/oak @dklab/oak-routing-ctrl
@@ -203,12 +310,14 @@ await app.listen({ port: 1993 });
 ```
 
 ```bash
-curl http://localhost:1993/hello/world # prints: "hello, world"
+curl http://localhost:1993/hello/world # prints: hello, world
 ```
 
 </details>
 
-## Tests
+## Developer Resources
+
+### Tests
 
 ```bash
 deno test -A --coverage=cov_profile
