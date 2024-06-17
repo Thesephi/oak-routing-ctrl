@@ -1,3 +1,11 @@
+## [0.7.2] - 2024-06-17
+
+### Changed
+
+- typo fix in README Markdown
+- added test coverage chart to README
+- attempted better format for JSR library main page
+
 ## [0.7.1] - 2024-06-17
 
 ### Added
