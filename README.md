@@ -19,7 +19,7 @@ class MyPokedex {
 }
 ```
 
-## Forewords
+# Forewords
 
 If you're familiar with the
 [npm library routing-controllers](https://www.npmjs.com/package/routing-controllers),
@@ -32,20 +32,18 @@ replacement for routing-controllers, as it attempts to conform to
 yet. There's currently no plan to support TypeScript "experimental" decorators,
 but if you feel strongly for it, please feel free to fork this repo!
 
-## Example Usages
-
-### Heads up
+# Heads up
 
 For easy reading, the examples below do not specify any explicit version when
 installing library dependencies. But in your production code, it's advisable to
 pin every dependency to a specific version.
 
-### Deno runtime
+# Deno runtime
 
 Prerequisite:
 [Deno](https://docs.deno.com/runtime/manual/getting_started/installation)
 
-#### Example: Retrieving path parameters
+## Example: Retrieving path parameters
 
 ```bash
 deno add @oak/oak @dklab/oak-routing-ctrl
@@ -87,9 +85,7 @@ deno run --allow-env --allow-net main.ts
 curl localhost:1993/v1/hello/world # prints: hello, world
 ```
 
-#### Other examples
-
-##### Retrieving path parameters and request body
+## Example: Retrieving path parameters and request body
 
 <details>
 <summary>View Example</summary>
@@ -102,7 +98,6 @@ import {
   Post,
   useOakServer,
 } from "@dklab/oak-routing-ctrl";
-const app = new Application();
 
 @Controller("/v1")
 class MyController {
@@ -113,10 +108,12 @@ class MyController {
   }
 }
 
+const app = new Application();
 useOakServer(app, [MyController]);
-
 await app.listen({ port: 1993 });
 ```
+
+_
 
 ```bash
 curl -H"Content-Type: application/json" localhost:1993/v1/tell/alice -d'{"message": "all we need is love"}'
@@ -125,7 +122,7 @@ curl -H"Content-Type: application/json" localhost:1993/v1/tell/alice -d'{"messag
 
 </details>
 
-##### Retrieving request query and path parameters
+## Example: Retrieving request query and path parameters
 
 <details>
 <summary>View Example</summary>
@@ -138,7 +135,6 @@ import {
   Get,
   useOakServer,
 } from "@dklab/oak-routing-ctrl";
-const app = new Application();
 
 @Controller("/v1")
 class MyController {
@@ -149,10 +145,12 @@ class MyController {
   }
 }
 
+const app = new Application();
 useOakServer(app, [MyController]);
-
 await app.listen({ port: 1993 });
 ```
+
+_
 
 ```bash
 curl localhost:1993/v1/books/thriller\?page=2
@@ -161,7 +159,7 @@ curl localhost:1993/v1/books/thriller\?page=2
 
 </details>
 
-##### Accessing underlying context object
+## Example: Accessing underlying context object
 
 <details>
 <summary>View Example</summary>
@@ -169,7 +167,6 @@ curl localhost:1993/v1/books/thriller\?page=2
 ```ts
 import { Application } from "@oak/oak/application";
 import { Controller, Get, useOakServer } from "@dklab/oak-routing-ctrl";
-const app = new Application();
 
 @Controller()
 class MyController {
@@ -181,10 +178,12 @@ class MyController {
   }
 }
 
+const app = new Application();
 useOakServer(app, [MyController]);
-
 await app.listen({ port: 1993 });
 ```
+
+_
 
 ```bash
 curl -H"x-foo: lorem" localhost:1993/foo/bar
@@ -193,11 +192,9 @@ curl -H"x-foo: lorem" localhost:1993/foo/bar
 
 </details>
 
----
+# Other runtimes
 
-### Other runtimes
-
-#### Node.js
+## Node.js
 
 <details>
 <summary>View Example</summary>
@@ -241,12 +238,12 @@ await app.listen({ port: 1993 });
 _
 
 ```bash
-curl http://localhost:1993/hello/world # prints: hello, world
+curl http://localhost:1993/v1/hello/world # prints: hello, world
 ```
 
 </details>
 
-#### Cloudflare Workers
+## Cloudflare Workers
 
 <details>
 <summary>View Example</summary>
@@ -264,7 +261,7 @@ import {
   ControllerMethodArgs,
   Get,
   useOakServer,
-} from "@dklab/oak-routing-ctrl";
+} from "@dklab/oak-routing-ctrl/mod";
 
 @Controller()
 class MyCloudflareWorkerController {
@@ -288,7 +285,7 @@ curl http://{your-cloudflare-worker-domain}/hello/world # prints: hello, world
 
 </details>
 
-#### Bun
+## Bun
 
 <details>
 <summary>View Example</summary>
@@ -300,19 +297,13 @@ bunx jsr i @oak/oak @dklab/oak-routing-ctrl
 _
 
 ```ts
-import { Application } from "@oak/oak/application";
-
-import {
-  Controller,
-  ControllerMethodArgs,
-  Get,
-  useOakServer,
-} from "@dklab/oak-routing-ctrl";
+import { Application, type RouterContext } from "@oak/oak";
+import { Controller, Get, useOakServer } from "@dklab/oak-routing-ctrl";
 
 @Controller("/v1")
 class MyController {
   @Get("/hello/:name")
-  hello(ctx) {
+  hello(ctx: RouterContext<"/hello/:name">) {
     return `hello, ${ctx.params.name}`;
   }
 }
@@ -325,25 +316,23 @@ await app.listen({ port: 1993 });
 _
 
 ```bash
-curl http://localhost:1993/hello/world # prints: hello, world
+curl http://localhost:1993/v1/hello/world # prints: hello, world
 ```
 
 </details>
 
-## Documentation
+# Documentation
 
 Documentation is hosted on the Javascript Registry:
 https://jsr.io/@dklab/oak-routing-ctrl/doc
 
-## Contributor Resources
+# Contributor Resources
 
-### Tests
+## Tests
 
 ```bash
 deno test -A --coverage=cov_profile
 deno coverage cov_profile
 ```
 
-### Test Coverage
-
-![coverage](https://codecov.io/gh/Thesephi/oak-routing-ctrl/graphs/tree.svg?token=BA3M9P6410)
+[![coverage](https://codecov.io/gh/Thesephi/oak-routing-ctrl/graphs/tree.svg?token=BA3M9P6410)](https://codecov.io/github/Thesephi/oak-routing-ctrl)
