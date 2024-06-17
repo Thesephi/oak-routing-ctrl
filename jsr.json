@@ -1,16 +1,9 @@
 {
   "name": "@dklab/oak-routing-ctrl",
-  "version": "0.7.3-alpha.1",
+  "version": "0.7.3-alpha.2",
   "exports": {
     ".": "./mod.ts",
-    "./useOakServer": "./src/useOakServer.ts",
-    "./Controller": "./src/Controller.ts",
-    "./ControllerMethodArgs": "./src/ControllerMethodArgs.ts",
-    "./Delete": "./src/Delete.ts",
-    "./Get": "./src/Get.ts",
-    "./Patch": "./src/Patch.ts",
-    "./Post": "./src/Post.ts",
-    "./Put": "./src/Put.ts"
+    "./mod": "./mod.ts"
   },
   "exclude": [
     "**/*_test.ts",
