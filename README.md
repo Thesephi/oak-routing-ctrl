@@ -335,4 +335,4 @@ deno test -A --coverage=cov_profile
 deno coverage cov_profile
 ```
 
-![coverage](https://codecov.io/gh/Thesephi/oak-routing-ctrl/graphs/tree.svg?token=BA3M9P6410)
+[![coverage](https://codecov.io/gh/Thesephi/oak-routing-ctrl/graphs/tree.svg?token=BA3M9P6410)](https://codecov.io/github/Thesephi/oak-routing-ctrl)
