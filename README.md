@@ -85,9 +85,7 @@ deno run --allow-env --allow-net main.ts
 curl localhost:1993/v1/hello/world # prints: hello, world
 ```
 
-## Other examples
-
-### Retrieving path parameters and request body
+## Example: Retrieving path parameters and request body
 
 <details>
 <summary>View Example</summary>
@@ -100,7 +98,6 @@ import {
   Post,
   useOakServer,
 } from "@dklab/oak-routing-ctrl";
-const app = new Application();
 
 @Controller("/v1")
 class MyController {
@@ -111,10 +108,12 @@ class MyController {
   }
 }
 
+const app = new Application();
 useOakServer(app, [MyController]);
-
 await app.listen({ port: 1993 });
 ```
+
+_
 
 ```bash
 curl -H"Content-Type: application/json" localhost:1993/v1/tell/alice -d'{"message": "all we need is love"}'
@@ -123,7 +122,7 @@ curl -H"Content-Type: application/json" localhost:1993/v1/tell/alice -d'{"messag
 
 </details>
 
-### Retrieving request query and path parameters
+## Example: Retrieving request query and path parameters
 
 <details>
 <summary>View Example</summary>
@@ -136,7 +135,6 @@ import {
   Get,
   useOakServer,
 } from "@dklab/oak-routing-ctrl";
-const app = new Application();
 
 @Controller("/v1")
 class MyController {
@@ -147,10 +145,12 @@ class MyController {
   }
 }
 
+const app = new Application();
 useOakServer(app, [MyController]);
-
 await app.listen({ port: 1993 });
 ```
+
+_
 
 ```bash
 curl localhost:1993/v1/books/thriller\?page=2
@@ -159,7 +159,7 @@ curl localhost:1993/v1/books/thriller\?page=2
 
 </details>
 
-### Accessing underlying context object
+## Example: Accessing underlying context object
 
 <details>
 <summary>View Example</summary>
@@ -167,7 +167,6 @@ curl localhost:1993/v1/books/thriller\?page=2
 ```ts
 import { Application } from "@oak/oak/application";
 import { Controller, Get, useOakServer } from "@dklab/oak-routing-ctrl";
-const app = new Application();
 
 @Controller()
 class MyController {
@@ -179,10 +178,12 @@ class MyController {
   }
 }
 
+const app = new Application();
 useOakServer(app, [MyController]);
-
 await app.listen({ port: 1993 });
 ```
+
+_
 
 ```bash
 curl -H"x-foo: lorem" localhost:1993/foo/bar
