@@ -193,8 +193,6 @@ curl -H"x-foo: lorem" localhost:1993/foo/bar
 
 </details>
 
----
-
 ### Other runtimes
 
 #### Node.js
@@ -241,7 +239,7 @@ await app.listen({ port: 1993 });
 _
 
 ```bash
-curl http://localhost:1993/hello/world # prints: hello, world
+curl http://localhost:1993/v1/hello/world # prints: hello, world
 ```
 
 </details>
@@ -264,7 +262,7 @@ import {
   ControllerMethodArgs,
   Get,
   useOakServer,
-} from "@dklab/oak-routing-ctrl";
+} from "@dklab/oak-routing-ctrl/mod";
 
 @Controller()
 class MyCloudflareWorkerController {
@@ -300,19 +298,13 @@ bunx jsr i @oak/oak @dklab/oak-routing-ctrl
 _
 
 ```ts
-import { Application } from "@oak/oak/application";
-
-import {
-  Controller,
-  ControllerMethodArgs,
-  Get,
-  useOakServer,
-} from "@dklab/oak-routing-ctrl";
+import { Application, type RouterContext } from "@oak/oak";
+import { Controller, Get, useOakServer } from "@dklab/oak-routing-ctrl";
 
 @Controller("/v1")
 class MyController {
   @Get("/hello/:name")
-  hello(ctx) {
+  hello(ctx: RouterContext<"/hello/:name">) {
     return `hello, ${ctx.params.name}`;
   }
 }
@@ -325,7 +317,7 @@ await app.listen({ port: 1993 });
 _
 
 ```bash
-curl http://localhost:1993/hello/world # prints: hello, world
+curl http://localhost:1993/v1/hello/world # prints: hello, world
 ```
 
 </details>

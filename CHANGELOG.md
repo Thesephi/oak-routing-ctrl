@@ -2,7 +2,8 @@
 
 ### Added
 
-- More symbols exported directly for better Node.js project compatibilities
+- More symbols exported directly for better compatibilities with Cloudflare
+  Workers projects (esp. in IDE environments such as Visual Studio Code)
 
 ## [0.7.2] - 2024-06-17
 
