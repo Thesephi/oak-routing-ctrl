@@ -210,6 +210,8 @@ npm i @jsr/oak__oak @jsr/dklab__oak-routing-ctrl
 # in better dependency resolutions
 ```
 
+_
+
 ```ts
 // alternatively imported from "@oak/oak/application"
 import { Application } from "@jsr/oak__oak/application";
@@ -232,10 +234,11 @@ export class MyController {
 }
 
 const app = new Application();
-
 useOakServer(app, [MyController]);
 await app.listen({ port: 1993 });
 ```
+
+_
 
 ```bash
 curl http://localhost:1993/hello/world # prints: hello, world
@@ -251,6 +254,8 @@ curl http://localhost:1993/hello/world # prints: hello, world
 ```bash
 npx jsr add @oak/oak @dklab/oak-routing-ctrl
 ```
+
+_
 
 ```ts
 import { Application } from "@oak/oak/application";
@@ -271,11 +276,11 @@ class MyCloudflareWorkerController {
 }
 
 const app = new Application();
-
 useOakServer(app, [MyCloudflareWorkerController]);
-
 export default { fetch: app.fetch };
 ```
+
+_
 
 ```bash
 curl http://{your-cloudflare-worker-domain}/hello/world # prints: hello, world
@@ -291,6 +296,8 @@ curl http://{your-cloudflare-worker-domain}/hello/world # prints: hello, world
 ```bash
 bunx jsr i @oak/oak @dklab/oak-routing-ctrl
 ```
+
+_
 
 ```ts
 import { Application } from "@oak/oak/application";
@@ -315,13 +322,13 @@ useOakServer(app, [MyController]);
 await app.listen({ port: 1993 });
 ```
 
+_
+
 ```bash
 curl http://localhost:1993/hello/world # prints: hello, world
 ```
 
 </details>
-
----
 
 ## Documentation
 
@@ -336,3 +343,7 @@ https://jsr.io/@dklab/oak-routing-ctrl/doc
 deno test -A --coverage=cov_profile
 deno coverage cov_profile
 ```
+
+### Test Coverage
+
+![coverage](https://codecov.io/gh/Thesephi/oak-routing-ctrl/graphs/tree.svg?token=BA3M9P6410)
