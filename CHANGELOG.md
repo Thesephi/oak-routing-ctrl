@@ -1,3 +1,13 @@
+## [Unreleased] - 2024-06-20
+
+### Added
+
+- `CONTRIBUTING.md` and `GOVERNANCE.md`
+
+### Changed
+
+- `README.md` headline formatting should conform to best practices
+
 ## [0.7.3] - 2024-06-17
 
 ### Added
