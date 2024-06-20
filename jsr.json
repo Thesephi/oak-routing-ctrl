@@ -1,6 +1,6 @@
 {
   "name": "@dklab/oak-routing-ctrl",
-  "version": "0.7.4-alpha.1",
+  "version": "0.7.4",
   "exports": {
     ".": "./mod.ts",
     "./mod": "./mod.ts"
