@@ -8,15 +8,17 @@ import {
 } from "../deps.ts";
 import { debug } from "./utils/logger.ts";
 
-const oasViewer = `
-<!doctype html> <!-- Important: must specify -->
+const defaultOasJsonServingPath = "/oas.json";
+const defaultOasUiServingPath = "/swagger";
+const defaultOasUiTemplate = `
+<!doctype html>
 <html>
   <head>
-    <meta charset="utf-8"> <!-- Important: rapi-doc uses utf8 characters -->
+    <meta charset="utf-8">
     <script type="module" src="https://unpkg.com/rapidoc/dist/rapidoc-min.js"></script>
   </head>
   <body>
-    <rapi-doc spec-url = "/oas.json"> </rapi-doc>
+    <rapi-doc spec-url="/oas.json" render-style="view" theme="dark"></rapi-doc>
   </body>
 </html>
 `;
@@ -24,18 +26,21 @@ const oasViewer = `
 const registry = new OpenAPIRegistry();
 
 type UseOasConfig = Partial<OpenAPIObjectConfig> & {
-  oasJsonServingPath: string; // e.g. /oas.json
-  oasUiServingPath: string; // e.g. /swagger
+  jsonPath?: string;
+  uiPath?: string;
+  uiTemplate?: string;
 };
 
 export const useOas = (
   app: Application,
-  cfg: UseOasConfig = {
-    oasJsonServingPath: "/oas.json",
-    oasUiServingPath: "/swagger",
-  },
+  cfg: UseOasConfig = {},
 ): void => {
-  const { oasJsonServingPath, oasUiServingPath, ...oasCfg } = cfg;
+  const {
+    jsonPath = defaultOasJsonServingPath,
+    uiPath = defaultOasUiServingPath,
+    uiTemplate = defaultOasUiTemplate,
+    ...oasCfg
+  } = cfg;
 
   oasStore.forEach((rc, fnName) => {
     if ("path" in rc && "method" in rc && "responses" in rc) {
@@ -62,10 +67,10 @@ export const useOas = (
   debug(Deno.inspect(apiDoc, { depth: 10 }));
 
   app.use(async (ctx, next) => {
-    if (ctx.request.url.pathname === oasJsonServingPath) {
+    if (ctx.request.url.pathname === jsonPath) {
       ctx.response.body = apiDoc;
-    } else if (ctx.request.url.pathname === oasUiServingPath) {
-      ctx.response.body = oasViewer;
+    } else if (ctx.request.url.pathname === uiPath) {
+      ctx.response.body = uiTemplate;
     }
     await next();
   });
