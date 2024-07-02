@@ -1,4 +1,5 @@
 export { useOakServer } from "./src/useOakServer.ts";
+export { useOas } from "./src/useOas.ts";
 export { Controller } from "./src/Controller.ts";
 export {
   type ControllerMethodArg,

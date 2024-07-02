@@ -1,3 +1,9 @@
+## [Unreleased]
+
+### Added
+
+- support for Swagger documentation serving (powered by `zod`)
+
 ## [0.7.4] - 2024-06-20
 
 ### Added

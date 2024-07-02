@@ -1,6 +1,7 @@
 import { debug } from "./utils/logger.ts";
 import { join } from "../deps.ts";
 import { store } from "./Store.ts";
+import { patchOasPath } from "./oasStore.ts";
 
 /**
  * Just a standard Class, that can be decorated with the `@Controller` decorator
@@ -22,6 +23,10 @@ export const Controller =
     for (const fnName of fnNames) {
       const pair = store.get(fnName);
       if (!pair) continue;
-      pair.forEach((path, verb, p) => p.set(verb, join(pathPrefix, path)));
+      pair.forEach((path, verb, p) => {
+        const fullPath = join(pathPrefix, path);
+        p.set(verb, fullPath);
+        patchOasPath(fnName, verb, fullPath);
+      });
     }
   };
