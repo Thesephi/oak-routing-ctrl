@@ -1,7 +1,7 @@
 import { debug } from "./utils/logger.ts";
 import { register } from "./Store.ts";
 import { getUserSuppliedDecoratedMethodName } from "./utils/getUserSuppliedDecoratedMethodName.ts";
-import { type OasRouteConfig } from "../deps.ts";
+import { type OakOpenApiSpec } from "../deps.ts";
 import { updateOas } from "./oasStore.ts";
 
 /**
@@ -10,7 +10,7 @@ import { updateOas } from "./oasStore.ts";
  */
 export const Patch = (
   path: string = "",
-  openApiSpecs?: OasRouteConfig,
+  openApiSpec?: OakOpenApiSpec,
 ) =>
 // deno-lint-ignore ban-types
 (arg1: Function | object, arg2: ClassMethodDecoratorContext | string): void => {
@@ -21,7 +21,7 @@ export const Patch = (
     arg2,
   );
   register("patch", path, fnName);
-  updateOas(fnName, "patch", path, openApiSpecs);
+  updateOas(fnName, "patch", path, openApiSpec);
 };
 
 export const _internal = { Patch };

@@ -1,10 +1,5 @@
-import {
-  type OasRouteConfig,
-  // type ResponseConfig,
-  // type ZodRequestBody,
-} from "../deps.ts";
+import { type OakOpenApiSpec, type RouteConfig } from "../deps.ts";
 import { SupportedVerb } from "./Store.ts";
-// import { SupportedVerb } from "./Store.ts";
 import { debug } from "./utils/logger.ts";
 
 // export type OasRouteConfig = {
@@ -22,7 +17,7 @@ import { debug } from "./utils/logger.ts";
 // };
 
 // fnName|method|path => OasRouteConfig
-export const oasStore: Map<string, Partial<OasRouteConfig>> = new Map();
+export const oasStore: Map<string, RouteConfig> = new Map();
 
 const getRouteId = (
   fnName: string,
@@ -51,7 +46,7 @@ export const updateOas = (
   fnName: string,
   method: SupportedVerb,
   path: string,
-  specs?: Partial<OasRouteConfig>,
+  specs?: Partial<OakOpenApiSpec>,
 ) => {
   const oasRouteIdentifier = getRouteId(fnName, method, path);
 

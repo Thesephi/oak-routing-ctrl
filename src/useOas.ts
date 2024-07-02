@@ -1,10 +1,10 @@
 import { Application } from "../deps.ts";
 import { oasStore } from "./oasStore.ts";
 import {
-  type OasRouteConfig,
   OpenApiGeneratorV3,
   type OpenAPIObjectConfig,
   OpenAPIRegistry,
+  type RouteConfig,
 } from "../deps.ts";
 import { debug } from "./utils/logger.ts";
 
@@ -39,7 +39,7 @@ export const useOas = (
 
   oasStore.forEach((rc, fnName) => {
     if ("path" in rc && "method" in rc && "responses" in rc) {
-      registry.registerPath(rc as OasRouteConfig);
+      registry.registerPath(rc as RouteConfig);
     } else {
       debug(
         `WARNING: OAS RouteConfig for '${fnName}' lacks either 'path', 'method', or 'responses'`,

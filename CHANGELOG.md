@@ -2,7 +2,8 @@
 
 ### Added
 
-- support for Swagger documentation serving (powered by `zod`)
+- support for Swagger documentation serving (powered by
+  `@asteasolutions/zod-to-openapi`)
 
 ## [0.7.4] - 2024-06-20
 
