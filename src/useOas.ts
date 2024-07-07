@@ -32,10 +32,15 @@ type UseOasConfig = Partial<OpenAPIObjectConfig> & {
   uiTemplate?: string;
 };
 
-export const useOas = (
+type UseOas = (
   app: Application,
-  cfg: UseOasConfig = {},
-): void => {
+  cfg?: UseOasConfig,
+) => void;
+
+const _useOas: UseOas = (
+  app,
+  cfg = {},
+) => {
   const {
     jsonPath = defaultOasJsonServingPath,
     uiPath = defaultOasUiServingPath,
@@ -75,4 +80,15 @@ export const useOas = (
     }
     await next();
   });
+};
+
+export const useOas: UseOas = (
+  app,
+  cfg = {},
+) => {
+  try {
+    _useOas(app, cfg);
+  } catch (e) {
+    debug("unable to complete OpenApiSpec initialization:", e.message);
+  }
 };
