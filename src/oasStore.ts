@@ -47,7 +47,11 @@ export const updateOas = (
   method: SupportedVerb,
   path: string,
   specs?: Partial<OakOpenApiSpec>,
-) => {
+): void => {
+  // if developer doesn't supply `specs` then bail early
+  // because we don't want "documentation without consent"
+  if (!specs) return;
+
   const oasRouteIdentifier = getRouteId(fnName, method, path);
 
   const oasPath = getOasCompatPath(path);

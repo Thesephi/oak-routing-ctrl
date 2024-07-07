@@ -70,7 +70,7 @@ const _useOas: UseOas = (
     ...oasCfg,
   });
 
-  debug(inspect(apiDoc, { depth: 10 }));
+  debug("OpenApiSpec", inspect(apiDoc, { depth: 10 }));
 
   app.use(async (ctx, next) => {
     if (ctx.request.url.pathname === jsonPath) {
