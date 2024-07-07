@@ -7,6 +7,7 @@ import {
   type RouteConfig,
 } from "../deps.ts";
 import { debug } from "./utils/logger.ts";
+import { inspect } from "./utils/inspect.ts";
 
 const defaultOasJsonServingPath = "/oas.json";
 const defaultOasUiServingPath = "/swagger";
@@ -64,7 +65,7 @@ export const useOas = (
     ...oasCfg,
   });
 
-  debug(Deno.inspect(apiDoc, { depth: 10 }));
+  debug(inspect(apiDoc, { depth: 10 }));
 
   app.use(async (ctx, next) => {
     if (ctx.request.url.pathname === jsonPath) {

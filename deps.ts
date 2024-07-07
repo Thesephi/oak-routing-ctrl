@@ -14,11 +14,13 @@ import {
   type RouteConfig,
 } from "npm:@asteasolutions/zod-to-openapi@^7.1.1";
 
-export type OakOpenApiSpec = Omit<RouteConfig, "method" | "path"> & {
-  responses?: {
-    [statusCode: string]: ResponseConfig;
+export type OakOpenApiSpec =
+  & Omit<RouteConfig, "method" | "path" | "responses">
+  & {
+    responses?: {
+      [statusCode: string]: ResponseConfig;
+    };
   };
-};
 
 export { type ResponseConfig, type RouteConfig };
 
