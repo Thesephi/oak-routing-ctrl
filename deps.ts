@@ -10,6 +10,7 @@ export type {
 } from "jsr:@oak/oak@^16.1.0";
 
 import {
+  extendZodWithOpenApi,
   type ResponseConfig,
   type RouteConfig,
 } from "npm:@asteasolutions/zod-to-openapi@^7.1.1";
@@ -25,7 +26,6 @@ export type OakOpenApiSpec =
 export { type ResponseConfig, type RouteConfig };
 
 export {
-  extendZodWithOpenApi,
   OpenApiGeneratorV3,
   OpenAPIRegistry,
   type ZodRequestBody,
@@ -33,4 +33,7 @@ export {
 
 export { type OpenAPIObjectConfig } from "npm:@asteasolutions/zod-to-openapi@^7.1.1/dist/v3.0/openapi-generator";
 
-export { z } from "npm:zod@^3.23.8"; // must export from npm: instead from deno.land to be compatible with zod-to-openapi
+// must import from `npm:` instead of from `deno.land` to be compatible with `@asteasolutions/zod-to-openapi`
+import { z } from "npm:zod@^3.23.8";
+extendZodWithOpenApi(z);
+export { z };

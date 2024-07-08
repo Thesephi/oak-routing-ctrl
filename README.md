@@ -321,6 +321,53 @@ curl http://localhost:1993/v1/hello/world # prints: hello, world
 
 </details>
 
+## Serving Open API Spec
+
+Serving Open API Spec (both as a JSON doc and as an HTML view) is supported as
+followed:
+
+```ts
+import { Application } from "@oak/oak";
+import {
+  Controller,
+  ControllerMethodArgs,
+  Get,
+  useOakServer,
+  useOas,
+  z,
+} from "@dklab/oak-routing-ctrl";
+
+@Controller("/v1")
+class MyController {
+  @Get("/hello/:name", {
+    // using `zod` to express Open API Spec for this route
+    request: {
+      params: z.object({
+        name: z.string(),
+      }),
+    },
+  })
+  @ControllerMethodArgs("param")
+  hello(param) {
+    return `hello, ${param.name}`;
+  }
+}
+
+useOakServer(app, [MyController]);
+useOas(app, {
+  // optionally declare OAS info as per your project needs
+  info: {
+    version: "0.1.0",
+    title: "My awesome API",
+    description: "This is an awesome API",
+  },
+});
+
+await app.listen({ port: 1993 });
+```
+
+The OAS view is now available at the default URL: http://localhost:1993/swagger
+
 ## Documentation
 
 Documentation is hosted on the Javascript Registry:

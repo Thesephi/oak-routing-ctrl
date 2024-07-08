@@ -1,0 +1,52 @@
+export const snapshot = {};
+
+snapshot[`inspect without depth - Deno env 1`] = `
+'{
+  this: {
+    is: {
+      a: [ "relatively", "deep", "object" ],
+      b: { but: { "is it": true }, or: { is: [Object] } }
+    }
+  }
+}'
+`;
+
+snapshot[`inspect with depth - Deno env 1`] = `
+'{
+  this: {
+    is: {
+      a: [ "relatively", "deep", "object" ],
+      b: {
+        but: { "is it": true },
+        or: {
+          is: { it: Map(3) { "just" => "1", "a" => "2", "hoax" => "3" } }
+        }
+      }
+    }
+  }
+}'
+`;
+
+snapshot[`inspect - non-Deno env 1`] = `
+'{
+  "this": {
+    "is": {
+      "a": [
+        "relatively",
+        "deep",
+        "object"
+      ],
+      "b": {
+        "but": {
+          "is it": true
+        },
+        "or": {
+          "is": {
+            "it": {}
+          }
+        }
+      }
+    }
+  }
+}'
+`;

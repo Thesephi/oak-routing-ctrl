@@ -2,20 +2,6 @@ import { type OakOpenApiSpec, type RouteConfig } from "../deps.ts";
 import { SupportedVerb } from "./Store.ts";
 import { debug } from "./utils/logger.ts";
 
-// export type OasRouteConfig = {
-//   method: SupportedVerb;
-//   path: string;
-//   request: {
-//     params?: object; // RouteParameter from Zod
-//     body?: ZodRequestBody;
-//     query?: object; // RouteParameter from Zod
-//   };
-//   responses?: {
-//     [statusCode: string]: ResponseConfig;
-//   };
-//   // @TODO cookies & headers
-// };
-
 // fnName|method|path => OasRouteConfig
 export const oasStore: Map<string, RouteConfig> = new Map();
 
@@ -97,6 +83,13 @@ export const patchOasPath = (
     ) {
       debug(`OpenApiSpec: patching ${storedSpecs.path} to ${path}`);
       storedSpecs.path = getOasCompatPath(path);
+      // @TODO consider throwing if we discover 2 (or more) Controllers
+      // sharing the exact same set of path, fnName, and method
     }
   });
+};
+
+export const _internal = {
+  getRouteId,
+  getOasCompatPath,
 };

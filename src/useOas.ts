@@ -92,3 +92,5 @@ export const useOas: UseOas = (
     debug("unable to complete OpenApiSpec initialization:", e.message);
   }
 };
+
+export const _internal = { _useOas, registry };

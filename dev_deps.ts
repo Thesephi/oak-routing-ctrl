@@ -36,4 +36,4 @@ export {
   it,
 } from "jsr:@std/testing@^0.225.1/bdd";
 
-export { createMockContext } from "jsr:@oak/oak@^16.1.0/testing";
+export { createMockApp, createMockContext } from "jsr:@oak/oak@^16.1.0/testing";
