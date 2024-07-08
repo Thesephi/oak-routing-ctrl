@@ -10,3 +10,7 @@ export { Post } from "./src/Post.ts";
 export { Put } from "./src/Put.ts";
 export { Patch } from "./src/Patch.ts";
 export { Delete } from "./src/Delete.ts";
+
+import { extendZodWithOpenApi, z } from "./deps.ts";
+extendZodWithOpenApi(z);
+export { z };
