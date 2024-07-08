@@ -93,4 +93,4 @@ export const useOas: UseOas = (
   }
 };
 
-export const _internal = { _useOas, registry };
+export const _internal = { registry };

@@ -4,10 +4,11 @@ import {
   assertSpyCall,
   assertSpyCalls,
   beforeEach,
+  describe,
+  it,
+  type Stub,
   stub,
 } from "../../dev_deps.ts";
-import type { Stub } from "../../dev_deps.ts";
-import { describe, it } from "../../dev_deps.ts";
 
 let stubConsoleDebug: Stub;
 
