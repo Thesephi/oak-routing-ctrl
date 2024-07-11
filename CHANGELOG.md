@@ -1,3 +1,13 @@
+## [0.8.1] - 2024-07-11
+
+### Added
+
+- `useOas` method is now documented
+
+### Changed
+
+- `z` "slow types" workaround attempt
+
 ## [0.8.0] - 2024-07-11
 
 ### Added

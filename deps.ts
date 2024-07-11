@@ -34,6 +34,11 @@ export {
 export { type OpenAPIObjectConfig } from "npm:@asteasolutions/zod-to-openapi@^7.1.1/dist/v3.0/openapi-generator";
 
 // must import from `npm:` instead of from `deno.land` to be compatible with `@asteasolutions/zod-to-openapi`
-import { z } from "npm:zod@^3.23.8";
-extendZodWithOpenApi(z);
-export { z };
+import { z as slowTypedZ } from "npm:zod@^3.23.8";
+extendZodWithOpenApi(slowTypedZ);
+type ExplicitZ = Omit<typeof slowTypedZ, "">;
+/**
+ * entry to the `Zod` API, enhanced with `@asteasolutions/zod-to-openapi`;
+ * for usage documentation please refer to https://github.com/asteasolutions/zod-to-openapi?tab=readme-ov-file#purpose-and-quick-example
+ */
+export const z: ExplicitZ = slowTypedZ;
