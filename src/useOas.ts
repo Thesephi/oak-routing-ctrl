@@ -82,6 +82,13 @@ const _useOas: UseOas = (
   });
 };
 
+/**
+ * helper method to enable Open API Spec for the routes
+ * declared with oak-routing-ctrl decorators
+ * @param app the oak Application instance
+ * @param cfg optional configuration object to
+ * finetune the OAS spec documentation
+ */
 export const useOas: UseOas = (
   app,
   cfg = {},
