@@ -89,10 +89,10 @@ const _useOas: UseOas = (
  * @param cfg optional configuration object to
  * finetune the OAS spec documentation
  */
-export const useOas: UseOas = (
-  app,
-  cfg = {},
-) => {
+export const useOas = (
+  app: Application,
+  cfg: UseOasConfig = {},
+): void => {
   try {
     _useOas(app, cfg);
   } catch (e) {

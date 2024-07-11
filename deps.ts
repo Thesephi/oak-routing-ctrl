@@ -37,4 +37,8 @@ export { type OpenAPIObjectConfig } from "npm:@asteasolutions/zod-to-openapi@^7.
 import { z as slowTypedZ } from "npm:zod@^3.23.8";
 extendZodWithOpenApi(slowTypedZ);
 type ExplicitZ = Omit<typeof slowTypedZ, "">;
+/**
+ * entry to the `Zod` API, enhanced with `@asteasolutions/zod-to-openapi`;
+ * for usage documentation please refer to https://github.com/asteasolutions/zod-to-openapi?tab=readme-ov-file#purpose-and-quick-example
+ */
 export const z: ExplicitZ = slowTypedZ;
