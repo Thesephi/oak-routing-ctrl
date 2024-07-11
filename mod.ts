@@ -10,5 +10,7 @@ export { Post } from "./src/Post.ts";
 export { Put } from "./src/Put.ts";
 export { Patch } from "./src/Patch.ts";
 export { Delete } from "./src/Delete.ts";
+export { Options } from "./src/Options.ts";
+export { Head } from "./src/Head.ts";
 
 export { z } from "./deps.ts";

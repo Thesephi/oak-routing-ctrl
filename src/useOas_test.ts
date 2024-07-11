@@ -11,7 +11,7 @@ import {
 import { OpenApiGeneratorV3, z } from "../deps.ts";
 import { oasStore, updateOas } from "./oasStore.ts";
 import { _internal, useOas } from "./useOas.ts";
-import { mockRequestInternals } from "./test_utils/mockRequestInternals.ts";
+import { mockRequestInternals } from "../test_utils/mockRequestInternals.ts";
 
 const { createMockApp, createMockContext } = oakTesting;
 

@@ -112,5 +112,39 @@ snapshot[`useOakServer - fully decorated Controller 1`] = `
     path: "/test/yaz/:whatever",
     regexp: /^\\/test\\/yaz(?:\\/([^\\/#\\?]+?))[\\/#\\?]?\$/i,
   },
+  {
+    methods: [
+      "OPTIONS",
+    ],
+    middleware: [
+      [AsyncFunction (anonymous)],
+    ],
+    options: {
+      end: undefined,
+      ignoreCaptures: undefined,
+      sensitive: undefined,
+      strict: undefined,
+    },
+    paramNames: [],
+    path: "/test/bul",
+    regexp: /^\\/test\\/bul[\\/#\\?]?\$/i,
+  },
+  {
+    methods: [
+      "HEAD",
+    ],
+    middleware: [
+      [AsyncFunction (anonymous)],
+    ],
+    options: {
+      end: undefined,
+      ignoreCaptures: undefined,
+      sensitive: undefined,
+      strict: undefined,
+    },
+    paramNames: [],
+    path: "/test/phil",
+    regexp: /^\\/test\\/phil[\\/#\\?]?\$/i,
+  },
 ]
 `;

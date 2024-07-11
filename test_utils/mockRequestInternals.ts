@@ -1,4 +1,4 @@
-import { type BodyType, type Request } from "../../dev_deps.ts";
+import { type BodyType, type Request } from "../dev_deps.ts";
 
 export type MockRequestBodyDefinition = {
   type: BodyType;

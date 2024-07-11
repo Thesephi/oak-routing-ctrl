@@ -7,6 +7,8 @@ import {
   ControllerMethodArgs,
   Delete,
   Get,
+  Head,
+  Options,
   Patch,
   Post,
   Put,
@@ -16,7 +18,10 @@ import { _internal as useOakServerInternal } from "./useOakServer.ts";
 import {
   type MockRequestBodyDefinition,
   mockRequestInternals,
-} from "./test_utils/mockRequestInternals.ts";
+} from "../test_utils/mockRequestInternals.ts";
+
+const staticFormData = new FormData();
+staticFormData.append("foo", "phiil");
 
 @Controller("/noop")
 class NoopController {
@@ -71,6 +76,16 @@ class TestController {
   }
   justRandom() {
     return "this is returned from a non-decorated function";
+  }
+  @Options("/bul")
+  @ControllerMethodArgs("body")
+  bul(body: URLSearchParams) {
+    return `hello, bul=${body.get("foo")}`;
+  }
+  @Head("/phil")
+  @ControllerMethodArgs("body")
+  phil(body: FormData) {
+    return `hello, phil=${body.get("foo")}`;
   }
 }
 
@@ -166,7 +181,26 @@ Deno.test({
           "handler with arbitrary (undocumented) arg treated as a member of ctx.params",
         method: "patch",
         mockRequestPathParams: { whatever: "i.am.a.patch" },
+        mockRequestBody: { type: "text", value: "lorem" },
         expectedResponse: "hello, i.am.a.patch",
+      },
+      {
+        caseDescription: "handler for a request with a form payload",
+        method: "options",
+        mockRequestBody: {
+          type: "form",
+          value: new URLSearchParams({ foo: "buul" }),
+        },
+        expectedResponse: "hello, bul=buul",
+      },
+      {
+        caseDescription: "handler for a request with a form-data payload",
+        method: "head",
+        mockRequestBody: {
+          type: "form-data",
+          value: staticFormData,
+        },
+        expectedResponse: "hello, phil=phiil",
       },
     ];
 
