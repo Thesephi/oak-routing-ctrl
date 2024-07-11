@@ -1,3 +1,9 @@
+## [0.8.2] - 2024-07-11
+
+### Changed
+
+- `z` "slow types" workaround attempt: `SubsetOfZ`
+
 ## [0.8.1] - 2024-07-11
 
 ### Added
