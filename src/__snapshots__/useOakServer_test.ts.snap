@@ -146,5 +146,22 @@ snapshot[`useOakServer - fully decorated Controller 1`] = `
     path: "/test/phil",
     regexp: /^\\/test\\/phil[\\/#\\?]?\$/i,
   },
+  {
+    methods: [
+      "POST",
+    ],
+    middleware: [
+      [AsyncFunction (anonymous)],
+    ],
+    options: {
+      end: undefined,
+      ignoreCaptures: undefined,
+      sensitive: undefined,
+      strict: undefined,
+    },
+    paramNames: [],
+    path: "/test/uah",
+    regexp: /^\\/test\\/uah[\\/#\\?]?\$/i,
+  },
 ]
 `;

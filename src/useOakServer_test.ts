@@ -23,6 +23,8 @@ import {
 const staticFormData = new FormData();
 staticFormData.append("foo", "phiil");
 
+const arrayBufferLen42 = new ArrayBuffer(42);
+
 @Controller("/noop")
 class NoopController {
   noop() {}
@@ -86,6 +88,11 @@ class TestController {
   @ControllerMethodArgs("body")
   phil(body: FormData) {
     return `hello, phil=${body.get("foo")}`;
+  }
+  @Post("/uah")
+  @ControllerMethodArgs("body")
+  uah(body: ArrayBuffer) {
+    return `hello, ArrayBuffer body with byteLength=${body.byteLength}`;
   }
 }
 
@@ -201,6 +208,15 @@ Deno.test({
           value: staticFormData,
         },
         expectedResponse: "hello, phil=phiil",
+      },
+      {
+        caseDescription: "handler for a request with an unknown-typed payload",
+        method: "post",
+        mockRequestBody: {
+          type: "unknown",
+          value: arrayBufferLen42,
+        },
+        expectedResponse: "hello, ArrayBuffer body with byteLength=42",
       },
     ];
 
