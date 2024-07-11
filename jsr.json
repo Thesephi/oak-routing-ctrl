@@ -6,6 +6,7 @@
     "./mod": "./mod.ts"
   },
   "exclude": [
+    "./src/test_utils",
     "**/*_test.ts",
     "cov_profile",
     "cov_profile.lcov",

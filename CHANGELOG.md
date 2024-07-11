@@ -2,6 +2,7 @@
 
 ### Added
 
+- decorators for 2 more methods: `@Head` and `@Options`
 - support for Swagger documentation serving (powered by
   `@asteasolutions/zod-to-openapi`)
 
@@ -9,6 +10,10 @@
 
 - upgraded dependencies: `@std/assert@1.0.0`, `@std/testing@0.225.3`,
   `@std/io@0.224.3`
+
+### Fixed
+
+- typos in previous sections of this CHANGELOG
 
 ## [0.7.4] - 2024-06-20
 
@@ -24,12 +29,12 @@
 
 ### Added
 
-- More symbols exported directly for better compatibilities with Cloudflare
+- more symbols exported directly for better compatibilities with Cloudflare
   Workers projects (esp. in IDE environments such as Visual Studio Code)
 
 ### Fixed
 
-- Better support for JavaScript Registry documentation navigation indentation
+- better support for JavaScript Registry documentation navigation indentation
   behaviors
 
 ## [0.7.2] - 2024-06-17
@@ -44,7 +49,7 @@
 
 ### Added
 
-- Organized example usages in README
+- organized example usages in README
 
 ## [0.7.0] - 2024-06-16
 
@@ -56,7 +61,7 @@
 
 ### Added
 
-- Examples for other runtimes (`Node.js`, `bun`)
+- examples for other runtimes (`Node.js`, `bun`)
 
 ## [0.6.1] - 2024-06-10
 
@@ -125,7 +130,7 @@
 
 ### Added
 
-- Decorator `@Patch` to use on controller method handling HTTP Patch requests
+- decorator `@Patch` to use on controller method handling HTTP Patch requests
 
 ### Fixed
 

@@ -11,10 +11,9 @@ import {
 import { OpenApiGeneratorV3, z } from "../deps.ts";
 import { oasStore, updateOas } from "./oasStore.ts";
 import { _internal, useOas } from "./useOas.ts";
-import { _internal as useOakServerTest } from "./useOakServer_test.ts";
+import { mockRequestInternals } from "./test_utils/mockRequestInternals.ts";
 
 const { createMockApp, createMockContext } = oakTesting;
-const { mockRequestInternals } = useOakServerTest;
 
 Deno.test("useOas with a non-conforming Application instance", () => {
   const defEnvGet = Deno.env.get;
