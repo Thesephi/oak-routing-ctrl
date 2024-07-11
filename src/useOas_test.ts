@@ -2,12 +2,19 @@ import {
   assertEquals,
   assertSnapshot,
   assertSpyCall,
-  createMockApp,
+  assertSpyCalls,
+  type Middleware,
+  oakTesting,
+  spy,
   stub,
 } from "../dev_deps.ts";
 import { OpenApiGeneratorV3, z } from "../deps.ts";
 import { oasStore, updateOas } from "./oasStore.ts";
 import { _internal, useOas } from "./useOas.ts";
+import { _internal as useOakServerTest } from "./useOakServer_test.ts";
+
+const { createMockApp, createMockContext } = oakTesting;
+const { mockRequestInternals } = useOakServerTest;
 
 Deno.test("useOas with a non-conforming Application instance", () => {
   const defEnvGet = Deno.env.get;
@@ -83,10 +90,13 @@ Deno.test("useOas standard behavior", async (t) => {
     },
   });
 
+  const uiPath = "/my/swagger";
+  const uiTemplate = "<html>mock</html>";
+  const jsonPath = "/my/swagger/json";
   const oasConfig = {
-    uiPath: "/my/swagger",
-    jsonPath: "/my/swagger/json",
-    uiTemplate: "<html>mock</html>",
+    uiPath,
+    uiTemplate,
+    jsonPath,
     openapi: "3.0.3",
     info: {
       version: "0.1.0",
@@ -95,11 +105,52 @@ Deno.test("useOas standard behavior", async (t) => {
     },
     servers: [{ url: "/mock/" }],
   };
+  let apiDoc;
 
-  useOas(createMockApp(), oasConfig);
+  await t.step(async function testApiDocSnapshot(t) {
+    const mockCtx = createMockContext();
+    useOas(mockCtx.app, oasConfig);
+    const generator = new OpenApiGeneratorV3(_internal.registry.definitions);
+    const {
+      jsonPath: _jsonPath,
+      uiPath: _uiPath,
+      uiTemplate: _uiTemplate,
+      ...oasCfg
+    } = oasConfig;
+    apiDoc = generator.generateDocument(oasCfg);
+    await assertSnapshot(t, apiDoc);
+  });
 
-  const generator = new OpenApiGeneratorV3(_internal.registry.definitions);
-  const apiDoc = generator.generateDocument(oasConfig);
+  const cases: { mockRequestPath: string; expectedResponseBody: unknown }[] = [{
+    mockRequestPath: uiPath,
+    expectedResponseBody: uiTemplate,
+  }, {
+    mockRequestPath: jsonPath,
+    expectedResponseBody: apiDoc,
+  }];
 
-  await assertSnapshot(t, apiDoc);
+  await Promise.all(
+    cases.map(({ mockRequestPath, expectedResponseBody }) =>
+      t.step({
+        name: `request oasMiddleware at ${mockRequestPath}`,
+        fn: async () => {
+          const mockCtx = createMockContext();
+          mockRequestInternals(mockCtx.request, { mockRequestPath });
+          const mockNxt = spy(() => Promise.resolve());
+          const spyAppUse = spy(mockCtx.app, "use");
+
+          useOas(mockCtx.app, oasConfig);
+
+          const oasMiddleware = spyAppUse.calls[0].args[0] as Middleware;
+          await oasMiddleware(mockCtx, mockNxt);
+
+          assertSpyCalls(mockNxt, 1);
+          assertEquals(mockCtx.response.body, expectedResponseBody);
+        },
+        sanitizeOps: false,
+        sanitizeResources: false,
+        sanitizeExit: false,
+      })
+    ),
+  );
 });

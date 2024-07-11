@@ -1,6 +1,121 @@
 export const snapshot = {};
 
-snapshot[`useOas standard behavior 1`] = `
+snapshot[`useOakServer - fully decorated Controller 1`] = `
+[
+  {
+    methods: [
+      "HEAD",
+      "GET",
+    ],
+    middleware: [
+      [AsyncFunction (anonymous)],
+    ],
+    options: {
+      end: undefined,
+      ignoreCaptures: undefined,
+      sensitive: undefined,
+      strict: undefined,
+    },
+    paramNames: [],
+    path: "/test/foo",
+    regexp: /^\\/test\\/foo[\\/#\\?]?\$/i,
+  },
+  {
+    methods: [
+      "POST",
+    ],
+    middleware: [
+      [AsyncFunction (anonymous)],
+    ],
+    options: {
+      end: undefined,
+      ignoreCaptures: undefined,
+      sensitive: undefined,
+      strict: undefined,
+    },
+    paramNames: [],
+    path: "/test/bar",
+    regexp: /^\\/test\\/bar[\\/#\\?]?\$/i,
+  },
+  {
+    methods: [
+      "HEAD",
+      "GET",
+    ],
+    middleware: [
+      [AsyncFunction (anonymous)],
+    ],
+    options: {
+      end: undefined,
+      ignoreCaptures: undefined,
+      sensitive: undefined,
+      strict: undefined,
+    },
+    paramNames: [
+      "zaz",
+    ],
+    path: "/test/baz/:zaz",
+    regexp: /^\\/test\\/baz(?:\\/([^\\/#\\?]+?))[\\/#\\?]?\$/i,
+  },
+  {
+    methods: [
+      "PUT",
+    ],
+    middleware: [
+      [AsyncFunction (anonymous)],
+    ],
+    options: {
+      end: undefined,
+      ignoreCaptures: undefined,
+      sensitive: undefined,
+      strict: undefined,
+    },
+    paramNames: [
+      "someId",
+    ],
+    path: "/test/taz/:someId",
+    regexp: /^\\/test\\/taz(?:\\/([^\\/#\\?]+?))[\\/#\\?]?\$/i,
+  },
+  {
+    methods: [
+      "DELETE",
+    ],
+    middleware: [
+      [AsyncFunction (anonymous)],
+    ],
+    options: {
+      end: undefined,
+      ignoreCaptures: undefined,
+      sensitive: undefined,
+      strict: undefined,
+    },
+    paramNames: [],
+    path: "/test/raz/",
+    regexp: /^\\/test\\/raz\\/[\\/#\\?]?\$/i,
+  },
+  {
+    methods: [
+      "PATCH",
+    ],
+    middleware: [
+      [AsyncFunction (anonymous)],
+    ],
+    options: {
+      end: undefined,
+      ignoreCaptures: undefined,
+      sensitive: undefined,
+      strict: undefined,
+    },
+    paramNames: [
+      "whatever",
+    ],
+    path: "/test/yaz/:whatever",
+    regexp: /^\\/test\\/yaz(?:\\/([^\\/#\\?]+?))[\\/#\\?]?\$/i,
+  },
+]
+`;
+
+snapshot[`useOas standard behavior > testApiDocSnapshot 1`] = `
 {
   components: {
     parameters: {},
@@ -11,7 +126,6 @@ snapshot[`useOas standard behavior 1`] = `
     title: "mock API",
     version: "0.1.0",
   },
-  jsonPath: "/my/swagger/json",
   openapi: "3.0.3",
   paths: {
     "/hello/{name}": {
@@ -35,7 +149,5 @@ snapshot[`useOas standard behavior 1`] = `
       url: "/mock/",
     },
   ],
-  uiPath: "/my/swagger",
-  uiTemplate: "<html>mock</html>",
 }
 `;

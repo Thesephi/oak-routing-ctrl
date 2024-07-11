@@ -1,9 +1,14 @@
-## [0.8.0] - 2024-07-08
+## [0.8.0] - 2024-07-11
 
 ### Added
 
 - support for Swagger documentation serving (powered by
   `@asteasolutions/zod-to-openapi`)
+
+### Changed
+
+- upgraded dependencies: `@std/assert@1.0.0`, `@std/testing@0.225.3`,
+  `@std/io@0.224.3`
 
 ## [0.7.4] - 2024-06-20
 

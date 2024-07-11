@@ -6,7 +6,7 @@ import {
   Body,
   type BodyType,
   Buffer,
-  createMockContext,
+  oakTesting,
   spy,
 } from "../dev_deps.ts";
 import { ERR_UNSUPPORTED_CLASS_METHOD_DECORATOR_RUNTIME_BEHAVIOR } from "./Constants.ts";
@@ -15,6 +15,8 @@ import {
   type ControllerMethodArg,
   ControllerMethodArgs,
 } from "./ControllerMethodArgs.ts";
+
+const { createMockContext } = oakTesting;
 
 Deno.test("ControllerMethodArgs Decorator - unsupported strategy - declaring body, param, query", () => {
   assertThrows(

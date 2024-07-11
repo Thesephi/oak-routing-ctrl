@@ -222,13 +222,20 @@ Deno.test({
 function mockRequestInternals(
   request: Request,
   {
+    mockRequestPath,
     mockRequestQuery,
     mockRequestBody,
   }: {
+    mockRequestPath?: string;
     mockRequestQuery?: Record<string, string>;
     mockRequestBody?: MockRequestBodyDefinition;
   },
 ) {
+  if (mockRequestPath) {
+    Object.assign(request, {
+      url: new URL(mockRequestPath, "http://localhost/"),
+    });
+  }
   if (mockRequestBody) {
     Object.assign(request, {
       body: getMockRequestBody(mockRequestBody),
@@ -265,3 +272,5 @@ function getMockRequestBody(args: { type: BodyType; value: any }): {
     arrayBuffer: () => Promise.resolve(value),
   };
 }
+
+export const _internal = { mockRequestInternals };
