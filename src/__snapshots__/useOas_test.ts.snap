@@ -1,0 +1,38 @@
+export const snapshot = {};
+
+snapshot[`useOas standard behavior > testApiDocSnapshot 1`] = `
+{
+  components: {
+    parameters: {},
+    schemas: {},
+  },
+  info: {
+    description: "this is a mock API",
+    title: "mock API",
+    version: "0.1.0",
+  },
+  openapi: "3.0.3",
+  paths: {
+    "/hello/{name}": {
+      post: {
+        parameters: [
+          {
+            in: "path",
+            name: "name",
+            required: true,
+            schema: {
+              type: "string",
+            },
+          },
+        ],
+        responses: {},
+      },
+    },
+  },
+  servers: [
+    {
+      url: "/mock/",
+    },
+  ],
+}
+`;

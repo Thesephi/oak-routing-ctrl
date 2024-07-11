@@ -19,6 +19,8 @@ class MyPokedex {
 }
 ```
 
+![Open API Spec example](https://khangdinh.wordpress.com/wp-content/uploads/2024/07/oak-routing-ctrl-oas-example.png)
+
 ## Forewords
 
 If you're familiar with the
@@ -317,6 +319,122 @@ _
 
 ```bash
 curl http://localhost:1993/v1/hello/world # prints: hello, world
+```
+
+</details>
+
+## Serving Open API Spec
+
+Serving Open API Spec (both as a JSON doc and as an HTML view) is supported as
+followed:
+
+```ts
+import { Application } from "@oak/oak";
+import {
+  Controller,
+  ControllerMethodArgs,
+  Get,
+  useOakServer,
+  useOas,
+  z,
+} from "@dklab/oak-routing-ctrl";
+
+@Controller("/v1")
+class MyController {
+  // using `zod` to express Open API Spec for this route
+  // e.g. `request` and `responses`
+  @Get("/hello/:name", {
+    request: {
+      params: z.object({
+        name: z.string(),
+      }),
+    },
+    responses: {
+      "200": {
+        description: "Success",
+        content: {
+          "text/plain": {
+            schema: z.string(),
+          },
+        },
+      },
+    },
+  })
+  @ControllerMethodArgs("param")
+  hello(param) {
+    return `hello, ${param.name}`;
+  }
+}
+
+useOakServer(app, [MyController]);
+useOas(app, {
+  // optionally declare OAS info as per your project needs
+  info: {
+    version: "0.1.0",
+    title: "My awesome API",
+    description: "This is an awesome API",
+  },
+});
+
+await app.listen({ port: 1993 });
+```
+
+The following OAS resources are now served:
+
+- UI: http://localhost:1993/swagger
+- JSON doc: http://localhost:1993/oas.json
+
+<details>
+<summary>View Example OAS json doc</summary>
+
+```bash
+curl localhost:1993/oas.json
+
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "0.1.0",
+    "title": "My awesome API",
+    "description": "This is an awesome API"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:1993"
+    }
+  ],
+  "components": {
+    "schemas": {},
+    "parameters": {}
+  },
+  "paths": {
+    "/hello/{name}": {
+      "get": {
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "name": "name",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
 ```
 
 </details>

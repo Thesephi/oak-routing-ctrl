@@ -1,24 +1,29 @@
 import type { SupportedVerb } from "./Store.ts";
 import { type Context, RouteContext } from "../deps.ts";
-import {
-  assertEquals,
-  assertSnapshot,
-  type BodyType,
-  oakTesting,
-  Request,
-} from "../dev_deps.ts";
+import { assertEquals, assertSnapshot, oakTesting } from "../dev_deps.ts";
 import {
   Controller,
   type ControllerMethodArg,
   ControllerMethodArgs,
   Delete,
   Get,
+  Head,
+  Options,
   Patch,
   Post,
   Put,
   useOakServer,
 } from "../mod.ts";
 import { _internal as useOakServerInternal } from "./useOakServer.ts";
+import {
+  type MockRequestBodyDefinition,
+  mockRequestInternals,
+} from "../test_utils/mockRequestInternals.ts";
+
+const staticFormData = new FormData();
+staticFormData.append("foo", "phiil");
+
+const arrayBufferLen42 = new ArrayBuffer(42);
 
 @Controller("/noop")
 class NoopController {
@@ -74,12 +79,22 @@ class TestController {
   justRandom() {
     return "this is returned from a non-decorated function";
   }
+  @Options("/bul")
+  @ControllerMethodArgs("body")
+  bul(body: URLSearchParams) {
+    return `hello, bul=${body.get("foo")}`;
+  }
+  @Head("/phil")
+  @ControllerMethodArgs("body")
+  phil(body: FormData) {
+    return `hello, phil=${body.get("foo")}`;
+  }
+  @Post("/uah")
+  @ControllerMethodArgs("body")
+  uah(body: ArrayBuffer) {
+    return `hello, ArrayBuffer body with byteLength=${body.byteLength}`;
+  }
 }
-
-type MockRequestBodyDefinition = {
-  type: BodyType;
-  value: unknown;
-};
 
 /**
  * test case matching what was declared in `TestController`
@@ -173,7 +188,35 @@ Deno.test({
           "handler with arbitrary (undocumented) arg treated as a member of ctx.params",
         method: "patch",
         mockRequestPathParams: { whatever: "i.am.a.patch" },
+        mockRequestBody: { type: "text", value: "lorem" },
         expectedResponse: "hello, i.am.a.patch",
+      },
+      {
+        caseDescription: "handler for a request with a form payload",
+        method: "options",
+        mockRequestBody: {
+          type: "form",
+          value: new URLSearchParams({ foo: "buul" }),
+        },
+        expectedResponse: "hello, bul=buul",
+      },
+      {
+        caseDescription: "handler for a request with a form-data payload",
+        method: "head",
+        mockRequestBody: {
+          type: "form-data",
+          value: staticFormData,
+        },
+        expectedResponse: "hello, phil=phiil",
+      },
+      {
+        caseDescription: "handler for a request with an unknown-typed payload",
+        method: "post",
+        mockRequestBody: {
+          type: "unknown",
+          value: arrayBufferLen42,
+        },
+        expectedResponse: "hello, ArrayBuffer body with byteLength=42",
       },
     ];
 
@@ -213,55 +256,3 @@ Deno.test({
     );
   },
 });
-
-/**
- * enhance a given mock request with desirable search params and body
- * @NOTE best to remove the use of this if/when the `oak` framework
- * provides its own mocking util for Request
- */
-function mockRequestInternals(
-  request: Request,
-  {
-    mockRequestQuery,
-    mockRequestBody,
-  }: {
-    mockRequestQuery?: Record<string, string>;
-    mockRequestBody?: MockRequestBodyDefinition;
-  },
-) {
-  if (mockRequestBody) {
-    Object.assign(request, {
-      body: getMockRequestBody(mockRequestBody),
-    });
-  }
-  for (const key in mockRequestQuery) {
-    request.url.searchParams.append(key, mockRequestQuery[key]);
-  }
-}
-
-/**
- * generate mock request body
- * @NOTE best to remove the use of this if/when the `oak` framework
- * provides its own mocking util for Request and/or RequestBody
- */
-// deno-lint-ignore no-explicit-any
-function getMockRequestBody(args: { type: BodyType; value: any }): {
-  type: () => BodyType;
-  json: () => Promise<Record<string, unknown>>;
-  text: () => Promise<string>;
-  blob: () => Promise<Blob>;
-  form: () => Promise<URLSearchParams>;
-  formData: () => Promise<FormData>;
-  arrayBuffer: () => Promise<ArrayBuffer>;
-} {
-  const { type, value } = args;
-  return {
-    type: () => type,
-    json: () => Promise.resolve(value),
-    text: () => Promise.resolve(value),
-    blob: () => Promise.resolve(value),
-    form: () => Promise.resolve(value),
-    formData: () => Promise.resolve(value),
-    arrayBuffer: () => Promise.resolve(value),
-  };
-}

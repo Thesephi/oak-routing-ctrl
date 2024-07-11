@@ -5,10 +5,11 @@ export {
   assertObjectMatch,
   assertStringIncludes,
   assertThrows,
-} from "jsr:@std/assert@^0.226.0";
+} from "jsr:@std/assert@^1.0.0";
 
 export {
   type BodyType,
+  type Middleware,
   Request,
   testing as oakTesting,
 } from "jsr:@oak/oak@^16.1.0";
@@ -23,17 +24,15 @@ export {
   spy,
   type Stub,
   stub,
-} from "jsr:@std/testing@^0.225.1/mock";
+} from "jsr:@std/testing@^0.225.3/mock";
 
-export { assertSnapshot } from "jsr:@std/testing@^0.225.1/snapshot";
+export { assertSnapshot } from "jsr:@std/testing@^0.225.3/snapshot";
 
-export { Buffer } from "jsr:@std/io@^0.224.1";
+export { Buffer } from "jsr:@std/io@^0.224.3";
 
 export {
   afterEach,
   beforeEach,
   describe,
   it,
-} from "jsr:@std/testing@^0.225.1/bdd";
-
-export { createMockContext } from "jsr:@oak/oak@^16.1.0/testing";
+} from "jsr:@std/testing@^0.225.3/bdd";

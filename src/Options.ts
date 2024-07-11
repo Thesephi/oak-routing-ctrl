@@ -6,9 +6,9 @@ import { updateOas } from "./oasStore.ts";
 
 /**
  * Decorator that should be used on the Controller Class Method
- * for PUT endpoints
+ * for OPTIONS endpoints
  */
-export const Put = (
+export const Options = (
   path: string = "",
   openApiSpec?: OakOpenApiSpec,
 ) =>
@@ -16,12 +16,12 @@ export const Put = (
 (arg1: Function | object, arg2: ClassMethodDecoratorContext | string): void => {
   const fnName: string = getUserSuppliedDecoratedMethodName(arg1, arg2);
   debug(
-    `invoking Put MethodDecorator for ${fnName} with pathPrefix ${path} -`,
+    `invoking Options MethodDecorator for ${fnName} with pathPrefix ${path} -`,
     `runtime provides context:`,
     arg2,
   );
-  register("put", path, fnName);
-  updateOas(fnName, "put", path, openApiSpec);
+  register("options", path, fnName);
+  updateOas(fnName, "options", path, openApiSpec);
 };
 
-export const _internal = { Put };
+export const _internal = { Options };
