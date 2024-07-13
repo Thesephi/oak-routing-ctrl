@@ -36,3 +36,5 @@ export {
   describe,
   it,
 } from "jsr:@std/testing@^0.225.3/bdd";
+
+export { ZodObject } from "npm:zod@^3.23.8";
