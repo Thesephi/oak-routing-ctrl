@@ -1,3 +1,10 @@
+## [0.8.3] - 2024-07-13
+
+### Changed
+
+- limited exported symbols from `SubsetOfZ` to an opinionated list of most
+  widely used ones
+
 ## [0.8.2] - 2024-07-11
 
 ### Changed
