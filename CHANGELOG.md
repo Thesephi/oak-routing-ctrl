@@ -1,3 +1,13 @@
+## [0.8.4] - 2024-07-13
+
+### Added
+
+- more non-type symbols re-exported from `z`
+
+### Fixed
+
+- JSR provenance fix attempt (remedying previous Github Action failure)
+
 ## [0.8.3] - 2024-07-13
 
 ### Changed
