@@ -1,5 +1,5 @@
 import { z } from "../deps.ts";
-import { assertEquals, assertInstanceOf } from "../dev_deps.ts";
+import { assertEquals, assertInstanceOf, ZodObject } from "../dev_deps.ts";
 import { oasStore, patchOasPath, updateOas } from "./oasStore.ts";
 import { _internal } from "./oasStore.ts";
 
@@ -44,7 +44,7 @@ Deno.test("store entry creation & update", () => {
   assertEquals(record?.path, getOasCompatPath(path));
   assertInstanceOf(
     record?.request?.body?.content?.["application/json"]?.schema,
-    z.ZodObject,
+    ZodObject,
   );
 
   patchOasPath(fnName, method, patchedPath);
@@ -53,6 +53,6 @@ Deno.test("store entry creation & update", () => {
   assertEquals(patchedRecord?.path, getOasCompatPath(patchedPath));
   assertInstanceOf(
     record?.request?.body?.content?.["application/json"]?.schema,
-    z.ZodObject,
+    ZodObject,
   );
 });
