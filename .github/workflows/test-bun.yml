@@ -1,0 +1,14 @@
+on:
+  workflow_dispatch
+
+name: test-bun
+jobs:
+  test-bun:
+    name: test-bun
+    runs-on: ubuntu-latest
+    steps:
+      - uses: oven-sh/setup-bun@v2
+      - run: |
+          npm create oak-bun@latest -- -y
+          bun install
+          bun test
