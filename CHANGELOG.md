@@ -1,3 +1,9 @@
+## [0.8.6] - 2024-07-14
+
+### Added
+
+- `z.infer` re-exported as type `zInfer`
+
 ## [0.8.5] - 2024-07-14
 
 ### Changed

@@ -13,4 +13,4 @@ export { Delete } from "./src/Delete.ts";
 export { Options } from "./src/Options.ts";
 export { Head } from "./src/Head.ts";
 
-export { z } from "./deps.ts";
+export { z, type zInfer } from "./deps.ts";
