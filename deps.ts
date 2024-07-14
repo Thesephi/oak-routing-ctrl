@@ -94,5 +94,20 @@ type SubsetOfZ = Pick<
 /**
  * entry to the `Zod` API, enhanced with `@asteasolutions/zod-to-openapi`;
  * for usage documentation please refer to https://github.com/asteasolutions/zod-to-openapi?tab=readme-ov-file#purpose-and-quick-example
+ * @example
+ * ```ts
+ * const SomeZodSchema = z.object({ name: z.string() });
+ * ```
  */
 export const z: SubsetOfZ = slowTypedZ;
+
+/**
+ * re-exported `z.infer` type inference API;
+ * for usage documentation please refer to https://github.com/colinhacks/zod?tab=readme-ov-file#type-inference
+ * @example
+ * ```ts
+ * const SomeZodSchema = z.object({ name: z.string() });
+ * const somePathParam: zInfer<typeof SomeZodSchema> = { name: "foo" };
+ * ```
+ */
+export type zInfer<T extends slowTypedZ.ZodType> = slowTypedZ.infer<T>;
