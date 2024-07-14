@@ -1,3 +1,9 @@
+## [Unreleased]
+
+### Changed
+
+- library publish command (the 2nd JSR provenance fix attempt)
+
 ## [0.8.4] - 2024-07-13
 
 ### Added

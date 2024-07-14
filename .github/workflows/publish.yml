@@ -30,7 +30,8 @@ jobs:
         run: deno test -A
 
       - name: Check publishing requirements
-        run: npx jsr publish --dry-run
+        run: deno publish --dry-run
 
       - name: Publish package
-        run: npx jsr publish
+        # `jsr publish` might fail inexplicably e.g. https://github.com/Thesephi/oak-routing-ctrl/actions/runs/9922161922/job/27410907701#step:8:9
+        run: deno publish
