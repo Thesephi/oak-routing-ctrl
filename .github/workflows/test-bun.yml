@@ -1,10 +1,11 @@
+name: Runtime Tests
 on:
   workflow_dispatch
 
-name: test-bun
 jobs:
+
   test-bun:
-    name: test-bun
+    name: Test on Bun
     runs-on: ubuntu-latest
     steps:
       - uses: oven-sh/setup-bun@v2
@@ -12,3 +13,20 @@ jobs:
           npm create oak-bun@latest -- -y
           bun install
           bun test
+
+  test-nodejs:
+    name: Test on Node.js
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: ['18.x', '20.x']
+    steps:
+      - uses: actions/setup-node@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: |
+          npm create oak-nodejs-esbuild@latest -- -y
+          npm ci
+          npm test
