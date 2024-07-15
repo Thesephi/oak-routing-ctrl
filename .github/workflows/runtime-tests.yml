@@ -31,7 +31,7 @@ jobs:
           npm install
           npm test
   
-  test-cloudflare-worker:
+  test-cloudflare-workers:
     name: Test on Cloudflare Workers dev env
     runs-on: ubuntu-latest
     strategy:
