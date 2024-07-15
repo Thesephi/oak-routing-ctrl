@@ -61,6 +61,7 @@ jobs:
         uses: denoland/setup-deno@v1 # needed to perform the actual tests
         with:
           deno-version: v1.x
-      - run: npm create oak-deno@latest -- -y
+      - name: Scaffold App
+        run: npm create oak-deno@latest -- -y
       - name: Perform Tests
         run: deno task test
