@@ -183,7 +183,7 @@ function getEnhancedHandler(
     decoratedArgs.push(ctx);
 
     return await consumerSuppliedHandler.call(
-      consumerSuppliedHandler,
+      this,
       ...decoratedArgs,
     );
   }

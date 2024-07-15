@@ -1,3 +1,7 @@
+## [Unrelease]
+
+- `this` is retained when invoking controller methods
+
 ## [0.8.7] - 2024-07-15
 
 ### Changed

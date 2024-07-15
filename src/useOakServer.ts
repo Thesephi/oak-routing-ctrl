@@ -14,7 +14,7 @@ export const useOakServer = (
   Controllers: ControllerClass[],
 ): void => {
   for (const Ctrl of Controllers) {
-    new Ctrl();
+    const ctrl: unknown = new Ctrl();
     const ctrlProps: string[] = Object.getOwnPropertyNames(Ctrl.prototype);
     for (const propName of ctrlProps) {
       if (propName === "constructor") continue;
@@ -28,7 +28,7 @@ export const useOakServer = (
               Ctrl.prototype,
               propName,
             )?.value;
-            const handlerRetVal = await handler(ctx);
+            const handlerRetVal = await handler.call(ctrl, ctx);
             // some developers set body within the handler,
             // some developers return something from the handler
             // and expect that it gets assigned to the response,
