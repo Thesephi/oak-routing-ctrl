@@ -355,6 +355,7 @@ import {
   useOakServer,
   useOas,
   z,
+  type zInfer,
 } from "@dklab/oak-routing-ctrl";
 
 const HelloNamePathParamsSchema = z.object({ name: z.string() });
