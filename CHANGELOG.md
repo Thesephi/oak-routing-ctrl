@@ -1,3 +1,12 @@
+## [0.8.7] - 2024-07-15
+
+### Changed
+
+- `@Controller` decorator doesn't require 2nd parameter `context` so it plays
+  along better with `experimentalDecorators` mode (even this library doesn't
+  support it officially)
+- improved README
+
 ## [0.8.6] - 2024-07-14
 
 ### Added

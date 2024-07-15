@@ -7,8 +7,10 @@
 [![codecov](https://codecov.io/github/Thesephi/oak-routing-ctrl/graph/badge.svg?token=BA3M9P6410)](https://codecov.io/github/Thesephi/oak-routing-ctrl)
 [![Runtime Tests](https://github.com/Thesephi/oak-routing-ctrl/actions/workflows/runtime-tests.yml/badge.svg)](https://github.com/Thesephi/oak-routing-ctrl/actions/workflows/runtime-tests.yml)
 
-routing-controllers -like library for the [Oak](https://jsr.io/@oak/oak)
-framework (`jsr:@oak/oak`) 🚗 🐿️ 🦕
+TypeScript Decorators for easy scaffolding API services with the
+[Oak](https://jsr.io/@oak/oak) framework (`jsr:@oak/oak`) 🚗 🐿️ 🦕
+
+Works on Node.js, Bun, Cloudflare Workers, and Deno
 
 ```ts
 @Controller("/api/v1/pokemon")
@@ -199,6 +201,10 @@ curl -H"x-foo: lorem" localhost:1993/foo/bar
 
 ### Node.js
 
+```bash
+npm create oak-nodejs-esbuild@latest
+```
+
 <details>
 <summary>View Example</summary>
 
@@ -248,6 +254,13 @@ curl http://localhost:1993/v1/hello/world # prints: hello, world
 
 ### Cloudflare Workers
 
+```bash
+npm create oak-cloudflare-worker@latest
+```
+
+Live Demo (uptime <ins>not</ins> guaranteed):
+https://oak-routing-ctrl-cloudflare.dklab.workers.dev/swagger
+
 <details>
 <summary>View Example</summary>
 
@@ -289,6 +302,10 @@ curl http://{your-cloudflare-worker-domain}/hello/world # prints: hello, world
 </details>
 
 ### Bun
+
+```bash
+npm create oak-bun@latest
+```
 
 <details>
 <summary>View Example</summary>
@@ -340,30 +357,30 @@ import {
   z,
 } from "@dklab/oak-routing-ctrl";
 
-@Controller("/v1")
-class MyController {
+const HelloNamePathParamsSchema = z.object({ name: z.string() });
+const OpenApiSpecForHelloName = {
   // using `zod` to express Open API Spec for this route
   // e.g. `request` and `responses`
-  @Get("/hello/:name", {
-    request: {
-      params: z.object({
-        name: z.string(),
-      }),
+  request: { params: HelloNamePathParamsSchema },
+  responses: {
+    "200": {
+      description: "Success",
+      content: { "text/html": { schema: z.string() } },
     },
-    responses: {
-      "200": {
-        description: "Success",
-        content: {
-          "text/plain": {
-            schema: z.string(),
-          },
-        },
-      },
-    },
-  })
+  },
+};
+
+@Controller("/v1")
+class MyController {
+  @Get(
+    "/hello/:name",
+    OpenApiSpecForHelloName, // API spec is entirely optional
+  )
   @ControllerMethodArgs("param")
-  hello(param) {
-    return `hello, ${param.name}`;
+  hello(
+    param: zInfer<typeof HelloNamePathParamsSchema>, // or type it however else you like
+  ) {
+    return `hello, ${param.name}`; // intellisense should just work ™
   }
 }
 
