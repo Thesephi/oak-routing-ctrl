@@ -10,10 +10,11 @@ export type ControllerClass = new (args?: unknown) => unknown;
 
 /**
  * Decorator that should be used on the Controller Class
+ * @NOTE under `experimentalDecorators`, `context` is not available
  */
 export const Controller =
   (pathPrefix: string = "") =>
-  (target: ControllerClass, context: ClassDecoratorContext): void => {
+  (target: ControllerClass, context?: ClassDecoratorContext): void => {
     debug(
       `invoking ControllerDecorator for ${target.name} -`,
       "runtime provides context:",
