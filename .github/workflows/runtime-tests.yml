@@ -9,10 +9,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: oven-sh/setup-bun@v2
-      - run: |
+      - name: Scaffold App
+        run: |
           npm create oak-bun@latest -- -y
           bun install
-          bun test
+      - name: Perform Tests
+        run: bun test
 
   test-nodejs:
     name: Test on Node.js
@@ -21,15 +23,16 @@ jobs:
       matrix:
         node-version: ['18.x', '20.x']
     steps:
-      - uses: actions/setup-node@v4
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-      - run: |
+      - name: Scaffold App
+        run: |
           npm create oak-nodejs-esbuild@latest -- -y
           npm install
-          npm test
+      - name: Perform Tests
+        run: npm test
   
   test-cloudflare-workers:
     name: Test on Cloudflare Workers dev env
@@ -38,12 +41,27 @@ jobs:
       matrix:
         node-version: ['18.x', '20.x']
     steps:
-      - uses: actions/setup-node@v4
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-      - run: |
+      - name: Scaffold App
+        run: |
           npm create oak-cloudflare-worker@latest -- -y
           npm install
-          npm test
+      - name: Perform Tests
+        run: npm test
+
+  test-deno:
+    name: Test on Deno
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v4 # needed to call the scaffolding `npm create` command
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1 # needed to perform the actual tests
+        with:
+          deno-version: v1.x
+      - name: Scaffold App
+        run: npm create oak-deno@latest -- -y
+      - name: Perform Tests
+        run: deno task test
