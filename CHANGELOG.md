@@ -1,3 +1,10 @@
+## [0.9.0] - 2024-07-16
+
+### Changed
+
+- `this` is retained when invoking controller methods
+- `./test_utils` excluded from dist package
+
 ## [0.8.7] - 2024-07-15
 
 ### Changed
