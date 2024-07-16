@@ -1,12 +1,12 @@
 {
   "name": "@dklab/oak-routing-ctrl",
-  "version": "0.9.0-alpha.1",
+  "version": "0.9.0",
   "exports": {
     ".": "./mod.ts",
     "./mod": "./mod.ts"
   },
   "exclude": [
-    "./src/test_utils",
+    "./test_utils",
     "**/*_test.ts",
     "cov_profile",
     "cov_profile.lcov",
