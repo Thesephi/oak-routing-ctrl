@@ -1,3 +1,10 @@
+## [Unreleased]
+
+### Added
+
+- support for `headers` in `ControllerMethodArg` as a shortcut to parse &
+  retrieve request headers
+
 ## [0.9.0] - 2024-07-16
 
 ### Changed
