@@ -17,7 +17,8 @@ import { ERR_UNSUPPORTED_CLASS_METHOD_DECORATOR_RUNTIME_BEHAVIOR } from "./Const
 export type ControllerMethodArg =
   | "param"
   | "body"
-  | "query";
+  | "query"
+  | "headers";
 
 // an enhanced version of a (decorated) method which
 // is declared in the (decorated) Controller Class
@@ -164,6 +165,13 @@ function getEnhancedHandler(
           // search query a.k.a URLSearchParams
           decoratedArgs.push(parsedReqSearchParams);
           break;
+        case p === "headers": {
+          // request headers
+          const headers: Record<string, string> = {};
+          ctx.request.headers.forEach((v, k) => headers[k] = v);
+          decoratedArgs.push(headers);
+          break;
+        }
         case ["ctx", "context"].includes(p):
           // `ctx` or `context` is supported by default (as the last argument)
           // but can also be declared explicitly
