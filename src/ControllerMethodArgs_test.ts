@@ -365,7 +365,7 @@ Deno.test("ControllerMethodArgs Decorator - CloudflareWorker strategy - declarin
     ) {
       return {
         "i.am.also": "deep.ya",
-        "my.headers.include": headers
+        "my.headers.include": headers,
       };
     },
     writable: true,
@@ -395,8 +395,8 @@ Deno.test("ControllerMethodArgs Decorator - CloudflareWorker strategy - declarin
       get: () => createMockRequestBody("json"),
     });
     Object.defineProperty(ctx.request, "headers", {
-      value: new Map([["x-foo", "bar"]])
-    })
+      value: new Map([["x-foo", "bar"]]),
+    });
     enhancedHandlerRetVal = await enhancedHandler(ctx);
   } catch (e) {
     throw new Error(`test case should not have thrown ${e.message}`);
