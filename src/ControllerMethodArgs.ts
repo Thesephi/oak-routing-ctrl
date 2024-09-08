@@ -17,7 +17,8 @@ import { ERR_UNSUPPORTED_CLASS_METHOD_DECORATOR_RUNTIME_BEHAVIOR } from "./Const
 export type ControllerMethodArg =
   | "param"
   | "body"
-  | "query";
+  | "query"
+  | "headers";
 
 // an enhanced version of a (decorated) method which
 // is declared in the (decorated) Controller Class
@@ -127,22 +128,26 @@ function getEnhancedHandler(
     try {
       parsedReqBody = await _internal.parseOakReqBody(ctx);
     } catch (e) {
-      return ctx.throw(400, `Unable to parse request body: ${e.message}`, {
-        stack: e.stack,
-      });
+      return ctx.throw(
+        400,
+        `Unable to parse request body: ${(e as Error).message}`,
+        {
+          stack: (e as Error).stack,
+        },
+      );
     }
 
     const parsedReqSearchParams: Record<string, string> = {};
     try {
-      ctx.request.url.searchParams.forEach((value, key) =>
+      ctx.request.url.searchParams.forEach((value: string, key: string) =>
         parsedReqSearchParams[key] = value
       );
     } catch (e) {
       return ctx.throw(
         400,
-        `Unable to parse request search params: ${e.message}`,
+        `Unable to parse request search params: ${(e as Error).message}`,
         {
-          stack: e.stack,
+          stack: (e as Error).stack,
         },
       );
     }
@@ -164,6 +169,13 @@ function getEnhancedHandler(
           // search query a.k.a URLSearchParams
           decoratedArgs.push(parsedReqSearchParams);
           break;
+        case p === "headers": {
+          // request headers
+          const headers: Record<string, string> = {};
+          ctx.request.headers.forEach((v: string, k: string) => headers[k] = v);
+          decoratedArgs.push(headers);
+          break;
+        }
         case ["ctx", "context"].includes(p):
           // `ctx` or `context` is supported by default (as the last argument)
           // but can also be declared explicitly
