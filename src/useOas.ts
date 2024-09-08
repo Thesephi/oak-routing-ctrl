@@ -96,7 +96,10 @@ export const useOas = (
   try {
     _useOas(app, cfg);
   } catch (e) {
-    debug("unable to complete OpenApiSpec initialization:", e.message);
+    debug(
+      "unable to complete OpenApiSpec initialization:",
+      (e as Error).message,
+    );
   }
 };
 

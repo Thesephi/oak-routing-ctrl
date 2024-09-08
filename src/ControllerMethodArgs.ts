@@ -128,22 +128,26 @@ function getEnhancedHandler(
     try {
       parsedReqBody = await _internal.parseOakReqBody(ctx);
     } catch (e) {
-      return ctx.throw(400, `Unable to parse request body: ${e.message}`, {
-        stack: e.stack,
-      });
+      return ctx.throw(
+        400,
+        `Unable to parse request body: ${(e as Error).message}`,
+        {
+          stack: (e as Error).stack,
+        },
+      );
     }
 
     const parsedReqSearchParams: Record<string, string> = {};
     try {
-      ctx.request.url.searchParams.forEach((value, key) =>
+      ctx.request.url.searchParams.forEach((value: string, key: string) =>
         parsedReqSearchParams[key] = value
       );
     } catch (e) {
       return ctx.throw(
         400,
-        `Unable to parse request search params: ${e.message}`,
+        `Unable to parse request search params: ${(e as Error).message}`,
         {
-          stack: e.stack,
+          stack: (e as Error).stack,
         },
       );
     }
@@ -168,7 +172,7 @@ function getEnhancedHandler(
         case p === "headers": {
           // request headers
           const headers: Record<string, string> = {};
-          ctx.request.headers.forEach((v, k) => headers[k] = v);
+          ctx.request.headers.forEach((v: string, k: string) => headers[k] = v);
           decoratedArgs.push(headers);
           break;
         }

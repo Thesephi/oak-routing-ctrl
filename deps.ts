@@ -1,13 +1,13 @@
-export { join } from "jsr:@std/path@^0.225.2";
+export { join } from "jsr:@std/path@^1.0.4";
 
-export { Router } from "jsr:@oak/oak@^16.1.0";
+export { Router } from "jsr:@oak/oak@^17.0.0";
 
 export type {
   Application,
   Context,
   Next,
   RouteContext,
-} from "jsr:@oak/oak@^16.1.0";
+} from "jsr:@oak/oak@^17.0.0";
 
 import {
   extendZodWithOpenApi,

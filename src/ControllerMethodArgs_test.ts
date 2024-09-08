@@ -108,7 +108,7 @@ Deno.test("ControllerMethodArgs Decorator - Standard strategy - declaring body, 
       } as ClassMethodDecoratorContext,
     );
   } catch (e) {
-    throw new Error(`test case should not have thrown ${e.message}`);
+    throw new Error(`test case should not have thrown ${(e as Error).message}`);
   }
   assertEquals(typeof enhancedHandler, "function");
 
@@ -120,7 +120,7 @@ Deno.test("ControllerMethodArgs Decorator - Standard strategy - declaring body, 
 
     enhancedHandlerRetVal = await enhancedHandler(ctx);
   } catch (e) {
-    throw new Error(`test case should not have thrown ${e.message}`);
+    throw new Error(`test case should not have thrown ${(e as Error).message}`);
   }
 
   assertEquals(enhancedHandlerRetVal, { "i.am": "deep" });
@@ -149,7 +149,7 @@ Deno.test("ControllerMethodArgs Decorator - Standard strategy - declaring body, 
       } as ClassMethodDecoratorContext,
     );
   } catch (e) {
-    throw new Error(`test case should not have thrown ${e.message}`);
+    throw new Error(`test case should not have thrown ${(e as Error).message}`);
   }
   assertEquals(typeof enhancedHandler, "function");
 
@@ -164,7 +164,7 @@ Deno.test("ControllerMethodArgs Decorator - Standard strategy - declaring body, 
 
     enhancedHandlerRetVal = await enhancedHandler(ctx);
   } catch (e) {
-    throw new Error(`test case should not have thrown ${e.message}`);
+    throw new Error(`test case should not have thrown ${(e as Error).message}`);
   }
 
   assertEquals(enhancedHandlerRetVal, {
@@ -188,7 +188,7 @@ Deno.test("ControllerMethodArgs Decorator - Standard strategy - declaring param,
       } as ClassMethodDecoratorContext,
     );
   } catch (e) {
-    throw new Error(`test case should not have thrown ${e.message}`);
+    throw new Error(`test case should not have thrown ${(e as Error).message}`);
   }
   assertEquals(typeof enhancedHandler, "function");
 
@@ -200,7 +200,7 @@ Deno.test("ControllerMethodArgs Decorator - Standard strategy - declaring param,
 
     enhancedHandlerRetVal = await enhancedHandler(ctx);
   } catch (e) {
-    throw new Error(`test case should not have thrown ${e.message}`);
+    throw new Error(`test case should not have thrown ${(e as Error).message}`);
   }
 
   assertEquals(enhancedHandlerRetVal, { "declaring": "param, body" });
@@ -221,7 +221,7 @@ Deno.test("ControllerMethodArgs Decorator - Standard strategy - declaring param,
       } as ClassMethodDecoratorContext,
     );
   } catch (e) {
-    throw new Error(`test case should not have thrown ${e.message}`);
+    throw new Error(`test case should not have thrown ${(e as Error).message}`);
   }
   assertEquals(typeof enhancedHandler, "function");
 
@@ -233,7 +233,7 @@ Deno.test("ControllerMethodArgs Decorator - Standard strategy - declaring param,
 
     enhancedHandlerRetVal = await enhancedHandler(ctx);
   } catch (e) {
-    throw new Error(`test case should not have thrown ${e.message}`);
+    throw new Error(`test case should not have thrown ${(e as Error).message}`);
   }
 
   assertEquals(enhancedHandlerRetVal, { "declaring": "param, query" });
@@ -254,7 +254,7 @@ Deno.test("ControllerMethodArgs Decorator - Standard strategy - declaring body",
       } as ClassMethodDecoratorContext,
     );
   } catch (e) {
-    throw new Error(`test case should not have thrown ${e.message}`);
+    throw new Error(`test case should not have thrown ${(e as Error).message}`);
   }
   assertEquals(typeof enhancedHandler, "function");
 
@@ -266,7 +266,7 @@ Deno.test("ControllerMethodArgs Decorator - Standard strategy - declaring body",
 
     enhancedHandlerRetVal = await enhancedHandler(ctx);
   } catch (e) {
-    throw new Error(`test case should not have thrown ${e.message}`);
+    throw new Error(`test case should not have thrown ${(e as Error).message}`);
   }
 
   assertEquals(enhancedHandlerRetVal, { "declaring": "body" });
@@ -285,7 +285,7 @@ Deno.test("ControllerMethodArgs Decorator - Standard strategy - declaring nothin
       } as ClassMethodDecoratorContext,
     );
   } catch (e) {
-    throw new Error(`test case should not have thrown ${e.message}`);
+    throw new Error(`test case should not have thrown ${(e as Error).message}`);
   }
   assertEquals(typeof enhancedHandler, "function");
 
@@ -297,7 +297,7 @@ Deno.test("ControllerMethodArgs Decorator - Standard strategy - declaring nothin
 
     enhancedHandlerRetVal = await enhancedHandler(ctx);
   } catch (e) {
-    throw new Error(`test case should not have thrown ${e.message}`);
+    throw new Error(`test case should not have thrown ${(e as Error).message}`);
   }
 
   assertEquals(enhancedHandlerRetVal, { "declaring": "nothing" });
@@ -333,7 +333,7 @@ Deno.test("ControllerMethodArgs Decorator - CloudflareWorker strategy - declarin
       methodDescriptor,
     );
   } catch (e) {
-    throw new Error(`test case should not have thrown ${e.message}`);
+    throw new Error(`test case should not have thrown ${(e as Error).message}`);
   }
   assertEquals(decoratorRetVal, undefined);
 
@@ -349,7 +349,7 @@ Deno.test("ControllerMethodArgs Decorator - CloudflareWorker strategy - declarin
     });
     enhancedHandlerRetVal = await enhancedHandler(ctx);
   } catch (e) {
-    throw new Error(`test case should not have thrown ${e.message}`);
+    throw new Error(`test case should not have thrown ${(e as Error).message}`);
   }
 
   assertEquals(enhancedHandlerRetVal, { "i.am": "deep.too" });
@@ -380,7 +380,7 @@ Deno.test("ControllerMethodArgs Decorator - CloudflareWorker strategy - declarin
       methodDescriptor,
     );
   } catch (e) {
-    throw new Error(`test case should not have thrown ${e.message}`);
+    throw new Error(`test case should not have thrown ${(e as Error).message}`);
   }
   assertEquals(decoratorRetVal, undefined);
 
@@ -399,7 +399,7 @@ Deno.test("ControllerMethodArgs Decorator - CloudflareWorker strategy - declarin
     });
     enhancedHandlerRetVal = await enhancedHandler(ctx);
   } catch (e) {
-    throw new Error(`test case should not have thrown ${e.message}`);
+    throw new Error(`test case should not have thrown ${(e as Error).message}`);
   }
 
   assertEquals(enhancedHandlerRetVal, {
@@ -425,7 +425,7 @@ Deno.test("ControllerMethodArgs Decorator - CloudflareWorker strategy - declarin
       methodDescriptor,
     );
   } catch (e) {
-    throw new Error(`test case should not have thrown ${e.message}`);
+    throw new Error(`test case should not have thrown ${(e as Error).message}`);
   }
   assertEquals(decoratorRetVal, undefined);
 
@@ -441,7 +441,7 @@ Deno.test("ControllerMethodArgs Decorator - CloudflareWorker strategy - declarin
     });
     enhancedHandlerRetVal = await enhancedHandler(ctx);
   } catch (e) {
-    throw new Error(`test case should not have thrown ${e.message}`);
+    throw new Error(`test case should not have thrown ${(e as Error).message}`);
   }
 
   assertEquals(enhancedHandlerRetVal, { "declaring": "param, body" });
@@ -464,7 +464,7 @@ Deno.test("ControllerMethodArgs Decorator - CloudflareWorker strategy - declarin
       methodDescriptor,
     );
   } catch (e) {
-    throw new Error(`test case should not have thrown ${e.message}`);
+    throw new Error(`test case should not have thrown ${(e as Error).message}`);
   }
   assertEquals(decoratorRetVal, undefined);
 
@@ -480,7 +480,7 @@ Deno.test("ControllerMethodArgs Decorator - CloudflareWorker strategy - declarin
     });
     enhancedHandlerRetVal = await enhancedHandler(ctx);
   } catch (e) {
-    throw new Error(`test case should not have thrown ${e.message}`);
+    throw new Error(`test case should not have thrown ${(e as Error).message}`);
   }
 
   assertEquals(enhancedHandlerRetVal, { "declaring": "param, query" });
@@ -503,7 +503,7 @@ Deno.test("ControllerMethodArgs Decorator - CloudflareWorker strategy - declarin
       methodDescriptor,
     );
   } catch (e) {
-    throw new Error(`test case should not have thrown ${e.message}`);
+    throw new Error(`test case should not have thrown ${(e as Error).message}`);
   }
   assertEquals(decoratorRetVal, undefined);
 
@@ -519,7 +519,7 @@ Deno.test("ControllerMethodArgs Decorator - CloudflareWorker strategy - declarin
     });
     enhancedHandlerRetVal = await enhancedHandler(ctx);
   } catch (e) {
-    throw new Error(`test case should not have thrown ${e.message}`);
+    throw new Error(`test case should not have thrown ${(e as Error).message}`);
   }
 
   assertEquals(enhancedHandlerRetVal, { "declaring": "body" });
@@ -542,7 +542,7 @@ Deno.test("ControllerMethodArgs Decorator - CloudflareWorker strategy - declarin
       methodDescriptor,
     );
   } catch (e) {
-    throw new Error(`test case should not have thrown ${e.message}`);
+    throw new Error(`test case should not have thrown ${(e as Error).message}`);
   }
   assertEquals(decoratorRetVal, undefined);
 
@@ -558,7 +558,7 @@ Deno.test("ControllerMethodArgs Decorator - CloudflareWorker strategy - declarin
     });
     enhancedHandlerRetVal = await enhancedHandler(ctx);
   } catch (e) {
-    throw new Error(`test case should not have thrown ${e.message}`);
+    throw new Error(`test case should not have thrown ${(e as Error).message}`);
   }
 
   assertEquals(enhancedHandlerRetVal, { "declaring": "nothing" });

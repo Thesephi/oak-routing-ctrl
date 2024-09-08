@@ -1,9 +1,16 @@
-## [Unreleased]
+## [0.10.0] - 2024-09-08
 
 ### Added
 
 - support for `headers` in `ControllerMethodArg` as a shortcut to parse &
   retrieve request headers
+
+### Changed
+
+- upgraded dependencies (`@oak/oak@17.0.0`, `@std/path@1.0.4`
+  `@std/assert@1.0.4`, `@std/testing@1.0.2`, `@std/io@0.224.7`)
+
+- minor TypeScript syntax updates to better support Deno 2
 
 ## [0.9.0] - 2024-07-16
 
