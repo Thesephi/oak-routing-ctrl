@@ -40,11 +40,11 @@ const arrayBufferLen42 = new ArrayBuffer(42);
 
 @Controller("/noop")
 class NoopController {
-  noop() { }
+  noop() {}
 }
 
 class UndecoratedController {
-  noop() { }
+  noop() {}
 }
 
 @Controller("/test")
@@ -74,8 +74,9 @@ class TestController {
   @ControllerMethodArgs("body")
   taz(body: ArrayBuffer, ctx: RouteContext<"/taz/:someId">) {
     const td = new TextDecoder();
-    return `hello, path param ${ctx.params.someId} with someBlob=${td.decode(body)
-      }`;
+    return `hello, path param ${ctx.params.someId} with someBlob=${
+      td.decode(body)
+    }`;
   }
   @Delete("/raz/")
   raz() {
