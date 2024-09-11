@@ -1,5 +1,5 @@
 import { debug } from "./utils/logger.ts";
-import { type Application, Router } from "../deps.ts";
+import { type Application, Router, Status, z } from "../deps.ts";
 import type { ControllerClass } from "./Controller.ts";
 import { store } from "./Store.ts";
 
@@ -28,12 +28,19 @@ export const useOakServer = (
               Ctrl.prototype,
               propName,
             )?.value;
-            const handlerRetVal = await handler.call(ctrl, ctx);
-            // some developers set body within the handler,
-            // some developers return something from the handler
-            // and expect that it gets assigned to the response,
-            // so by doing the following, we satisfy both use cases
-            ctx.response.body = ctx.response.body ?? handlerRetVal;
+            try {
+              const handlerRetVal = await handler.call(ctrl, ctx);
+              // some developers set body within the handler,
+              // some developers return something from the handler
+              // and expect that it gets assigned to the response,
+              // so by doing the following, we satisfy both use cases
+              ctx.response.body = ctx.response.body ?? handlerRetVal;
+            } catch (e) {
+              if (e instanceof z.ZodError) {
+                return ctx.throw(Status.BadRequest, e.toString());
+              }
+              throw e;
+            }
             await next();
           },
         );

@@ -1,10 +1,11 @@
 export { join } from "jsr:@std/path@^1.0.4";
 
-export { Router } from "jsr:@oak/oak@^17.0.0";
+export { Router, Status } from "jsr:@oak/oak@^17.0.0";
 
 export type {
   Application,
   Context,
+  ErrorStatus,
   Next,
   RouteContext,
 } from "jsr:@oak/oak@^17.0.0";
@@ -90,6 +91,7 @@ type SubsetOfZ = Pick<
   | "union"
   | "unknown"
   | "util"
+  | "ZodError"
 >;
 /**
  * entry to the `Zod` API, enhanced with `@asteasolutions/zod-to-openapi`;

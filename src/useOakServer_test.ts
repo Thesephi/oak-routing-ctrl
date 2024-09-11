@@ -1,6 +1,18 @@
 import type { SupportedVerb } from "./Store.ts";
-import { type Context, RouteContext } from "../deps.ts";
-import { assertEquals, assertSnapshot, oakTesting } from "../dev_deps.ts";
+import {
+  type Context,
+  type ErrorStatus,
+  RouteContext,
+  Status,
+  z,
+} from "../deps.ts";
+import {
+  assertEquals,
+  assertSnapshot,
+  assertSpyCalls,
+  oakTesting,
+  spy,
+} from "../dev_deps.ts";
 import {
   Controller,
   type ControllerMethodArg,
@@ -19,6 +31,7 @@ import {
   type MockRequestBodyDefinition,
   mockRequestInternals,
 } from "../test_utils/mockRequestInternals.ts";
+import { assertSpyCallArg } from "jsr:@std/testing@^1.0.2/mock";
 
 const staticFormData = new FormData();
 staticFormData.append("foo", "phiil");
@@ -27,11 +40,11 @@ const arrayBufferLen42 = new ArrayBuffer(42);
 
 @Controller("/noop")
 class NoopController {
-  noop() {}
+  noop() { }
 }
 
 class UndecoratedController {
-  noop() {}
+  noop() { }
 }
 
 @Controller("/test")
@@ -61,9 +74,8 @@ class TestController {
   @ControllerMethodArgs("body")
   taz(body: ArrayBuffer, ctx: RouteContext<"/taz/:someId">) {
     const td = new TextDecoder();
-    return `hello, path param ${ctx.params.someId} with someBlob=${
-      td.decode(body)
-    }`;
+    return `hello, path param ${ctx.params.someId} with someBlob=${td.decode(body)
+      }`;
   }
   @Delete("/raz/")
   raz() {
@@ -94,6 +106,14 @@ class TestController {
   uah(body: ArrayBuffer) {
     return `hello, ArrayBuffer body with byteLength=${body.byteLength}`;
   }
+  @Get("/zodError")
+  zodError() {
+    z.enum(["alice", "bob"]).parse("camela");
+  }
+  @Post("/arbitraryError")
+  arbitraryError() {
+    throw new Error("nah");
+  }
 }
 
 /**
@@ -109,6 +129,9 @@ type TestCaseDefinition = {
   mockRequestPathParams?: Record<string, string>;
   mockRequestBody?: MockRequestBodyDefinition;
   expectedResponse: unknown;
+  expectedCtxThrow?: boolean;
+  expectedError?: unknown;
+  expectedResponseStatus?: Status;
 };
 
 Deno.test("useOakServer - noop Controller", () => {
@@ -218,6 +241,32 @@ Deno.test({
         },
         expectedResponse: "hello, ArrayBuffer body with byteLength=42",
       },
+      {
+        caseDescription: "handler where a ZodError (validation error) happens",
+        method: "get",
+        expectedCtxThrow: true,
+        expectedError: `[
+          {
+            "received": "camela",
+            "code": "invalid_enum_value",
+            "options": [
+              "alice",
+              "bob"
+            ],
+            "path": [],
+            "message": "Invalid enum value. Expected 'alice' | 'bob', received 'camela'"
+          }
+        ]`,
+        expectedResponse: undefined,
+        expectedResponseStatus: Status.BadRequest,
+      },
+      {
+        caseDescription: "handler where an arbitrary error happens",
+        method: "post",
+        expectedError: "nah",
+        expectedResponse: undefined,
+        expectedResponseStatus: Status.InternalServerError,
+      },
     ];
 
     await Promise.all(
@@ -228,6 +277,9 @@ Deno.test({
         mockRequestPathParams = undefined,
         mockRequestBody = undefined,
         expectedResponse,
+        expectedCtxThrow,
+        expectedError,
+        expectedResponseStatus,
       }, i) =>
         t.step({
           name: `case ${i + 1}: ${caseDescription}`,
@@ -245,7 +297,35 @@ Deno.test({
             const next = oakTesting.createMockNext();
             useOakServer(ctx.app, [TestController]);
             const routes = Array.from(useOakServerInternal.oakRouter.values());
-            await routes[i].middleware[0]?.(ctx, next); // simulate the route being requested
+            const spyCtxThrow = spy(ctx, "throw");
+            try {
+              // simulate the route being requested
+              await routes[i].middleware[0]?.(ctx, next);
+            } catch (e) {
+              const theErrMsg = (e as Error).message;
+              if (expectedCtxThrow) {
+                assertSpyCalls(spyCtxThrow, 1);
+                assertSpyCallArg(
+                  spyCtxThrow,
+                  0,
+                  0,
+                  expectedResponseStatus as ErrorStatus,
+                );
+                assertSpyCallArg(
+                  spyCtxThrow,
+                  0,
+                  1,
+                  JSON.stringify(
+                    JSON.parse(expectedError as string),
+                    undefined,
+                    2,
+                  ),
+                );
+              } else {
+                assertSpyCalls(spyCtxThrow, 0);
+                assertEquals(theErrMsg, expectedError);
+              }
+            }
             assertEquals(ctx.response.body, expectedResponse);
           },
           sanitizeOps: false,

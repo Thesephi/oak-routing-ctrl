@@ -1,3 +1,11 @@
+## [0.11.0] - 2024-09-11
+
+### Changed
+
+- if a handler function throws because of a `Zod` validation error (ie. from
+  `ZodSchema.parse()`), the response will automatically have status `400` and
+  the whole `ZodError` as the response text
+
 ## [0.10.0] - 2024-09-08
 
 ### Added
