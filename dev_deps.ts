@@ -18,6 +18,7 @@ export { Body } from "jsr:@oak/oak@^17.0.0/body";
 
 export {
   assertSpyCall,
+  assertSpyCallArg,
   assertSpyCalls,
   type MethodSpy,
   type Spy,
