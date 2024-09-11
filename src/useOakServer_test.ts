@@ -9,6 +9,7 @@ import {
 import {
   assertEquals,
   assertSnapshot,
+  assertSpyCallArg,
   assertSpyCalls,
   oakTesting,
   spy,
@@ -31,7 +32,6 @@ import {
   type MockRequestBodyDefinition,
   mockRequestInternals,
 } from "../test_utils/mockRequestInternals.ts";
-import { assertSpyCallArg } from "jsr:@std/testing@^1.0.2/mock";
 
 const staticFormData = new FormData();
 staticFormData.append("foo", "phiil");
