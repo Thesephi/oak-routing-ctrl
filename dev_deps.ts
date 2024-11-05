@@ -5,16 +5,16 @@ export {
   assertObjectMatch,
   assertStringIncludes,
   assertThrows,
-} from "jsr:@std/assert@^1.0.4";
+} from "jsr:@std/assert@^1.0.7";
 
 export {
   type BodyType,
   type Middleware,
   Request,
   testing as oakTesting,
-} from "jsr:@oak/oak@^17.0.0";
+} from "jsr:@oak/oak@^17.1.3";
 
-export { Body } from "jsr:@oak/oak@^17.0.0/body";
+export { Body } from "jsr:@oak/oak@^17.1.3/body";
 
 export {
   assertSpyCall,
@@ -25,17 +25,17 @@ export {
   spy,
   type Stub,
   stub,
-} from "jsr:@std/testing@^1.0.2/mock";
+} from "jsr:@std/testing@^1.0.4/mock";
 
-export { assertSnapshot } from "jsr:@std/testing@^1.0.2/snapshot";
+export { assertSnapshot } from "jsr:@std/testing@^1.0.4/snapshot";
 
-export { Buffer } from "jsr:@std/io@^0.224.7";
+export { Buffer } from "jsr:@std/io@^0.225.0";
 
 export {
   afterEach,
   beforeEach,
   describe,
   it,
-} from "jsr:@std/testing@^1.0.2/bdd";
+} from "jsr:@std/testing@^1.0.4/bdd";
 
 export { ZodObject } from "npm:zod@^3.23.8";

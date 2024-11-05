@@ -1,6 +1,6 @@
-export { join } from "jsr:@std/path@^1.0.4";
+export { join } from "jsr:@std/path@^1.0.8";
 
-export { Router, Status } from "jsr:@oak/oak@^17.0.0";
+export { Router, Status } from "jsr:@oak/oak@^17.1.3";
 
 export type {
   Application,
@@ -8,13 +8,13 @@ export type {
   ErrorStatus,
   Next,
   RouteContext,
-} from "jsr:@oak/oak@^17.0.0";
+} from "jsr:@oak/oak@^17.1.3";
 
 import {
   extendZodWithOpenApi,
   type ResponseConfig,
   type RouteConfig,
-} from "npm:@asteasolutions/zod-to-openapi@^7.1.1";
+} from "npm:@asteasolutions/zod-to-openapi@^7.2.0";
 
 export type OakOpenApiSpec =
   & Omit<RouteConfig, "method" | "path" | "responses">
@@ -30,9 +30,9 @@ export {
   OpenApiGeneratorV3,
   OpenAPIRegistry,
   type ZodRequestBody,
-} from "npm:@asteasolutions/zod-to-openapi@^7.1.1";
+} from "npm:@asteasolutions/zod-to-openapi@^7.2.0";
 
-export { type OpenAPIObjectConfig } from "npm:@asteasolutions/zod-to-openapi@^7.1.1/dist/v3.0/openapi-generator";
+export { type OpenAPIObjectConfig } from "npm:@asteasolutions/zod-to-openapi@^7.2.0/dist/v3.0/openapi-generator";
 
 // must import from `npm:` instead of from `deno.land` to be compatible with `@asteasolutions/zod-to-openapi`
 import { z as slowTypedZ } from "npm:zod@^3.23.8";

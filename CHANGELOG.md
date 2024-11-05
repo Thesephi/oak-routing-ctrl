@@ -1,3 +1,12 @@
+## [0.12.0] - 2024-11-05
+
+### Changed
+
+- lax parsing rule for GET requests with header 'content-type: application/json'
+- upgraded dependencies (`@std/path@^1.0.8`, `@std/testing@^1.0.4`,
+  `@std/assert@^1.0.7`, `@oak/oak@^17.1.3`,
+  `@asteasolutions/zod-to-openapi@^7.2.0`, `@std/io@^0.225.0`)
+
 ## [0.11.0] - 2024-09-11
 
 ### Changed

@@ -1,5 +1,5 @@
 import { debug } from "./utils/logger.ts";
-import { Context, RouteContext } from "../deps.ts";
+import { type Context, type RouteContext } from "../deps.ts";
 import { ERR_UNSUPPORTED_CLASS_METHOD_DECORATOR_RUNTIME_BEHAVIOR } from "./Constants.ts";
 
 /**
@@ -49,34 +49,34 @@ type EnhancedHandler = (
  */
 export const ControllerMethodArgs =
   (...desirableParams: ControllerMethodArg[]) =>
-  (
-    // deno-lint-ignore ban-types
-    arg1: Function | object,
-    arg2: ClassMethodDecoratorContext | string,
-    // deno-lint-ignore no-explicit-any
-    ...rest: any[]
-    // deno-lint-ignore no-explicit-any
-  ): any => {
-    if (typeof arg1 === "function" && typeof arg2 === "object") {
-      return decorateClassMethodTypeStandard(
-        arg1,
-        arg2,
-        ...desirableParams,
-      );
-    }
+    (
+      // deno-lint-ignore ban-types
+      arg1: Function | object,
+      arg2: ClassMethodDecoratorContext | string,
+      // deno-lint-ignore no-explicit-any
+      ...rest: any[]
+      // deno-lint-ignore no-explicit-any
+    ): any => {
+      if (typeof arg1 === "function" && typeof arg2 === "object") {
+        return decorateClassMethodTypeStandard(
+          arg1,
+          arg2,
+          ...desirableParams,
+        );
+      }
 
-    if (typeof arg1 === "object" && typeof arg2 === "string") {
-      const methodDescriptor: PropertyDescriptor = rest[0];
-      return decorateClassMethodTypeCloudflareWorker(
-        arg1,
-        arg2,
-        methodDescriptor,
-        ...desirableParams,
-      );
-    }
+      if (typeof arg1 === "object" && typeof arg2 === "string") {
+        const methodDescriptor: PropertyDescriptor = rest[0];
+        return decorateClassMethodTypeCloudflareWorker(
+          arg1,
+          arg2,
+          methodDescriptor,
+          ...desirableParams,
+        );
+      }
 
-    throw new Error(ERR_UNSUPPORTED_CLASS_METHOD_DECORATOR_RUNTIME_BEHAVIOR);
-  };
+      throw new Error(ERR_UNSUPPORTED_CLASS_METHOD_DECORATOR_RUNTIME_BEHAVIOR);
+    };
 
 function decorateClassMethodTypeStandard(
   // deno-lint-ignore ban-types
@@ -128,13 +128,22 @@ function getEnhancedHandler(
     try {
       parsedReqBody = await _internal.parseOakReqBody(ctx);
     } catch (e) {
-      return ctx.throw(
-        400,
-        `Unable to parse request body: ${(e as Error).message}`,
-        {
-          stack: (e as Error).stack,
-        },
-      );
+      if (ctx.request.method === "GET"
+        && ctx.request.headers.get("Content-Type") === "application/json"
+        && (e as Error).message?.includes("Unexpected end of JSON input")
+      ) {
+        // we ignore this parsing error because the client was sending
+        // a weird combination of method & content-type header
+      } else {
+        // for other case, we trigger the error back to userland
+        return ctx.throw(
+          400,
+          `Unable to parse request body: ${(e as Error).message}`,
+          {
+            stack: (e as Error).stack,
+          },
+        );
+      }
     }
 
     const parsedReqSearchParams: Record<string, string> = {};
@@ -184,8 +193,8 @@ function getEnhancedHandler(
         default:
           // otherwise assume it's all from ctx params
           decoratedArgs.push(ctx.params[p]);
-          // @TODO consider if it's also desirable to extract the arg
-          // from `parsedReqBody` as an automatic "fallback" after `ctx.params`
+        // @TODO consider if it's also desirable to extract the arg
+        // from `parsedReqBody` as an automatic "fallback" after `ctx.params`
       }
     }
 
