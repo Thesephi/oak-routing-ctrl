@@ -1,3 +1,11 @@
+## [0.12.1] - 2024-11-05
+
+### Changed
+
+- laxed parsing rule for requests with header 'content-type: application/json'
+  now covers all 3 methods: GET, DELETE, and HEAD
+- doc updated in README
+
 ## [0.12.0] - 2024-11-05
 
 ### Changed

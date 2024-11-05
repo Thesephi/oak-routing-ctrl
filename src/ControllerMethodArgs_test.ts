@@ -636,30 +636,47 @@ Deno.test("getEnhancedHandler with a faulty ctx.request.body", async () => {
   spyParseOakRequestBody.restore();
 });
 
-Deno.test("getEnhancedHandler with a faulty request method and content-type combination", async () => {
+Deno.test("getEnhancedHandler with a non-conventional request method and content-type combination", async (t) => {
+  const methodsToTest = ["GET", "HEAD", "DELETE"];
   const spyParseOakRequestBody = spy(_internal, "parseOakReqBody");
-  function testHandler() {
-    return "weird.method.content-type.combination.handled";
-  }
-  // deno-lint-ignore ban-types
-  const enhancedHandler: Function = _internal.getEnhancedHandler(testHandler);
-  const ctx = createMockContext({
-    method: "GET",
-    headers: [["Content-Type", "application/json"]],
-  });
-  Object.defineProperty(ctx.request, "body", {
-    get: () => createMockRequestBody("json", "Unexpected end of JSON input"),
-  });
-  const spyCtxThrow = spy();
-  Object.defineProperty(ctx, "throw", {
-    value: (errorStatus: unknown, message?: string, props?: unknown) => {
-      spyCtxThrow(errorStatus, message, props);
-    },
-  });
-  const retVal = await enhancedHandler(ctx);
-  assertSpyCalls(spyCtxThrow, 0);
-  assertSpyCalls(spyParseOakRequestBody, 1);
-  assertEquals(retVal, "weird.method.content-type.combination.handled");
+  await Promise.all(methodsToTest.map((method) =>
+    t.step({
+      name: `testing content-type: application/json and ${method} request`,
+      fn: async () => {
+        function testHandler() {
+          return `method ${method} and Content-Type: application/json handled`;
+        }
+        // deno-lint-ignore ban-types
+        const enhancedHandler: Function = _internal.getEnhancedHandler(
+          testHandler,
+        );
+        const ctx = createMockContext({
+          method, // GET | HEAD | DELETE
+          headers: [["Content-Type", "application/json"]],
+        });
+        Object.defineProperty(ctx.request, "body", {
+          get: () =>
+            createMockRequestBody("json", "Unexpected end of JSON input"),
+        });
+        const spyCtxThrow = spy();
+        Object.defineProperty(ctx, "throw", {
+          value: (errorStatus: unknown, message?: string, props?: unknown) => {
+            spyCtxThrow(errorStatus, message, props);
+          },
+        });
+        const retVal = await enhancedHandler(ctx);
+        assertSpyCalls(spyCtxThrow, 0);
+        assertEquals(
+          retVal,
+          `method ${method} and Content-Type: application/json handled`,
+        );
+      },
+      sanitizeOps: false,
+      sanitizeResources: false,
+      sanitizeExit: false,
+    })
+  ));
+  assertSpyCalls(spyParseOakRequestBody, methodsToTest.length);
   spyParseOakRequestBody.restore();
 });
 
