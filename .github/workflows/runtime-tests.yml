@@ -3,7 +3,6 @@ on:
   workflow_dispatch
 
 jobs:
-
   test-bun:
     name: Test on Bun
     runs-on: ubuntu-latest
@@ -21,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: ['18.x', '20.x']
+        node-version: ["18.x", "20.x"]
     steps:
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
@@ -33,13 +32,13 @@ jobs:
           npm install
       - name: Perform Tests
         run: npm test
-  
+
   test-cloudflare-workers:
     name: Test on Cloudflare Workers dev env
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: ['18.x', '20.x']
+        node-version: ["18.x", "20.x"]
     steps:
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4

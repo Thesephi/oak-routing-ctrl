@@ -879,7 +879,10 @@ Deno.test("getEnhancedHandler - not declaring any param", async () => {
 /**
  * @NOTE if/when `oak` supports such a method, better import from there instead
  */
-function createMockRequestBody(type: BodyType, thrownMsgWhenParsed?: string): Body {
+function createMockRequestBody(
+  type: BodyType,
+  thrownMsgWhenParsed?: string,
+): Body {
   const buf = new Buffer();
   const rs = new ReadableStream();
   const retVal = new Body({
@@ -897,34 +900,40 @@ function createMockRequestBody(type: BodyType, thrownMsgWhenParsed?: string): Bo
       value: () => type,
     },
     json: {
-      value: () => !thrownMsgWhenParsed
-        ? Promise.resolve({ mock: "mock" })
-        : Promise.reject(new Error(thrownMsgWhenParsed)),
+      value: () =>
+        !thrownMsgWhenParsed
+          ? Promise.resolve({ mock: "mock" })
+          : Promise.reject(new Error(thrownMsgWhenParsed)),
     },
     text: {
-      value: () => !thrownMsgWhenParsed
-        ? Promise.resolve("mock")
-        : Promise.reject(new Error(thrownMsgWhenParsed)),
+      value: () =>
+        !thrownMsgWhenParsed
+          ? Promise.resolve("mock")
+          : Promise.reject(new Error(thrownMsgWhenParsed)),
     },
     blob: {
-      value: () => !thrownMsgWhenParsed
-        ? Promise.resolve(buf)
-        : Promise.reject(new Error(thrownMsgWhenParsed)),
+      value: () =>
+        !thrownMsgWhenParsed
+          ? Promise.resolve(buf)
+          : Promise.reject(new Error(thrownMsgWhenParsed)),
     },
     form: {
-      value: () => !thrownMsgWhenParsed
-        ? Promise.resolve(new URLSearchParams({ mock: "mock" }))
-        : Promise.reject(new Error(thrownMsgWhenParsed)),
+      value: () =>
+        !thrownMsgWhenParsed
+          ? Promise.resolve(new URLSearchParams({ mock: "mock" }))
+          : Promise.reject(new Error(thrownMsgWhenParsed)),
     },
     formData: {
-      value: () => !thrownMsgWhenParsed
-        ? Promise.resolve(new FormData())
-        : Promise.reject(new Error(thrownMsgWhenParsed)),
+      value: () =>
+        !thrownMsgWhenParsed
+          ? Promise.resolve(new FormData())
+          : Promise.reject(new Error(thrownMsgWhenParsed)),
     },
     arrayBuffer: {
-      value: () => !thrownMsgWhenParsed
-        ? Promise.resolve(buf)
-        : Promise.reject(new Error(thrownMsgWhenParsed)),
+      value: () =>
+        !thrownMsgWhenParsed
+          ? Promise.resolve(buf)
+          : Promise.reject(new Error(thrownMsgWhenParsed)),
     },
   });
   return retVal;

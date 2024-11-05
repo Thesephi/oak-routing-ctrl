@@ -6,6 +6,7 @@
 - upgraded dependencies (`@std/path@^1.0.8`, `@std/testing@^1.0.4`,
   `@std/assert@^1.0.7`, `@oak/oak@^17.1.3`,
   `@asteasolutions/zod-to-openapi@^7.2.0`, `@std/io@^0.225.0`)
+- code format
 
 ## [0.11.0] - 2024-09-11
 
