@@ -1,5 +1,5 @@
 import { debug } from "./utils/logger.ts";
-import { Context, RouteContext } from "../deps.ts";
+import { type Context, type RouteContext } from "../deps.ts";
 import { ERR_UNSUPPORTED_CLASS_METHOD_DECORATOR_RUNTIME_BEHAVIOR } from "./Constants.ts";
 
 /**
@@ -128,13 +128,23 @@ function getEnhancedHandler(
     try {
       parsedReqBody = await _internal.parseOakReqBody(ctx);
     } catch (e) {
-      return ctx.throw(
-        400,
-        `Unable to parse request body: ${(e as Error).message}`,
-        {
-          stack: (e as Error).stack,
-        },
-      );
+      if (
+        ctx.request.method === "GET" &&
+        ctx.request.headers.get("Content-Type") === "application/json" &&
+        (e as Error).message?.includes("Unexpected end of JSON input")
+      ) {
+        // we ignore this parsing error because the client was sending
+        // a weird combination of method & content-type header
+      } else {
+        // for other case, we trigger the error back to userland
+        return ctx.throw(
+          400,
+          `Unable to parse request body: ${(e as Error).message}`,
+          {
+            stack: (e as Error).stack,
+          },
+        );
+      }
     }
 
     const parsedReqSearchParams: Record<string, string> = {};

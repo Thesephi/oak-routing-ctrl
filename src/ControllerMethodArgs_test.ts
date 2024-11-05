@@ -636,6 +636,33 @@ Deno.test("getEnhancedHandler with a faulty ctx.request.body", async () => {
   spyParseOakRequestBody.restore();
 });
 
+Deno.test("getEnhancedHandler with a faulty request method and content-type combination", async () => {
+  const spyParseOakRequestBody = spy(_internal, "parseOakReqBody");
+  function testHandler() {
+    return "weird.method.content-type.combination.handled";
+  }
+  // deno-lint-ignore ban-types
+  const enhancedHandler: Function = _internal.getEnhancedHandler(testHandler);
+  const ctx = createMockContext({
+    method: "GET",
+    headers: [["Content-Type", "application/json"]],
+  });
+  Object.defineProperty(ctx.request, "body", {
+    get: () => createMockRequestBody("json", "Unexpected end of JSON input"),
+  });
+  const spyCtxThrow = spy();
+  Object.defineProperty(ctx, "throw", {
+    value: (errorStatus: unknown, message?: string, props?: unknown) => {
+      spyCtxThrow(errorStatus, message, props);
+    },
+  });
+  const retVal = await enhancedHandler(ctx);
+  assertSpyCalls(spyCtxThrow, 0);
+  assertSpyCalls(spyParseOakRequestBody, 1);
+  assertEquals(retVal, "weird.method.content-type.combination.handled");
+  spyParseOakRequestBody.restore();
+});
+
 Deno.test("getEnhancedHandler with a faulty ctx.request.url.searchParams", async () => {
   const spyParseOakRequestBody = spy(_internal, "parseOakReqBody");
   function testHandler() {
@@ -669,7 +696,8 @@ Deno.test("getEnhancedHandler with a faulty ctx.request.url.searchParams", async
 });
 
 Deno.test("getEnhancedHandler - declaring 4 desirable params in order A", async () => {
-  const testHandler = spy((..._rest) => 42);
+  // deno-lint-ignore no-explicit-any
+  const testHandler = spy((..._rest: any[]) => 42);
   // deno-lint-ignore ban-types
   const enhancedHandler: Function = _internal.getEnhancedHandler(
     testHandler,
@@ -699,7 +727,8 @@ Deno.test("getEnhancedHandler - declaring 4 desirable params in order A", async 
 });
 
 Deno.test("getEnhancedHandler - declaring 4 desirable params in order B", async () => {
-  const testHandler = spy((..._rest) => 43);
+  // deno-lint-ignore no-explicit-any
+  const testHandler = spy((..._rest: any[]) => 43);
   // deno-lint-ignore ban-types
   const enhancedHandler: Function = _internal.getEnhancedHandler(
     testHandler,
@@ -730,7 +759,8 @@ Deno.test("getEnhancedHandler - declaring 4 desirable params in order B", async 
 
 Deno.test("getEnhancedHandler - declaring 5 desirable params", async () => {
   const spyParseOakRequestBody = spy(_internal, "parseOakReqBody");
-  const testHandler = spy((..._rest) => 44);
+  // deno-lint-ignore no-explicit-any
+  const testHandler = spy((..._rest: any[]) => 44);
   // deno-lint-ignore ban-types
   const enhancedHandler: Function = _internal.getEnhancedHandler(
     testHandler,
@@ -765,7 +795,8 @@ Deno.test("getEnhancedHandler - declaring 5 desirable params", async () => {
 });
 
 Deno.test("getEnhancedHandler - declaring 3 desirable params in order A", async () => {
-  const testHandler = spy((..._rest) => 45);
+  // deno-lint-ignore no-explicit-any
+  const testHandler = spy((..._rest: any[]) => 45);
   // deno-lint-ignore ban-types
   const enhancedHandler: Function = _internal.getEnhancedHandler(
     testHandler,
@@ -794,7 +825,8 @@ Deno.test("getEnhancedHandler - declaring 3 desirable params in order A", async 
 });
 
 Deno.test("getEnhancedHandler - declaring 3 desirable params in order B", async () => {
-  const testHandler = spy((..._rest) => 46);
+  // deno-lint-ignore no-explicit-any
+  const testHandler = spy((..._rest: any[]) => 46);
   // deno-lint-ignore ban-types
   const enhancedHandler: Function = _internal.getEnhancedHandler(
     testHandler,
@@ -847,7 +879,10 @@ Deno.test("getEnhancedHandler - not declaring any param", async () => {
 /**
  * @NOTE if/when `oak` supports such a method, better import from there instead
  */
-function createMockRequestBody(type: BodyType): Body {
+function createMockRequestBody(
+  type: BodyType,
+  thrownMsgWhenParsed?: string,
+): Body {
   const buf = new Buffer();
   const rs = new ReadableStream();
   const retVal = new Body({
@@ -865,22 +900,40 @@ function createMockRequestBody(type: BodyType): Body {
       value: () => type,
     },
     json: {
-      value: () => Promise.resolve({ mock: "mock" }),
+      value: () =>
+        !thrownMsgWhenParsed
+          ? Promise.resolve({ mock: "mock" })
+          : Promise.reject(new Error(thrownMsgWhenParsed)),
     },
     text: {
-      value: () => Promise.resolve("mock"),
+      value: () =>
+        !thrownMsgWhenParsed
+          ? Promise.resolve("mock")
+          : Promise.reject(new Error(thrownMsgWhenParsed)),
     },
     blob: {
-      value: () => Promise.resolve(buf),
+      value: () =>
+        !thrownMsgWhenParsed
+          ? Promise.resolve(buf)
+          : Promise.reject(new Error(thrownMsgWhenParsed)),
     },
     form: {
-      value: () => Promise.resolve(new URLSearchParams({ mock: "mock" })),
+      value: () =>
+        !thrownMsgWhenParsed
+          ? Promise.resolve(new URLSearchParams({ mock: "mock" }))
+          : Promise.reject(new Error(thrownMsgWhenParsed)),
     },
     formData: {
-      value: () => Promise.resolve(new FormData()),
+      value: () =>
+        !thrownMsgWhenParsed
+          ? Promise.resolve(new FormData())
+          : Promise.reject(new Error(thrownMsgWhenParsed)),
     },
     arrayBuffer: {
-      value: () => Promise.resolve(buf),
+      value: () =>
+        !thrownMsgWhenParsed
+          ? Promise.resolve(buf)
+          : Promise.reject(new Error(thrownMsgWhenParsed)),
     },
   });
   return retVal;
