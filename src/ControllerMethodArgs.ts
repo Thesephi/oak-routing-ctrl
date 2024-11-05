@@ -129,14 +129,16 @@ function getEnhancedHandler(
       parsedReqBody = await _internal.parseOakReqBody(ctx);
     } catch (e) {
       if (
-        ctx.request.method === "GET" &&
+        ["GET", "DELETE", "HEAD"].includes(ctx.request.method) &&
         ctx.request.headers.get("Content-Type") === "application/json" &&
         (e as Error).message?.includes("Unexpected end of JSON input")
       ) {
         // we ignore this parsing error because the client was sending
-        // a weird combination of method & content-type header
+        // a weird combination of method & content-type header, but here to
+        // the "Japanese engineering mindset":
+        // https://www.500eboard.co/forums/threads/engineers-japanese-vs-german.14695/
       } else {
-        // for other case, we trigger the error back to userland
+        // for other scenarios, we trigger the error back to userland
         return ctx.throw(
           400,
           `Unable to parse request body: ${(e as Error).message}`,

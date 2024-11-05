@@ -57,13 +57,13 @@ deno add @oak/oak @dklab/oak-routing-ctrl
 ```ts
 // main.ts
 
-import { Application } from "@oak/oak/application";
+import { Application } from "jsr:@oak/oak/application";
 import {
   Controller,
   ControllerMethodArgs,
   Get,
   useOakServer,
-} from "@dklab/oak-routing-ctrl";
+} from "jsr:@dklab/oak-routing-ctrl";
 
 const app = new Application();
 
@@ -96,13 +96,13 @@ curl localhost:1993/v1/hello/world # prints: hello, world
 <summary>View Example</summary>
 
 ```ts
-import { Application } from "@oak/oak/application";
+import { Application } from "jsr:@oak/oak/application";
 import {
   Controller,
   ControllerMethodArgs,
   Post,
   useOakServer,
-} from "@dklab/oak-routing-ctrl";
+} from "jsr:@dklab/oak-routing-ctrl";
 
 @Controller("/v1")
 class MyController {
@@ -133,13 +133,13 @@ curl -H"Content-Type: application/json" localhost:1993/v1/tell/alice -d'{"messag
 <summary>View Example</summary>
 
 ```ts
-import { Application } from "@oak/oak/application";
+import { Application } from "jsr:@oak/oak/application";
 import {
   Controller,
   ControllerMethodArgs,
   Get,
   useOakServer,
-} from "@dklab/oak-routing-ctrl";
+} from "jsr:@dklab/oak-routing-ctrl";
 
 @Controller("/v1")
 class MyController {
@@ -170,8 +170,8 @@ curl localhost:1993/v1/books/thriller\?page=2
 <summary>View Example</summary>
 
 ```ts
-import { Application } from "@oak/oak/application";
-import { Controller, Get, useOakServer } from "@dklab/oak-routing-ctrl";
+import { Application } from "jsr:@oak/oak/application";
+import { Controller, Get, useOakServer } from "jsr:@dklab/oak-routing-ctrl";
 
 @Controller()
 class MyController {
