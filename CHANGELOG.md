@@ -1,3 +1,17 @@
+## [0.12.2] - 2024-12-06
+
+### Added
+
+- `OakOpenApiSpec` and `useOak` are explicitly exported for consumption
+
+### Changed
+
+- README content update
+
+### Fixed
+
+- underscore character is now supported in OAS path param name
+
 ## [0.12.1] - 2024-11-05
 
 ### Changed

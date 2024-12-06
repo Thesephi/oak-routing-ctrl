@@ -17,7 +17,7 @@ const getRouteId = (
  */
 const getOasCompatPath = (path: string) =>
   path.replace(
-    /\/:([a-zA-Z0-9]*)/g,
+    /\/:([a-zA-Z0-9_]*)/g,
     "/{$1}",
   );
 
