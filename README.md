@@ -50,10 +50,6 @@ Prerequisite:
 
 ### Example: Retrieving path parameters
 
-```bash
-deno add @oak/oak @dklab/oak-routing-ctrl
-```
-
 ```ts
 // main.ts
 
@@ -201,18 +197,35 @@ curl -H"x-foo: lorem" localhost:1993/foo/bar
 
 ### Node.js
 
+If you're on Node.js 22 (or above), please consult this example boilerplate:
+https://replit.com/@0x97FB9/auto-swagger-node-alpha
+
+If you're on Node.js 21 (or below), then the example workflow below may apply to
+you.
+
+<details>
+<summary>View Example for Node.js 21 and below</summary>
+
+_
+
+You can start with a boilerplate
+
 ```bash
 npm create oak-nodejs-esbuild@latest
 ```
 
-<details>
-<summary>View Example</summary>
+_
+
+Or you can start from scratch
+
+<small>friendly note: if something doesn't work as advertised in this section,
+please file an issue, thanks!</small>
 
 ```bash
 npm i @jsr/oak__oak @jsr/dklab__oak-routing-ctrl
 
 # note that `npx jsr i {package}` also works, but
-# installing directly from the `@jsr` scope may result
+# installing directly from the `@jsr` scope might result
 # in better dependency resolutions
 ```
 
