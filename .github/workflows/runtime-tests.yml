@@ -51,8 +51,8 @@ jobs:
       - name: Perform Tests
         run: npm test
 
-  test-deno:
-    name: Test on Deno
+  test-deno-with-npm-create:
+    name: Test on Deno using 'npm create'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-node@v4 # needed to call the scaffolding `npm create` command
@@ -62,5 +62,18 @@ jobs:
           deno-version: v2.x
       - name: Scaffold App
         run: npm create oak-deno@latest -- -y
+      - name: Perform Tests
+        run: deno task test
+
+  test-deno-with-deno-init:
+    name: Test on Deno using 'deno init'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - name: Scaffold App
+        run: deno run -A npm:create-oak-deno@latest -- -y
       - name: Perform Tests
         run: deno task test
