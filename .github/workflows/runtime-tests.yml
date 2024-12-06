@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: ["18.x", "20.x"]
+        node-version: ["18.x", "20.x", "22.x"]
     steps:
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: ["18.x", "20.x"]
+        node-version: ["18.x", "20.x", "22.x"]
     steps:
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
@@ -57,9 +57,9 @@ jobs:
     steps:
       - uses: actions/setup-node@v4 # needed to call the scaffolding `npm create` command
       - name: Setup Deno
-        uses: denoland/setup-deno@v1 # needed to perform the actual tests
+        uses: denoland/setup-deno@v2 # needed to perform the actual tests
         with:
-          deno-version: v1.x
+          deno-version: v2.x
       - name: Scaffold App
         run: npm create oak-deno@latest -- -y
       - name: Perform Tests
