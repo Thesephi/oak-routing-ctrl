@@ -1,4 +1,5 @@
-import { type OakOpenApiSpec, type RouteConfig } from "../deps.ts";
+import { type RouteConfig } from "@asteasolutions/zod-to-openapi";
+import { type OakOpenApiSpec } from "./utils/schema_utils.ts";
 import { SupportedVerb } from "./Store.ts";
 import { debug } from "./utils/logger.ts";
 

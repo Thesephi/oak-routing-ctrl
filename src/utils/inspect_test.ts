@@ -1,4 +1,4 @@
-import { assertSnapshot } from "../../dev_deps.ts";
+import { assertSnapshot } from "@std/testing/snapshot";
 import { inspect } from "./inspect.ts";
 
 const testObj = {

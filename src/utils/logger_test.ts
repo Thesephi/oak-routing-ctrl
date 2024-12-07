@@ -1,14 +1,11 @@
 import { debug } from "./logger.ts";
+import { afterEach, beforeEach, describe, it } from "@std/testing/bdd";
 import {
-  afterEach,
   assertSpyCall,
   assertSpyCalls,
-  beforeEach,
-  describe,
-  it,
   type Stub,
   stub,
-} from "../../dev_deps.ts";
+} from "@std/testing/mock";
 
 let stubConsoleDebug: Stub;
 
@@ -66,6 +63,6 @@ function stubGetEnv(envName: string, stubValue: string | undefined): Stub {
   return stub(
     Deno.env,
     "get",
-    (key) => key === envName ? stubValue : Deno.env.get(key),
+    (key: string) => key === envName ? stubValue : Deno.env.get(key),
   );
 }

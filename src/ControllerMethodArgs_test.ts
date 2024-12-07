@@ -1,14 +1,26 @@
+import { type BodyType, testing as oakTesting } from "@oak/oak";
+import { Body } from "@oak/oak/body";
 import {
   assertEquals,
-  assertSpyCalls,
+  // assertSpyCalls,
   assertStringIncludes,
   assertThrows,
-  Body,
-  type BodyType,
-  Buffer,
-  oakTesting,
+  // Body,
+  // type BodyType,
+  // Buffer,
+  // oakTesting,
+  // spy,
+} from "@std/assert";
+import {
+  // assertEquals,
+  assertSpyCalls,
+  // assertStringIncludes,
+  // assertThrows,
+  // Body,
+  // type BodyType,
   spy,
-} from "../dev_deps.ts";
+} from "@std/testing/mock";
+import { Buffer } from "@std/io";
 import { ERR_UNSUPPORTED_CLASS_METHOD_DECORATOR_RUNTIME_BEHAVIOR } from "./Constants.ts";
 import {
   _internal,

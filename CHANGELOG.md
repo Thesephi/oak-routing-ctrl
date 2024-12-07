@@ -1,3 +1,11 @@
+## Unreleased
+
+### Changed
+
+- switched from `deps.ts` and `dev_deps.ts` to `deno.jsonc`
+- revamped documentation
+- code format
+
 ## [0.12.2] - 2024-12-06
 
 ### Added
