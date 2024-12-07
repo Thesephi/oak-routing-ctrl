@@ -1,5 +1,4 @@
-export { useOakServer } from "./src/useOakServer.ts";
-export { useOak } from "./src/useOakServer.ts";
+export { useOak, useOakServer } from "./src/useOakServer.ts";
 export { useOas, type UseOasConfig } from "./src/useOas.ts";
 export { Controller } from "./src/Controller.ts";
 export {
