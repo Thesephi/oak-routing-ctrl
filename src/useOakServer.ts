@@ -1,5 +1,6 @@
 import { debug } from "./utils/logger.ts";
-import { type Application, Router, Status, z } from "../deps.ts";
+import { type Application, Router, Status } from "@oak/oak";
+import { z } from "./utils/schema_utils.ts";
 import type { ControllerClass } from "./Controller.ts";
 import { store } from "./Store.ts";
 
@@ -51,5 +52,10 @@ export const useOakServer = (
   app.use(oakRouter.routes());
   app.use(oakRouter.allowedMethods());
 };
+
+/**
+ * alias of {@linkcode useOakServer}
+ */
+export const useOak = useOakServer;
 
 export const _internal = { oakRouter };

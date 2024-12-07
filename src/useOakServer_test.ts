@@ -4,16 +4,12 @@ import {
   type ErrorStatus,
   RouteContext,
   Status,
-  z,
-} from "../deps.ts";
-import {
-  assertEquals,
-  assertSnapshot,
-  assertSpyCallArg,
-  assertSpyCalls,
-  oakTesting,
-  spy,
-} from "../dev_deps.ts";
+  testing as oakTesting,
+} from "@oak/oak";
+import { z } from "./utils/schema_utils.ts";
+import { assertEquals } from "@std/assert";
+import { assertSpyCallArg, assertSpyCalls, spy } from "@std/testing/mock";
+import { assertSnapshot } from "@std/testing/snapshot";
 import {
   Controller,
   type ControllerMethodArg,

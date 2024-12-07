@@ -1,16 +1,18 @@
 import { debug } from "./utils/logger.ts";
-import { type Context, type RouteContext } from "../deps.ts";
+import { type Context, type RouteContext } from "@oak/oak";
 import { ERR_UNSUPPORTED_CLASS_METHOD_DECORATOR_RUNTIME_BEHAVIOR } from "./Constants.ts";
 
 /**
- * literal keywords that can be used as arguments for the `@ControllerMethodArgs`
+ * literal keywords that can be used as arguments for the {@linkcode ControllerMethodArgs}
  * decorator; these keywords **MUST** appear in the same order that their counterpart
  * arguments show up in the actual (decorated) handler function
  * @example
  * ```ts
- * (@)ControllerMethodArgs("query", "body")
- * doSomething(query, body) {
- *   console.log(query, body);
+ * class ExampleClass {
+ *   ;@ControllerMethodArgs("query", "body")
+ *   doSomething(query: object, body: object) {
+ *     console.log(query, body);
+ *   }
  * }
  * ```
  */
@@ -27,36 +29,44 @@ type EnhancedHandler = (
   ...args: unknown[]
 ) => Promise<unknown>;
 
+type MethodDecorator = (
+  // deno-lint-ignore ban-types
+  arg1: Function | object,
+  arg2: ClassMethodDecoratorContext | string,
+  // deno-lint-ignore no-explicit-any
+  ...rest: any[]
+  // deno-lint-ignore no-explicit-any
+) => any;
+
 /**
  * Decorator that should be used on the Controller Method
  * when we need to refer to the request body, param, query, etc.
  * in the Method Body
  * @returns a function with the signature (arguments) matching that
  * of the provided `desirableParams`, which can then be **decorated**
- * with one of the Class Method decorators (e.g. `Get`, `Post`, etc.)
+ * with one of the Class Method decorators (e.g. {@linkcode Get}, {@linkcode Post}, etc.)
  * @example
- * ```ts
- * (@)Controller("/api/v1")
+ * ```
+ * import { Controller, Post, ControllerMethodArgs } from "@dklab/oak-routing-ctrl"
+ *
+ * ;@Controller()
  * class MyClass {
- *   (@)Post("/:resource")
- *   (@)ControllerMethodArgs("body", "query", "param")
- *   doSomething(body, query, param, ctx): void {
+ *   ;@Post("/:resource")
+ *   ;@ControllerMethodArgs("body", "query", "param", "headers")
+ *   doSomething(body, query, param, headers, ctx): void {
  *     console.log(`endpoint called: /api/v1/${ctx.params.resource}`);
- *     console.log(`now let's do something with`, body, query, param);
+ *     console.log(`now let's do something with`, body, query, param, headers);
  *   }
  * }
  * ```
  */
 export const ControllerMethodArgs =
-  (...desirableParams: ControllerMethodArg[]) =>
+  (...desirableParams: ControllerMethodArg[]): MethodDecorator =>
   (
-    // deno-lint-ignore ban-types
-    arg1: Function | object,
-    arg2: ClassMethodDecoratorContext | string,
-    // deno-lint-ignore no-explicit-any
-    ...rest: any[]
-    // deno-lint-ignore no-explicit-any
-  ): any => {
+    arg1,
+    arg2,
+    ...rest
+  ) => {
     if (typeof arg1 === "function" && typeof arg2 === "object") {
       return decorateClassMethodTypeStandard(
         arg1,

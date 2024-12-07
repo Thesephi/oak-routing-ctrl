@@ -1,14 +1,9 @@
-import {
-  assertEquals,
-  assertSnapshot,
-  assertSpyCall,
-  assertSpyCalls,
-  type Middleware,
-  oakTesting,
-  spy,
-  stub,
-} from "../dev_deps.ts";
-import { OpenApiGeneratorV3, z } from "../deps.ts";
+import { type Middleware, testing as oakTesting } from "@oak/oak";
+import { assertEquals } from "@std/assert";
+import { assertSpyCall, assertSpyCalls, spy, stub } from "@std/testing/mock";
+import { assertSnapshot } from "@std/testing/snapshot";
+import { OpenApiGeneratorV3 } from "@asteasolutions/zod-to-openapi";
+import { z } from "./utils/schema_utils.ts";
 import { oasStore, updateOas } from "./oasStore.ts";
 import { _internal, useOas } from "./useOas.ts";
 import { mockRequestInternals } from "../test_utils/mockRequestInternals.ts";

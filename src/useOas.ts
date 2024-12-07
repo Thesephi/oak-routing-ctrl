@@ -1,11 +1,11 @@
-import { Application } from "../deps.ts";
+import { Application } from "@oak/oak";
 import { oasStore } from "./oasStore.ts";
 import {
   OpenApiGeneratorV3,
-  type OpenAPIObjectConfig,
   OpenAPIRegistry,
   type RouteConfig,
-} from "../deps.ts";
+} from "@asteasolutions/zod-to-openapi";
+import { type OpenAPIObjectConfig } from "npm:@asteasolutions/zod-to-openapi@^7.2.0/dist/v3.0/openapi-generator";
 import { debug } from "./utils/logger.ts";
 import { inspect } from "./utils/inspect.ts";
 
@@ -26,7 +26,11 @@ const defaultOasUiTemplate = `
 
 const registry = new OpenAPIRegistry();
 
-type UseOasConfig = Partial<OpenAPIObjectConfig> & {
+/**
+ * interface for an object used to configure how the Open API Spec
+ * is generated (e.g. `/oas.json`)
+ */
+export type UseOasConfig = Partial<OpenAPIObjectConfig> & {
   jsonPath?: string;
   uiPath?: string;
   uiTemplate?: string;
@@ -85,9 +89,9 @@ const _useOas: UseOas = (
 /**
  * helper method to enable Open API Spec for the routes
  * declared with oak-routing-ctrl decorators
- * @param app the oak Application instance
- * @param cfg optional configuration object to
- * finetune the OAS spec documentation
+ * @param {Application} app the {@linkcode Application} instance from `@oak/oak`
+ * @param {UseOasConfig} [cfg] optional configuration object to
+ * finetune the Open API spec documentation
  */
 export const useOas = (
   app: Application,
