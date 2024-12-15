@@ -2,7 +2,7 @@ import type { SupportedVerb } from "./Store.ts";
 import {
   type Context,
   type ErrorStatus,
-  RouteContext,
+  type RouteContext,
   Status,
   testing as oakTesting,
 } from "@oak/oak";

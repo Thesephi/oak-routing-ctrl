@@ -30,10 +30,8 @@
   "exclude": [
     "./docs",
     "./test_utils",
-    "**/*_test.ts",
     "cov_profile",
     "cov_profile.lcov",
-    "dev_deps.ts",
     "**/__snapshots__",
     ".github",
     ".vscode",
