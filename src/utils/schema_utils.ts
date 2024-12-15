@@ -2,7 +2,7 @@ import {
   extendZodWithOpenApi,
   type ResponseConfig,
   type RouteConfig,
-} from "npm:@asteasolutions/zod-to-openapi@^7.2.0";
+} from "@asteasolutions/zod-to-openapi";
 
 /**
  * Open API Schema interface, usable when composing the request/response
@@ -36,7 +36,7 @@ export type OakOpenApiSpec =
   };
 
 // must import from `npm:` instead of from `deno.land` to be compatible with `@asteasolutions/zod-to-openapi`
-import { z as slowTypedZ } from "npm:zod@^3.23.8";
+import { z as slowTypedZ } from "zod";
 extendZodWithOpenApi(slowTypedZ);
 type SubsetOfZ = Pick<
   typeof slowTypedZ,

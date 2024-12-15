@@ -180,6 +180,7 @@ function getEnhancedHandler(
     for (const p of consumerDesirableParams) {
       switch (true) {
         case p === "param":
+        case p === "params" as ControllerMethodArg: // undocumented on purpose
           // path param
           decoratedArgs.push(ctx.params);
           break;
@@ -188,10 +189,13 @@ function getEnhancedHandler(
           decoratedArgs.push(parsedReqBody);
           break;
         case p === "query":
+        case p === "queries" as ControllerMethodArg: // undocumented on purpose
           // search query a.k.a URLSearchParams
           decoratedArgs.push(parsedReqSearchParams);
           break;
-        case p === "headers": {
+        case p === "headers":
+        case p === "header" as ControllerMethodArg: // undocumented on purpose
+        {
           // request headers
           const headers: Record<string, string> = {};
           ctx.request.headers.forEach((v: string, k: string) => headers[k] = v);

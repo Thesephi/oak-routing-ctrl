@@ -66,6 +66,11 @@ class TestController {
   baz(query: Record<string, string>, param: Record<string, string>) {
     return `hello, path /baz/${param.zaz} with query ${query.someKey}`;
   }
+  @Get("/dolor/:zaz_zaz")
+  @ControllerMethodArgs("params" as ControllerMethodArg) // intentional coercing to test undocumented usage
+  dolor(param: Record<string, string>) {
+    return `hello, path /dolor/${param.zaz_zaz}`;
+  }
   @Put("/taz/:someId")
   @ControllerMethodArgs("body")
   taz(body: ArrayBuffer, ctx: RouteContext<"/taz/:someId">) {
@@ -187,6 +192,12 @@ Deno.test({
         mockRequestQuery: { someKey: "chaz" },
         mockRequestPathParams: { zaz: "jaz" },
         expectedResponse: "hello, path /baz/jaz with query chaz",
+      },
+      {
+        caseDescription: "handler with 'params' as undocumented usage",
+        method: "get",
+        mockRequestPathParams: { zaz_zaz: "jaz_jaz" },
+        expectedResponse: "hello, path /dolor/jaz_jaz",
       },
       {
         caseDescription: "handler for a request with a binary payload",

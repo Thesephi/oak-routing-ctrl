@@ -1,10 +1,17 @@
 ## Unreleased
 
+### Added
+
+- Laxer usage of `ControllerMethodArgs` decorator: now allowing `queries`,
+  `params`, `header` as literal arguments, so that things still work even if
+  users accidentally / deliberately use the undocumented singular / plural forms
+
 ### Changed
 
 - switched from `deps.ts` and `dev_deps.ts` to `deno.jsonc`
-- revamped documentation
-- code format
+- revamped documentation (JSDoc)
+- code format & code format settings for VS Code users
+- upgraded dependencies (`zod@^3.24.1`)
 
 ## [0.12.2] - 2024-12-06
 

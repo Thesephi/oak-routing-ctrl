@@ -5,7 +5,7 @@ import {
   OpenAPIRegistry,
   type RouteConfig,
 } from "@asteasolutions/zod-to-openapi";
-import { type OpenAPIObjectConfig } from "npm:@asteasolutions/zod-to-openapi@^7.2.0/dist/v3.0/openapi-generator";
+import { type OpenAPIObjectConfig } from "@asteasolutions/zod-to-openapi/dist/v3.0/openapi-generator";
 import { debug } from "./utils/logger.ts";
 import { inspect } from "./utils/inspect.ts";
 
