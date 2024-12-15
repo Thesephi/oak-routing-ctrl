@@ -13,6 +13,10 @@
 - code format & code format settings for VS Code users
 - upgraded dependencies (`zod@^3.24.1`)
 
+## Removed
+
+- the file `jsr.json` is removed in favour of file `deno.jsonc`
+
 ## [0.12.2] - 2024-12-06
 
 ### Added
