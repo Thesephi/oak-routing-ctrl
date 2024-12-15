@@ -5,6 +5,14 @@
     ".": "./mod.ts",
     "./mod": "./mod.ts"
   },
+  "publish": {
+    "exclude": [
+      "./test_utils",
+      "**/*_test.ts",
+      "./CONTRIBUTING.md",
+      "./GOVERNANCE.md"
+    ]
+  },
   "tasks": {
     "pretty": "deno lint --ignore=docs && deno check . && deno fmt",
     "test": "deno test -RE",
@@ -29,13 +37,10 @@
   },
   "exclude": [
     "./docs",
-    "./test_utils",
     "cov_profile",
     "cov_profile.lcov",
     "**/__snapshots__",
     ".github",
-    ".vscode",
-    "./CONTRIBUTING.md",
-    "./GOVERNANCE.md"
+    ".vscode"
   ]
 }

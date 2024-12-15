@@ -1,4 +1,4 @@
-import { type BodyType, type Request } from "@oak/oak";
+import type { BodyType, Request } from "@oak/oak";
 
 export type MockRequestBodyDefinition = {
   type: BodyType;
