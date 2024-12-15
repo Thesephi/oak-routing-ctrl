@@ -1,4 +1,4 @@
-import { assertEquals, assertThrows } from "../../dev_deps.ts";
+import { assertEquals, assertThrows } from "@std/assert";
 import { ERR_UNSUPPORTED_CLASS_METHOD_DECORATOR_RUNTIME_BEHAVIOR } from "../Constants.ts";
 import { getUserSuppliedDecoratedMethodName } from "./getUserSuppliedDecoratedMethodName.ts";
 

@@ -1,9 +1,5 @@
-import {
-  assertEquals,
-  assertSpyCall,
-  assertSpyCalls,
-  spy,
-} from "../dev_deps.ts";
+import { assertEquals } from "@std/assert";
+import { assertSpyCall, assertSpyCalls, spy } from "@std/testing/mock";
 import { register, store } from "./Store.ts";
 
 Deno.test("Store", () => {

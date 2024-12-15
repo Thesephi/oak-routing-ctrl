@@ -1,4 +1,4 @@
-import { type BodyType, type Request } from "../dev_deps.ts";
+import type { BodyType, Request } from "@oak/oak";
 
 export type MockRequestBodyDefinition = {
   type: BodyType;

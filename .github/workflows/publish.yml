@@ -26,6 +26,9 @@ jobs:
       - name: Run linter
         run: deno lint --ignore=\*\*\/\*_test.ts
 
+      - name: Check doc
+        run: deno task check-doc
+
       - name: Run tests
         run: deno test -A
 

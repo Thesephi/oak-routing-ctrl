@@ -28,6 +28,9 @@ jobs:
       - name: Run linter
         run: deno lint
 
+      - name: Check doc
+        run: deno task check-doc
+
       - name: Run tests
         run: |
           deno test -A --coverage=cov_profile

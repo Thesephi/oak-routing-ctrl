@@ -1,3 +1,24 @@
+## Unreleased
+
+### Added
+
+- Laxer usage of `ControllerMethodArgs` decorator: now allowing `queries`,
+  `params`, `header` as literal arguments, so that things still work even if
+  users accidentally / deliberately use the undocumented singular / plural forms
+
+### Changed
+
+- switched from `deps.ts` and `dev_deps.ts` to `deno.jsonc`
+- revamped documentation (JSDoc)
+- code format & code format settings for VS Code users
+- upgraded dependencies (`zod@^3.24.1`)
+- updated typing for `OakOpenApiSpec` (added prop: `request`, untyped unproven
+  prop: `requestBody`)
+
+## Removed
+
+- the file `jsr.json` is removed in favour of the file `deno.jsonc`
+
 ## [0.12.2] - 2024-12-06
 
 ### Added
