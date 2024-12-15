@@ -1,7 +1,7 @@
 import { debug } from "./utils/logger.ts";
 import { register } from "./Store.ts";
 import { getUserSuppliedDecoratedMethodName } from "./utils/getUserSuppliedDecoratedMethodName.ts";
-import { type OakOpenApiSpec } from "./utils/schema_utils.ts";
+import type { OakOpenApiSpec } from "./utils/schema_utils.ts";
 import { updateOas } from "./oasStore.ts";
 
 type MethodDecorator = (

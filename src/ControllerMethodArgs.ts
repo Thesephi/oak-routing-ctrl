@@ -1,5 +1,5 @@
 import { debug } from "./utils/logger.ts";
-import { type Context, type RouteContext } from "@oak/oak";
+import type { Context, RouteContext } from "@oak/oak";
 import { ERR_UNSUPPORTED_CLASS_METHOD_DECORATOR_RUNTIME_BEHAVIOR } from "./Constants.ts";
 
 /**
