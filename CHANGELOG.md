@@ -12,10 +12,12 @@
 - revamped documentation (JSDoc)
 - code format & code format settings for VS Code users
 - upgraded dependencies (`zod@^3.24.1`)
+- updated typing for `OakOpenApiSpec` (added prop: `request`, untyped unproven
+  prop: `requestBody`)
 
 ## Removed
 
-- the file `jsr.json` is removed in favour of file `deno.jsonc`
+- the file `jsr.json` is removed in favour of the file `deno.jsonc`
 
 ## [0.12.2] - 2024-12-06
 

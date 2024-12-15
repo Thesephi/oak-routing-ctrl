@@ -28,8 +28,9 @@ import {
  * ```
  */
 export type OakOpenApiSpec =
-  & Omit<RouteConfig, "method" | "path" | "responses">
+  & Omit<RouteConfig, "method" | "path" | "responses" | "requestBody">
   & {
+    request?: RouteConfig["request"];
     responses?: {
       [statusCode: string]: ResponseConfig;
     };
