@@ -2,6 +2,7 @@ import type { Application } from "@oak/oak";
 import { oasStore } from "./oasStore.ts";
 import {
   OpenApiGeneratorV3,
+  OpenApiGeneratorV31,
   OpenAPIRegistry,
   type RouteConfig,
 } from "@asteasolutions/zod-to-openapi";
@@ -34,6 +35,11 @@ export type UseOasConfig = Partial<OpenAPIObjectConfig> & {
   jsonPath?: string;
   uiPath?: string;
   uiTemplate?: string;
+  tags?: {
+    name: string;
+    description?: string;
+    externalDocs?: { url: string };
+  }[];
 };
 
 type UseOas = (
@@ -62,7 +68,11 @@ const _useOas: UseOas = (
     }
   });
 
-  const generator = new OpenApiGeneratorV3(registry.definitions);
+  const OpenApiGenerator = oasCfg.openapi?.startsWith("3.0")
+    ? OpenApiGeneratorV3
+    : OpenApiGeneratorV31;
+
+  const generator = new OpenApiGenerator(registry.definitions);
   const apiDoc = generator.generateDocument({
     openapi: "3.0.0",
     info: {

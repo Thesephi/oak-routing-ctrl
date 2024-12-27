@@ -3,8 +3,12 @@ import type { OakOpenApiSpec } from "./utils/schema_utils.ts";
 import type { SupportedVerb } from "./Store.ts";
 import { debug } from "./utils/logger.ts";
 
+type TheRouteConfig = RouteConfig & {
+  tags?: string[];
+};
+
 // fnName|method|path => OasRouteConfig
-export const oasStore: Map<string, RouteConfig> = new Map();
+export const oasStore: Map<string, TheRouteConfig> = new Map();
 
 const getRouteId = (
   fnName: string,
@@ -62,6 +66,8 @@ export const updateOas = (
       ...existing.responses,
       ...specs?.responses,
     },
+    operationId: specs?.operationId,
+    tags: specs?.tags,
   };
 
   debug(`OpenApiSpec: recording for [${method}] ${path}`);
