@@ -1,4 +1,4 @@
-## Unreleased
+## [0.13.0] - 2025-02-01
 
 ### Added
 
@@ -18,6 +18,8 @@
   `@std/testing@^1.0.8`)
 - updated typing for `OakOpenApiSpec` (added prop: `request`, untyped unproven
   prop: `requestBody`)
+- upgraded dependencies: `jsr:@oak/oak@^17.1.4`, `jsr:@std/assert@^1.0.11`,
+  `jsr:@std/io@^0.225.2`, `jsr:@std/testing@^1.0.9`
 
 ## Removed
 
