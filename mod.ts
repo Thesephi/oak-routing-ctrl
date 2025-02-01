@@ -1,6 +1,5 @@
-export { useOakServer } from "./src/useOakServer.ts";
-export { useOakServer as useOak } from "./src/useOakServer.ts";
-export { useOas } from "./src/useOas.ts";
+export { useOak, useOakServer } from "./src/useOakServer.ts";
+export { useOas, type UseOasConfig } from "./src/useOas.ts";
 export { Controller } from "./src/Controller.ts";
 export {
   type ControllerMethodArg,
@@ -14,4 +13,8 @@ export { Delete } from "./src/Delete.ts";
 export { Options } from "./src/Options.ts";
 export { Head } from "./src/Head.ts";
 
-export { type OakOpenApiSpec, z, type zInfer } from "./deps.ts";
+export {
+  type OakOpenApiSpec,
+  z,
+  type zInfer,
+} from "./src/utils/schema_utils.ts";

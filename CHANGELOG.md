@@ -1,3 +1,30 @@
+## [0.13.0] - 2025-02-01
+
+### Added
+
+- Laxer usage of `ControllerMethodArgs` decorator: now allowing `queries`,
+  `params`, `header` as literal arguments, so that things still work even if
+  users accidentally / deliberately use the undocumented singular / plural forms
+- Support for Open API Spec v3.1
+- Support for `operationId` and `tags` in OAS path request declarations
+- Support for top-level `tags` in OAS document
+
+### Changed
+
+- switched from `deps.ts` and `dev_deps.ts` to `deno.jsonc`
+- revamped documentation (JSDoc)
+- code format & code format settings for VS Code users
+- upgraded dependencies (`zod@^3.24.1`, `@std/assert@^1.0.10`,
+  `@std/testing@^1.0.8`)
+- updated typing for `OakOpenApiSpec` (added prop: `request`, untyped unproven
+  prop: `requestBody`)
+- upgraded dependencies: `jsr:@oak/oak@^17.1.4`, `jsr:@std/assert@^1.0.11`,
+  `jsr:@std/io@^0.225.2`, `jsr:@std/testing@^1.0.9`
+
+## Removed
+
+- the file `jsr.json` is removed in favour of the file `deno.jsonc`
+
 ## [0.12.2] - 2024-12-06
 
 ### Added

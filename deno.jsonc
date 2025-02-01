@@ -1,0 +1,46 @@
+{
+  "name": "@dklab/oak-routing-ctrl",
+  "version": "0.13.0",
+  "exports": {
+    ".": "./mod.ts",
+    "./mod": "./mod.ts"
+  },
+  "publish": {
+    "exclude": [
+      "./test_utils",
+      "**/*_test.ts",
+      "./CONTRIBUTING.md",
+      "./GOVERNANCE.md"
+    ]
+  },
+  "tasks": {
+    "pretty": "deno lint --ignore=docs && deno check . && deno fmt",
+    "test": "deno test -RE",
+    "check-doc": "deno check --doc .",
+    "doc": "deno doc --html mod.ts"
+  },
+  "imports": {
+    "@asteasolutions/zod-to-openapi": "npm:@asteasolutions/zod-to-openapi@^7.3.0",
+    "@oak/oak": "jsr:@oak/oak@^17.1.4",
+    "@std/assert": "jsr:@std/assert@^1.0.11",
+    "@std/io": "jsr:@std/io@^0.225.2",
+    "@std/path": "jsr:@std/path@^1.0.8",
+    "@std/testing": "jsr:@std/testing@^1.0.9",
+    "zod": "npm:zod@^3.24.1"
+  },
+  "fmt": {
+    "useTabs": false,
+    "indentWidth": 2,
+    "semiColons": true,
+    "singleQuote": false,
+    "proseWrap": "always"
+  },
+  "exclude": [
+    "./docs",
+    "cov_profile",
+    "cov_profile.lcov",
+    "**/__snapshots__",
+    ".github",
+    ".vscode"
+  ]
+}

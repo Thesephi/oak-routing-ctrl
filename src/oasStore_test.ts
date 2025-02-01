@@ -1,5 +1,6 @@
-import { z } from "../deps.ts";
-import { assertEquals, assertInstanceOf, ZodObject } from "../dev_deps.ts";
+import { z } from "./utils/schema_utils.ts";
+import { assertEquals, assertInstanceOf } from "@std/assert";
+import { ZodObject } from "zod";
 import { oasStore, patchOasPath, updateOas } from "./oasStore.ts";
 import { _internal } from "./oasStore.ts";
 

@@ -2,18 +2,14 @@ import type { SupportedVerb } from "./Store.ts";
 import {
   type Context,
   type ErrorStatus,
-  RouteContext,
+  type RouteContext,
   Status,
-  z,
-} from "../deps.ts";
-import {
-  assertEquals,
-  assertSnapshot,
-  assertSpyCallArg,
-  assertSpyCalls,
-  oakTesting,
-  spy,
-} from "../dev_deps.ts";
+  testing as oakTesting,
+} from "@oak/oak";
+import { z } from "./utils/schema_utils.ts";
+import { assertEquals } from "@std/assert";
+import { assertSpyCallArg, assertSpyCalls, spy } from "@std/testing/mock";
+import { assertSnapshot } from "@std/testing/snapshot";
 import {
   Controller,
   type ControllerMethodArg,
@@ -69,6 +65,11 @@ class TestController {
   @ControllerMethodArgs("query", "param")
   baz(query: Record<string, string>, param: Record<string, string>) {
     return `hello, path /baz/${param.zaz} with query ${query.someKey}`;
+  }
+  @Get("/dolor/:zaz_zaz")
+  @ControllerMethodArgs("params" as ControllerMethodArg) // intentional coercing to test undocumented usage
+  dolor(param: Record<string, string>) {
+    return `hello, path /dolor/${param.zaz_zaz}`;
   }
   @Put("/taz/:someId")
   @ControllerMethodArgs("body")
@@ -191,6 +192,12 @@ Deno.test({
         mockRequestQuery: { someKey: "chaz" },
         mockRequestPathParams: { zaz: "jaz" },
         expectedResponse: "hello, path /baz/jaz with query chaz",
+      },
+      {
+        caseDescription: "handler with 'params' as undocumented usage",
+        method: "get",
+        mockRequestPathParams: { zaz_zaz: "jaz_jaz" },
+        expectedResponse: "hello, path /dolor/jaz_jaz",
       },
       {
         caseDescription: "handler for a request with a binary payload",

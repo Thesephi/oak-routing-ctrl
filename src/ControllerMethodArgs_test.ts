@@ -1,14 +1,8 @@
-import {
-  assertEquals,
-  assertSpyCalls,
-  assertStringIncludes,
-  assertThrows,
-  Body,
-  type BodyType,
-  Buffer,
-  oakTesting,
-  spy,
-} from "../dev_deps.ts";
+import { type BodyType, testing as oakTesting } from "@oak/oak";
+import { Body } from "@oak/oak/body";
+import { assertEquals, assertStringIncludes, assertThrows } from "@std/assert";
+import { assertSpyCalls, spy } from "@std/testing/mock";
+import { Buffer } from "@std/io";
 import { ERR_UNSUPPORTED_CLASS_METHOD_DECORATOR_RUNTIME_BEHAVIOR } from "./Constants.ts";
 import {
   _internal,
@@ -891,6 +885,44 @@ Deno.test("getEnhancedHandler - not declaring any param", async () => {
   assertEquals(args[0], ctx);
   assertEquals(testHandler.calls[0].returned, undefined);
   assertSpyCalls(testHandler, 1);
+});
+
+Deno.test("getEnhancedHandler - declaring undocumented params", async () => {
+  const spyParseOakRequestBody = spy(_internal, "parseOakReqBody");
+  // deno-lint-ignore no-explicit-any
+  const testHandler = spy((..._rest: any[]) => 44);
+  // deno-lint-ignore ban-types
+  const enhancedHandler: Function = _internal.getEnhancedHandler(
+    testHandler,
+    "context" as ControllerMethodArg,
+    "params" as ControllerMethodArg,
+    "queries" as ControllerMethodArg,
+    "header" as ControllerMethodArg,
+    "hiddenFeature" as ControllerMethodArg,
+  );
+  const ctx = createMockContext({
+    path: "/hello/world",
+    params: { lorem: "undocumented usage", hiddenFeature: "84" },
+    headers: [["X-Foo", "Bearer Bar"]],
+  });
+  Object.defineProperty(ctx.request, "body", {
+    get: () => createMockRequestBody("binary"),
+  });
+  Object.defineProperty(ctx.request.url, "searchParams", {
+    value: new Map([["ipsum", "dolor"]]),
+  });
+  await enhancedHandler(ctx);
+  const [context, param, query, headers, hiddenFeature] =
+    testHandler.calls[0].args;
+  assertEquals(param, { lorem: "undocumented usage", hiddenFeature: "84" });
+  assertEquals(query, { ipsum: "dolor" });
+  assertEquals(hiddenFeature, "84");
+  assertEquals(context, ctx);
+  assertEquals(headers, { "x-foo": "Bearer Bar" });
+  assertEquals(testHandler.calls[0].returned, 44);
+  assertSpyCalls(testHandler, 1);
+  assertSpyCalls(spyParseOakRequestBody, 1);
+  spyParseOakRequestBody.restore();
 });
 
 /**

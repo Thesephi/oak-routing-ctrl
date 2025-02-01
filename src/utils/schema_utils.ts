@@ -1,41 +1,43 @@
-export { join } from "jsr:@std/path@^1.0.8";
-
-export { Router, Status } from "jsr:@oak/oak@^17.1.3";
-
-export type {
-  Application,
-  Context,
-  ErrorStatus,
-  Next,
-  RouteContext,
-} from "jsr:@oak/oak@^17.1.3";
-
 import {
   extendZodWithOpenApi,
   type ResponseConfig,
   type RouteConfig,
-} from "npm:@asteasolutions/zod-to-openapi@^7.2.0";
+} from "@asteasolutions/zod-to-openapi";
 
+/**
+ * Open API Schema interface, usable when composing the request/response
+ * schema for a REST endpoint (declared when using the
+ * decorators such as {@linkcode Get}, {@linkcode Post}, etc.)
+ * @example
+ * ```ts
+ * import { Get } from "@dklab/oak-routing-ctrl"
+ *
+ * const GetItemsSchema: OakOpenApiSpec = {
+ *   responses: {
+ *     "200": { "description": "OK" }
+ *   }
+ * }
+ *
+ * // later inside the Controller Class
+ * class ExampleClass {
+ *   ;@Get("/", GetItemsSchema)
+ *   async getSomething() {
+ *     //
+ *   }
+ * }
+ * ```
+ */
 export type OakOpenApiSpec =
-  & Omit<RouteConfig, "method" | "path" | "responses">
+  & Omit<RouteConfig, "method" | "path" | "responses" | "requestBody">
   & {
+    request?: RouteConfig["request"];
     responses?: {
       [statusCode: string]: ResponseConfig;
     };
   };
 
-export { type ResponseConfig, type RouteConfig };
-
-export {
-  OpenApiGeneratorV3,
-  OpenAPIRegistry,
-  type ZodRequestBody,
-} from "npm:@asteasolutions/zod-to-openapi@^7.2.0";
-
-export { type OpenAPIObjectConfig } from "npm:@asteasolutions/zod-to-openapi@^7.2.0/dist/v3.0/openapi-generator";
-
 // must import from `npm:` instead of from `deno.land` to be compatible with `@asteasolutions/zod-to-openapi`
-import { z as slowTypedZ } from "npm:zod@^3.23.8";
+import { z as slowTypedZ } from "zod";
 extendZodWithOpenApi(slowTypedZ);
 type SubsetOfZ = Pick<
   typeof slowTypedZ,

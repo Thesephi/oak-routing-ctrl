@@ -1,11 +1,10 @@
+import { assertEquals, assertInstanceOf } from "@std/assert";
 import {
-  assertEquals,
-  assertInstanceOf,
   assertSpyCall,
   assertSpyCalls,
   type MethodSpy,
   spy,
-} from "../dev_deps.ts";
+} from "@std/testing/mock";
 import { store } from "./Store.ts";
 import { _internal } from "./Get.ts";
 
