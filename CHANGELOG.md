@@ -4,8 +4,8 @@
 
 - multiple paths can now be registered on the same HTTP verb, and if the
   "static" and the "parameter" portions of the registered paths somehow overlap,
-  then the handler is invoked **once for each matched path**; for example if we
-  register `@Get("/foo/:bar")` and `@Get("/foo/bar")` (in that order) on the
+  then the handler is invoked **once for each registered path**; for example if
+  we register `@Get("/foo/:bar")` and `@Get("/foo/bar")` (in that order) on the
   same handler function, then for every request to `/foo/bar`, the same handler
   is invoked **twice**, the first time having no "param" at all, and the 2nd
   time having the param `bar` with the value `"bar"`. This behavior follows TC39
@@ -16,10 +16,10 @@
 
 - `ctx.state._oakRoutingCtrl_regPath` is available as a pointer to the
   registered path that matches the URL request currently being handled; this is
-  helpful in rare situations where multiple similar paths are registered on the
-  same handler function, causing it to be invoked multiple times, and so we need
-  a machanism to control when to write to the response body (as it can only be
-  done once)
+  helpful in rare situations where multiple overlapping paths are registered on
+  the same handler function, causing it to be invoked multiple times, and so we
+  may benefit from a mechanism to control when to write to the response body (as
+  this operation can only be done once)
 
 ## [0.13.0] - 2025-02-01
 

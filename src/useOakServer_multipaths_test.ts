@@ -7,11 +7,17 @@
 
 import { superoak } from "superoak";
 import { Application } from "@oak/oak";
-import { type Context, ControllerMethodArgs, useOakServer } from "../mod.ts";
-import { Controller, Get, Post } from "../mod.ts";
+import {
+  type Context,
+  Controller,
+  ControllerMethodArgs,
+  Get,
+  Post,
+  Put,
+  useOakServer,
+} from "../mod.ts";
 import { assertSpyCallArgs, assertSpyCalls, spy } from "@std/testing/mock";
 import { assertEquals } from "@std/assert";
-import { Put } from "./Put.ts";
 
 const spyTemplate = {
   handler1(..._: unknown[]) {},
