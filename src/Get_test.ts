@@ -23,5 +23,5 @@ Deno.test("@Get decorator", () => {
   assertSpyCall(Get, 0, { args: ["/bar"] });
   assertInstanceOf(Get.calls[0].returned, Function);
   assertSpyCalls(Get, 1);
-  assertEquals(store.get("doSomething")?.get("get"), "/bar");
+  assertEquals(store.get("doSomething")?.get("/bar"), "get");
 });

@@ -27,7 +27,7 @@ Deno.test("@Put decorator", () => {
   assertSpyCall(Put, 0, { args: ["/bar"] });
   assertInstanceOf(Put.calls[0].returned, Function);
   assertSpyCalls(Put, 1);
-  assertEquals(store.get("doSomething")?.get("put"), "/bar");
+  assertEquals(store.get("doSomething")?.get("/bar"), "put");
 
   // assertSpyCalls(spyLoggerDebug, 1);
   // assertSpyCalls(spyStoreRegister, 1);

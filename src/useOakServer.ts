@@ -21,10 +21,17 @@ export const useOakServer = (
       if (propName === "constructor") continue;
       const pair = store.get(propName);
       if (!pair) continue;
-      for (const [verb, path] of pair) {
+      for (const [path, verb] of pair) {
         oakRouter[verb](
           path,
           async (ctx, next): Promise<void> => {
+            // since 0.14.0, multiple paths can be registered on the
+            // same handler function, so it's useful to have a pointer
+            // to the currently registered path every time the handler is
+            // invoked per match
+            ctx.state._oakRoutingCtrl_regPath = path;
+            debug(`handling literally-registered path ${path}`);
+
             const handler = Object.getOwnPropertyDescriptor(
               Ctrl.prototype,
               propName,

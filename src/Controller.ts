@@ -35,10 +35,12 @@ export const Controller =
     for (const fnName of fnNames) {
       const pair = store.get(fnName);
       if (!pair) continue;
-      pair.forEach((path, verb, p) => {
+      const patchedPair = new Map();
+      pair.forEach((verb, path) => {
         const fullPath = join(pathPrefix, path);
-        p.set(verb, fullPath);
+        patchedPair.set(fullPath, verb);
         patchOasPath(fnName, verb, fullPath);
       });
+      store.set(fnName, patchedPair);
     }
   };

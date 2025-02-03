@@ -23,5 +23,5 @@ Deno.test("@Head decorator", () => {
   assertSpyCall(Head, 0, { args: ["/bar"] });
   assertInstanceOf(Head.calls[0].returned, Function);
   assertSpyCalls(Head, 1);
-  assertEquals(store.get("doSomething")?.get("head"), "/bar");
+  assertEquals(store.get("doSomething")?.get("/bar"), "head");
 });

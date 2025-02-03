@@ -23,5 +23,5 @@ Deno.test("@Patch decorator", () => {
   assertSpyCall(Patch, 0, { args: ["/bar"] });
   assertInstanceOf(Patch.calls[0].returned, Function);
   assertSpyCalls(Patch, 1);
-  assertEquals(store.get("doSomething")?.get("patch"), "/bar");
+  assertEquals(store.get("doSomething")?.get("/bar"), "patch");
 });

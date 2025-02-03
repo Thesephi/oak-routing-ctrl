@@ -7,7 +7,7 @@ export type SupportedVerb =
   | "head"
   | "options";
 
-export const store: Map<string, Map<SupportedVerb, string>> = new Map();
+export const store: Map<string, Map<string, SupportedVerb>> = new Map();
 
 /**
  * internal library helper method, used to keep track of the declared
@@ -21,8 +21,13 @@ export const register = (
   const normalizedVerb: SupportedVerb = verb.toLowerCase() as SupportedVerb;
   const existingPair = store.get(fnName);
   if (existingPair) {
-    existingPair.set(normalizedVerb, path);
+    // @NOTE that we intentionally allow multiple paths registered on the
+    // same verb e.g.
+    // - @Get('/foo') AND @Get('/foo/bar')
+    // - @Get('/foo') AND @Get('/bar')
+    // - @Get('/foo/:bar') AND @Get('/foo/bar')
+    existingPair.set(path, normalizedVerb);
   } else {
-    store.set(fnName, new Map([[normalizedVerb, path]]));
+    store.set(fnName, new Map([[path, normalizedVerb]]));
   }
 };

@@ -23,11 +23,11 @@ Deno.test("Store", () => {
   assertSpyCall(spyStoreGet, 3, { args: ["handlerFnName"] });
   assertSpyCall(spyStoreGet, 4, { args: ["handlerFnName"] });
   const finalMap = new Map([
-    ["get", "/foo"],
-    ["post", "/bar"],
-    ["put", "/baz"],
-    ["delete", "/maz"],
-    ["patch", "/laz"],
+    ["/foo", "get"],
+    ["/bar", "post"],
+    ["/baz", "put"],
+    ["/maz", "delete"],
+    ["/laz", "patch"],
   ]);
   assertEquals(store.get("handlerFnName"), finalMap);
 
