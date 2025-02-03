@@ -15,8 +15,8 @@
   },
   "tasks": {
     "pretty": "deno lint --ignore=docs && deno check . && deno fmt",
-    "test": "deno test -REI -N=0.0.0.0,127.0.0.1",
-    "check-doc": "deno check --doc .",
+    "test": "deno test -RE -I=jspm.dev,jsr.io,deno.land -N=0.0.0.0,127.0.0.1",
+    "check-doc": "deno check -I=jspm.dev,jsr.io,deno.land --doc .",
     "doc": "deno doc --html mod.ts"
   },
   "imports": {
