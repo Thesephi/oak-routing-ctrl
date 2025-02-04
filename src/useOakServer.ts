@@ -19,7 +19,8 @@ export const useOakServer = (
     const ctrlProps: string[] = Object.getOwnPropertyNames(Ctrl.prototype);
     for (const propName of ctrlProps) {
       if (propName === "constructor") continue;
-      const pair = store.get(propName);
+      const fqFnName = `${Ctrl.name}.${propName}`;
+      const pair = store.get(fqFnName);
       if (!pair) continue;
       for (const [path, verb] of pair) {
         oakRouter[verb](
@@ -30,7 +31,9 @@ export const useOakServer = (
             // to the currently registered path every time the handler is
             // invoked per match
             ctx.state._oakRoutingCtrl_regPath = path;
-            debug(`handling literally-registered path ${path}`);
+            debug(
+              `handling literally-registered path ${path} with ${fqFnName}`,
+            );
 
             const handler = Object.getOwnPropertyDescriptor(
               Ctrl.prototype,
@@ -52,7 +55,7 @@ export const useOakServer = (
             await next();
           },
         );
-        debug(`mapping route [${verb}] ${path} -> ${propName}`);
+        debug(`mapping route [${verb}] ${path} -> ${fqFnName}`);
       }
     }
   }

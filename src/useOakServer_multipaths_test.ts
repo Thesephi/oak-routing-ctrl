@@ -12,6 +12,7 @@ import {
   Controller,
   ControllerMethodArgs,
   Get,
+  Patch,
   Post,
   Put,
   useOakServer,
@@ -23,11 +24,12 @@ const spyTemplate = {
   handler1(..._: unknown[]) {},
   handler2(..._: unknown[]) {},
   handler3(..._: unknown[]) {},
+  handler4(..._: unknown[]) {},
   catchAll(..._: unknown[]) {},
 };
 
 @Controller("/test")
-class TestController {
+class TestController1 {
   @Get("/handler1/:bar")
   @Get("/handler1/bar")
   @Post("/handler1/par")
@@ -70,10 +72,41 @@ class TestController {
     spyTemplate.handler3(method, reqPath, regPath, { ...param });
     return { method, reqPath, regPath, param, body };
   }
+
+  @Patch("/handler4")
+  @ControllerMethodArgs("body", "param")
+  handler4(
+    body: Record<string, unknown>,
+    param: Record<string, unknown>,
+    ctx: Context,
+  ) {
+    const method = ctx.request.method;
+    const reqPath = ctx.request.url.pathname;
+    const regPath = ctx.state._oakRoutingCtrl_regPath;
+    spyTemplate.handler4(method, reqPath, regPath, { ...param });
+    return { method, reqPath, regPath, param, body };
+  }
+}
+
+@Controller("/test")
+class TestController2 {
+  @Patch("/handler4/:bar")
+  @ControllerMethodArgs("body", "param")
+  handler4(
+    body: Record<string, unknown>,
+    param: Record<string, unknown>,
+    ctx: Context,
+  ) {
+    const method = ctx.request.method;
+    const reqPath = ctx.request.url.pathname;
+    const regPath = ctx.state._oakRoutingCtrl_regPath;
+    spyTemplate.handler4(method, reqPath, regPath, { ...param });
+    return { method, reqPath, regPath, param, body };
+  }
 }
 
 const app = new Application();
-useOakServer(app, [TestController]);
+useOakServer(app, [TestController1, TestController2]);
 app.use((ctx) => {
   spyTemplate.catchAll(
     "catch-all middleware invoked for",
@@ -280,5 +313,61 @@ Deno.test("Similar paths that do not actually overlap - path 2", async () => {
     regPath: "/test/handler3/:bar",
     param: { bar: "charlie" },
     body: { charlie: true },
+  });
+});
+
+Deno.test("[PATCH] /test/handler4", async () => {
+  const handler4Spy = spy(spyTemplate, "handler4");
+  const catchAllSpy = spy(spyTemplate, "catchAll");
+
+  const req = await superoak(app);
+  const res = await req.patch("/test/handler4");
+
+  assertSpyCalls(handler4Spy, 1);
+  assertSpyCallArgs(handler4Spy, 0, [
+    "PATCH",
+    "/test/handler4",
+    "/test/handler4",
+    {},
+  ]);
+  assertSpyCalls(catchAllSpy, 1);
+
+  handler4Spy.restore();
+  catchAllSpy.restore();
+
+  assertEquals(res.body, {
+    method: "PATCH",
+    reqPath: "/test/handler4",
+    regPath: "/test/handler4",
+    param: {},
+    body: {},
+  });
+});
+
+Deno.test("[PATCH] /test/handler4/:bar", async () => {
+  const handler4Spy = spy(spyTemplate, "handler4");
+  const catchAllSpy = spy(spyTemplate, "catchAll");
+
+  const req = await superoak(app);
+  const res = await req.patch("/test/handler4/bob").send({ bob: true });
+
+  assertSpyCalls(handler4Spy, 1);
+  assertSpyCallArgs(handler4Spy, 0, [
+    "PATCH",
+    "/test/handler4/bob",
+    "/test/handler4/:bar",
+    { bar: "bob" },
+  ]);
+  assertSpyCalls(catchAllSpy, 1);
+
+  handler4Spy.restore();
+  catchAllSpy.restore();
+
+  assertEquals(res.body, {
+    method: "PATCH",
+    reqPath: "/test/handler4/bob",
+    regPath: "/test/handler4/:bar",
+    param: { bar: "bob" },
+    body: { bob: true },
   });
 });
