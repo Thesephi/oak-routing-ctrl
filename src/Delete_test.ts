@@ -23,5 +23,5 @@ Deno.test("@Delete decorator", () => {
   assertSpyCall(Delete, 0, { args: ["/bar"] });
   assertInstanceOf(Delete.calls[0].returned, Function);
   assertSpyCalls(Delete, 1);
-  assertEquals(store.get("doSomething")?.get("delete"), "/bar");
+  assertEquals(store.get("doSomething")?.get("/bar"), "delete");
 });

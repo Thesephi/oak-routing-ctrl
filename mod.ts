@@ -18,3 +18,11 @@ export {
   z,
   type zInfer,
 } from "./src/utils/schema_utils.ts";
+
+export type {
+  /**
+   * re-exporting from oak for convenient uses
+   * @ignore
+   */
+  Context,
+} from "@oak/oak";

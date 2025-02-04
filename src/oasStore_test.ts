@@ -12,6 +12,7 @@ Deno.test("no-op", () => {
 });
 
 Deno.test("store entry creation & update", () => {
+  const ctrlName = "TestCtrl";
   const fnName = "doSomething";
   const method = "post";
   const path = "/hello/:name";
@@ -40,7 +41,7 @@ Deno.test("store entry creation & update", () => {
     },
   });
 
-  const record = oasStore.get(getRouteId(fnName, method, path));
+  const record = oasStore.get(getRouteId("FILLED_LATER", fnName, method, path));
   assertEquals(record?.method, method);
   assertEquals(record?.path, getOasCompatPath(path));
   assertInstanceOf(
@@ -48,8 +49,10 @@ Deno.test("store entry creation & update", () => {
     ZodObject,
   );
 
-  patchOasPath(fnName, method, patchedPath);
-  const patchedRecord = oasStore.get(getRouteId(fnName, method, path));
+  patchOasPath(ctrlName, fnName, method, patchedPath);
+  const patchedRecord = oasStore.get(
+    getRouteId(ctrlName, fnName, method, patchedPath),
+  );
   assertEquals(patchedRecord?.method, method);
   assertEquals(patchedRecord?.path, getOasCompatPath(patchedPath));
   assertInstanceOf(

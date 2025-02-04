@@ -26,8 +26,9 @@ type ClassDecorator = (
  */
 export const Controller =
   (pathPrefix: string = ""): ClassDecorator => (target, context): void => {
+    const ctrlClassName = target.name;
     debug(
-      `invoking ControllerDecorator for ${target.name} -`,
+      `invoking ControllerDecorator for ${ctrlClassName} -`,
       "runtime provides context:",
       context,
     );
@@ -35,10 +36,19 @@ export const Controller =
     for (const fnName of fnNames) {
       const pair = store.get(fnName);
       if (!pair) continue;
-      pair.forEach((path, verb, p) => {
+      const patchedPair = new Map();
+      pair.forEach((verb, path) => {
         const fullPath = join(pathPrefix, path);
-        p.set(verb, fullPath);
-        patchOasPath(fnName, verb, fullPath);
+        patchedPair.set(fullPath, verb);
+        debug(
+          `[${ctrlClassName}] @Controller: patched [${verb}] ${path} to ${fullPath}`,
+        );
+        // @TODO consider throwing if we discover 2 (or more) Controllers
+        // sharing the exact same set of path, fnName, and method
+        patchOasPath(ctrlClassName, fnName, verb, fullPath);
       });
+      store.delete(fnName);
+      const fqFnName = `${ctrlClassName}.${fnName}`;
+      store.set(fqFnName, patchedPair);
     }
   };

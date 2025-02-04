@@ -1,6 +1,6 @@
 {
   "name": "@dklab/oak-routing-ctrl",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "exports": {
     ".": "./mod.ts",
     "./mod": "./mod.ts"
@@ -15,8 +15,8 @@
   },
   "tasks": {
     "pretty": "deno lint --ignore=docs && deno check . && deno fmt",
-    "test": "deno test -RE",
-    "check-doc": "deno check --doc .",
+    "test": "deno test -RE -I=jspm.dev,jsr.io,deno.land -N=0.0.0.0,127.0.0.1",
+    "check-doc": "deno check -I=jspm.dev,jsr.io,deno.land --doc .",
     "doc": "deno doc --html mod.ts"
   },
   "imports": {
@@ -26,7 +26,8 @@
     "@std/io": "jsr:@std/io@^0.225.2",
     "@std/path": "jsr:@std/path@^1.0.8",
     "@std/testing": "jsr:@std/testing@^1.0.9",
-    "zod": "npm:zod@^3.24.1"
+    "zod": "npm:zod@^3.24.1",
+    "superoak": "https://deno.land/x/superoak@4.8.1/mod.ts"
   },
   "fmt": {
     "useTabs": false,

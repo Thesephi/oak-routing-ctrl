@@ -1,3 +1,27 @@
+## [0.14.0] - 2025-02-04
+
+## Changed
+
+- multiple paths can now be registered on the same HTTP verb, and if the paths
+  are exactly the same, or if the "static" and the "parameter" portions of the
+  paths somehow overlap, then the handler is invoked **once for each registered
+  path**; for example if we register `@Get("/foo/:bar")` and `@Get("/foo/bar")`
+  (in that order) on the same handler function, then for every request to
+  `/foo/bar`, that handler is invoked **twice**, the first time having no
+  "param" at all, and the 2nd time having the param `bar` with the value
+  `"bar"`. This behavior follows TC39 decorator specs where all decorators to a
+  function are applied "from inside out" aka: the last declared decorator gets
+  applied first, and so on
+
+## Added
+
+- `ctx.state._oakRoutingCtrl_regPath` is available as a pointer to the
+  registered path that matches the URL request currently being handled; this is
+  helpful in rare situations where multiple overlapping paths are registered on
+  the same handler function, causing it to be invoked multiple times, and so we
+  may benefit from a mechanism to control when to write to the response body (as
+  this operation can only be done once)
+
 ## [0.13.0] - 2025-02-01
 
 ### Added

@@ -7,14 +7,17 @@ type TheRouteConfig = RouteConfig & {
   tags?: string[];
 };
 
-// fnName|method|path => OasRouteConfig
+const TMP_CTRL_NAME = "FILLED_LATER";
+
+// ctrlName|fnName|method|path => OasRouteConfig
 export const oasStore: Map<string, TheRouteConfig> = new Map();
 
 const getRouteId = (
+  ctrlName: string,
   fnName: string,
   method: SupportedVerb,
   path: string,
-) => `${fnName}|${method}|${path}`;
+) => `${ctrlName}|${fnName}|${method}|${path}`;
 
 /**
  * input: `/some/:foo/and/:bar`
@@ -43,7 +46,7 @@ export const updateOas = (
   // because we don't want "documentation without consent"
   if (!specs) return;
 
-  const oasRouteIdentifier = getRouteId(fnName, method, path);
+  const oasRouteIdentifier = getRouteId(TMP_CTRL_NAME, fnName, method, path);
 
   const oasPath = getOasCompatPath(path);
 
@@ -70,30 +73,43 @@ export const updateOas = (
     tags: specs?.tags,
   };
 
-  debug(`OpenApiSpec: recording for [${method}] ${path}`);
+  debug(`[${TMP_CTRL_NAME}] OpenApiSpec: recording for [${method}] ${path}`);
 
   oasStore.set(oasRouteIdentifier, updated);
 };
 
+/**
+ * patch the Open API Spec config, designed to be invoked in the context of the `@Controller` decorator
+ * @param ctrlName the name of the class being decorated with `@Controller`
+ * @param fnName the name of the function being decorated with e.g. `@Get`, `@Post`, and so on
+ */
 export const patchOasPath = (
+  ctrlName: string,
   fnName: string,
   method: SupportedVerb,
   path: string,
 ) => {
-  oasStore.forEach((storedSpecs, routeId) => {
-    const [storedFnName, storedMethod, storedPath] = routeId.split("|");
+  for (const [routeId, storedSpecs] of oasStore) {
+    const [storedCtrlName, storedFnName, storedMethod, storedPath] = routeId
+      .split("|");
+
     if (
+      storedCtrlName === TMP_CTRL_NAME &&
       fnName === storedFnName &&
       method === storedMethod &&
-      path.length > storedPath.length &&
+      path.length >= storedPath.length &&
       path.endsWith(storedPath)
     ) {
-      debug(`OpenApiSpec: patching ${storedSpecs.path} to ${path}`);
       storedSpecs.path = getOasCompatPath(path);
-      // @TODO consider throwing if we discover 2 (or more) Controllers
-      // sharing the exact same set of path, fnName, and method
+      const newRouteId = getRouteId(ctrlName, fnName, method, path);
+      oasStore.delete(routeId);
+      oasStore.set(newRouteId, storedSpecs);
+      debug(
+        `[${ctrlName}] OpenApiSpec: patched [${method}] ${storedPath} to ${path}`,
+      );
+      break;
     }
-  });
+  }
 };
 
 export const _internal = {
