@@ -1,3 +1,9 @@
+## [0.14.1] - 2025-02-23
+
+### Changed
+
+- upgraded dependencies: `npm:zod@^3.24.2`
+
 ## [0.14.0] - 2025-02-04
 
 ## Changed

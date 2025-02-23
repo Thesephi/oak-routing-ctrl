@@ -48,7 +48,7 @@ export const useOakServer = (
               ctx.response.body = ctx.response.body ?? handlerRetVal;
             } catch (e) {
               if (e instanceof z.ZodError) {
-                return ctx.throw(Status.BadRequest, e.toString());
+                return ctx.throw(Status.BadRequest, (e as Error).toString());
               }
               throw e;
             }
