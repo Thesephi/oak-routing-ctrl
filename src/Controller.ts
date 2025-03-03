@@ -1,4 +1,4 @@
-import { join } from "@std/path";
+import { join } from "@std/path/posix";
 import { debug } from "./utils/logger.ts";
 import { store } from "./Store.ts";
 import { patchOasPath } from "./oasStore.ts";
@@ -38,7 +38,7 @@ export const Controller =
       if (!pair) continue;
       const patchedPair = new Map();
       pair.forEach((verb, path) => {
-        const fullPath = join(pathPrefix, path);
+        const fullPath = join(pathPrefix, path); // @NOTE **must** be posix style
         patchedPair.set(fullPath, verb);
         debug(
           `[${ctrlClassName}] @Controller: patched [${verb}] ${path} to ${fullPath}`,
