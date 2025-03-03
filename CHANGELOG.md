@@ -1,3 +1,10 @@
+## [0.14.2] - 2025-03-03
+
+### Fixed
+
+- posix style is enforced when assigning paths in `@Controller` (so it still
+  works when running on Windows platform)
+
 ## [0.14.1] - 2025-02-23
 
 ### Changed
