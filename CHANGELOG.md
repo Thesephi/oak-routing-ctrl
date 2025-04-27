@@ -1,3 +1,8 @@
+## [0.14.3] - 2025-04-27
+
+upgraded dependencies: `jsr:@std/assert@^1.0.13`, `jsr:@std/path@^1.0.9`,
+`jsr:@std/testing@^1.0.11`, `npm:zod@^3.24.3`
+
 ## [0.14.2] - 2025-03-03
 
 ### Fixed
