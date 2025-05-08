@@ -1,3 +1,9 @@
+## [0.15.0] - 2025-05-08
+
+### Changed
+
+- Open API specs config object is fully spread into the final output
+
 ## [0.14.3] - 2025-04-27
 
 upgraded dependencies: `jsr:@std/assert@^1.0.13`, `jsr:@std/path@^1.0.9`,

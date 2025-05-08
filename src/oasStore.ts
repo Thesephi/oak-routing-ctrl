@@ -59,6 +59,7 @@ export const updateOas = (
 
   const updated = {
     ...existing,
+    ...specs,
     method,
     path: oasPath,
     request: {
