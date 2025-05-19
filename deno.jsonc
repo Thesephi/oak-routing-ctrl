@@ -1,6 +1,6 @@
 {
   "name": "@dklab/oak-routing-ctrl",
-  "version": "0.15.0",
+  "version": "0.15.1",
   "exports": {
     ".": "./mod.ts",
     "./mod": "./mod.ts"
@@ -25,8 +25,8 @@
     "@std/assert": "jsr:@std/assert@^1.0.13",
     "@std/io": "jsr:@std/io@^0.225.2",
     "@std/path": "jsr:@std/path@^1.0.9",
-    "@std/testing": "jsr:@std/testing@^1.0.11",
-    "zod": "npm:zod@^3.24.3",
+    "@std/testing": "jsr:@std/testing@^1.0.12",
+    "zod": "npm:zod@^3.25.7",
     "superoak": "https://deno.land/x/superoak@4.8.1/mod.ts"
   },
   "fmt": {

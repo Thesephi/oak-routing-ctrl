@@ -1,3 +1,9 @@
+## [0.15.1] - 2025-05-20
+
+### Changed
+
+- upgraded dependencies: `jsr:@std/testing@^1.0.12`, `npm:zod@^3.25.7`
+
 ## [0.15.0] - 2025-05-08
 
 ### Changed
