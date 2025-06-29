@@ -1,3 +1,10 @@
+## [0.15.2] - 2025-06-29
+
+- upgraded dependencies: `npm:@asteasolutions/zod-to-openapi@^7.3.4`,
+  `jsr:@std/path@^1.1.0`, `jsr:@std/testing@^1.0.14`, `npm:zod@^3.25.67`
+
+### Changed
+
 ## [0.15.1] - 2025-05-20
 
 ### Changed
