@@ -255,14 +255,13 @@ Deno.test({
         expectedCtxThrow: true,
         expectedError: `[
           {
-            "received": "camela",
-            "code": "invalid_enum_value",
-            "options": [
+            "code": "invalid_value",
+            "values": [
               "alice",
               "bob"
             ],
             "path": [],
-            "message": "Invalid enum value. Expected 'alice' | 'bob', received 'camela'"
+            "message": "Invalid option: expected one of \\"alice\\"|\\"bob\\""
           }
         ]`,
         expectedResponse: undefined,

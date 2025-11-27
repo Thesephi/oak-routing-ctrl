@@ -2,49 +2,39 @@
   "version": "5",
   "specifiers": {
     "jsr:@oak/commons@1": "1.0.1",
-    "jsr:@oak/oak@^17.1.4": "17.1.4",
-    "jsr:@std/assert@1": "1.0.13",
+    "jsr:@oak/oak@^17.2.0": "17.2.0",
+    "jsr:@std/assert@1": "1.0.16",
     "jsr:@std/assert@^1.0.10": "1.0.11",
     "jsr:@std/assert@^1.0.11": "1.0.11",
-    "jsr:@std/assert@^1.0.12": "1.0.13",
-    "jsr:@std/assert@^1.0.13": "1.0.13",
+    "jsr:@std/assert@^1.0.15": "1.0.16",
+    "jsr:@std/assert@^1.0.16": "1.0.16",
     "jsr:@std/bytes@1": "1.0.6",
     "jsr:@std/bytes@^1.0.5": "1.0.6",
     "jsr:@std/crypto@1": "1.0.5",
-    "jsr:@std/data-structures@^1.0.8": "1.0.8",
+    "jsr:@std/data-structures@^1.0.9": "1.0.9",
     "jsr:@std/encoding@1": "1.0.10",
     "jsr:@std/encoding@^1.0.10": "1.0.10",
     "jsr:@std/encoding@^1.0.7": "1.0.7",
-    "jsr:@std/fs@^1.0.18": "1.0.18",
-    "jsr:@std/http@1": "1.0.18",
+    "jsr:@std/fs@^1.0.19": "1.0.19",
+    "jsr:@std/http@1": "1.0.21",
+    "jsr:@std/internal@^1.0.12": "1.0.12",
     "jsr:@std/internal@^1.0.5": "1.0.5",
-    "jsr:@std/internal@^1.0.6": "1.0.8",
     "jsr:@std/internal@^1.0.7": "1.0.7",
-    "jsr:@std/internal@^1.0.8": "1.0.8",
     "jsr:@std/io@~0.225.2": "0.225.2",
     "jsr:@std/media-types@1": "1.1.0",
-    "jsr:@std/path@1": "1.1.0",
+    "jsr:@std/path@1": "1.1.3",
     "jsr:@std/path@^1.0.8": "1.0.9",
     "jsr:@std/path@^1.0.9": "1.0.9",
-    "jsr:@std/path@^1.1.0": "1.1.0",
-    "jsr:@std/testing@^1.0.14": "1.0.14",
-    "npm:@asteasolutions/zod-to-openapi@^7.3.4": "7.3.4_zod@3.25.67",
+    "jsr:@std/path@^1.1.1": "1.1.3",
+    "jsr:@std/path@^1.1.2": "1.1.3",
+    "jsr:@std/path@^1.1.3": "1.1.3",
+    "jsr:@std/testing@^1.0.16": "1.0.16",
+    "npm:@asteasolutions/zod-to-openapi@^8.1.0": "8.1.0_zod@4.1.13",
     "npm:@types/node@*": "22.5.4",
     "npm:path-to-regexp@^6.3.0": "6.3.0",
-    "npm:zod@^3.25.67": "3.25.67"
+    "npm:zod@^4.1.13": "4.1.13"
   },
   "jsr": {
-    "@oak/commons@1.0.0": {
-      "integrity": "49805b55603c3627a9d6235c0655aa2b6222d3036b3a13ff0380c16368f607ac",
-      "dependencies": [
-        "jsr:@std/assert@1",
-        "jsr:@std/bytes@1",
-        "jsr:@std/crypto",
-        "jsr:@std/encoding@1",
-        "jsr:@std/http",
-        "jsr:@std/media-types"
-      ]
-    },
     "@oak/commons@1.0.1": {
       "integrity": "889ff210f0b4292591721be07244ecb1b5c118742f5273c70cf30d7cd4184d0c",
       "dependencies": [
@@ -56,8 +46,8 @@
         "jsr:@std/media-types"
       ]
     },
-    "@oak/oak@17.1.4": {
-      "integrity": "60530b582bf276ff741e39cc664026781aa08dd5f2bc5134d756cc427bf2c13e",
+    "@oak/oak@17.2.0": {
+      "integrity": "938537a92fc7922a46a9984696c65fb189c9baad164416ac3e336768a9ff0cd1",
       "dependencies": [
         "jsr:@oak/commons",
         "jsr:@std/assert@1",
@@ -74,10 +64,10 @@
         "jsr:@std/internal@^1.0.5"
       ]
     },
-    "@std/assert@1.0.13": {
-      "integrity": "ae0d31e41919b12c656c742b22522c32fb26ed0cba32975cb0de2a273cb68b29",
+    "@std/assert@1.0.16": {
+      "integrity": "6a7272ed1eaa77defe76e5ff63ca705d9c495077e2d5fd0126d2b53fc5bd6532",
       "dependencies": [
-        "jsr:@std/internal@^1.0.6"
+        "jsr:@std/internal@^1.0.12"
       ]
     },
     "@std/bytes@1.0.5": {
@@ -92,8 +82,8 @@
     "@std/crypto@1.0.5": {
       "integrity": "0dcfbb319fe0bba1bd3af904ceb4f948cde1b92979ec1614528380ed308a3b40"
     },
-    "@std/data-structures@1.0.8": {
-      "integrity": "2fb7219247e044c8fcd51341788547575653c82ae2c759ff209e0263ba7d9b66"
+    "@std/data-structures@1.0.9": {
+      "integrity": "033d6e17e64bf1f84a614e647c1b015fa2576ae3312305821e1a4cb20674bb4d"
     },
     "@std/encoding@1.0.7": {
       "integrity": "f631247c1698fef289f2de9e2a33d571e46133b38d042905e3eac3715030a82d"
@@ -101,10 +91,10 @@
     "@std/encoding@1.0.10": {
       "integrity": "8783c6384a2d13abd5e9e87a7ae0520a30e9f56aeeaa3bdf910a3eaaf5c811a1"
     },
-    "@std/fs@1.0.18": {
-      "integrity": "24bcad99eab1af4fde75e05da6e9ed0e0dce5edb71b7e34baacf86ffe3969f3a",
+    "@std/fs@1.0.19": {
+      "integrity": "051968c2b1eae4d2ea9f79a08a3845740ef6af10356aff43d3e2ef11ed09fb06",
       "dependencies": [
-        "jsr:@std/path@^1.1.0"
+        "jsr:@std/path@^1.1.1"
       ]
     },
     "@std/http@1.0.13": {
@@ -113,20 +103,8 @@
         "jsr:@std/encoding@^1.0.7"
       ]
     },
-    "@std/http@1.0.15": {
-      "integrity": "435a4934b4e196e82a8233f724da525f7b7112f3566502f28815e94764c19159",
-      "dependencies": [
-        "jsr:@std/encoding@^1.0.10"
-      ]
-    },
-    "@std/http@1.0.16": {
-      "integrity": "80c8d08c4bfcf615b89978dcefb84f7e880087cf3b6b901703936f3592a06933",
-      "dependencies": [
-        "jsr:@std/encoding@^1.0.10"
-      ]
-    },
-    "@std/http@1.0.18": {
-      "integrity": "8d9546aa532c52a0cf318c74616db0638b4c1073405355d1b14f9e1591dccf20",
+    "@std/http@1.0.21": {
+      "integrity": "abb5c747651ee6e3ea6139858fd9b1810d2c97f53a5e6722f3b6d27a6d263edc",
       "dependencies": [
         "jsr:@std/encoding@^1.0.10"
       ]
@@ -140,8 +118,8 @@
     "@std/internal@1.0.7": {
       "integrity": "39eeb5265190a7bc5d5591c9ff019490bd1f2c3907c044a11b0d545796158a0f"
     },
-    "@std/internal@1.0.8": {
-      "integrity": "fc66e846d8d38a47cffd274d80d2ca3f0de71040f855783724bb6b87f60891f5"
+    "@std/internal@1.0.12": {
+      "integrity": "972a634fd5bc34b242024402972cd5143eac68d8dffaca5eaa4dba30ce17b027"
     },
     "@std/io@0.225.2": {
       "integrity": "3c740cd4ee4c082e6cfc86458f47e2ab7cb353dc6234d5e9b1f91a2de5f4d6c7",
@@ -158,23 +136,26 @@
     "@std/path@1.0.9": {
       "integrity": "260a49f11edd3db93dd38350bf9cd1b4d1366afa98e81b86167b4e3dd750129e"
     },
-    "@std/path@1.1.0": {
-      "integrity": "ddc94f8e3c275627281cbc23341df6b8bcc874d70374f75fec2533521e3d6886"
-    },
-    "@std/testing@1.0.14": {
-      "integrity": "144b3737105b9071cb50c957681f58a1b8ec0f3e5b19ad830f401c5fa931e8f0",
+    "@std/path@1.1.3": {
+      "integrity": "b015962d82a5e6daea980c32b82d2c40142149639968549c649031a230b1afb3",
       "dependencies": [
-        "jsr:@std/assert@^1.0.13",
+        "jsr:@std/internal@^1.0.12"
+      ]
+    },
+    "@std/testing@1.0.16": {
+      "integrity": "a917ffdeb5924c9be436dc78bc32e511760e14d3a96e49c607fc5ecca86d0092",
+      "dependencies": [
+        "jsr:@std/assert@^1.0.15",
         "jsr:@std/data-structures",
         "jsr:@std/fs",
-        "jsr:@std/internal@^1.0.8",
-        "jsr:@std/path@^1.1.0"
+        "jsr:@std/internal@^1.0.12",
+        "jsr:@std/path@^1.1.2"
       ]
     }
   },
   "npm": {
-    "@asteasolutions/zod-to-openapi@7.3.4_zod@3.25.67": {
-      "integrity": "sha512-/2rThQ5zPi9OzVwes6U7lK1+Yvug0iXu25olp7S0XsYmOqnyMfxH7gdSQjn/+DSOHRg7wnotwGJSyL+fBKdnEA==",
+    "@asteasolutions/zod-to-openapi@8.1.0_zod@4.1.13": {
+      "integrity": "sha512-tQFxVs05J/6QXXqIzj6rTRk3nj1HFs4pe+uThwE95jL5II2JfpVXkK+CqkO7aT0Do5AYqO6LDrKpleLUFXgY+g==",
       "dependencies": [
         "openapi3-ts",
         "zod"
@@ -198,12 +179,12 @@
     "undici-types@6.19.8": {
       "integrity": "sha512-ve2KP6f/JnbPBFyobGHuerC9g1FYGn/F8n1LWTwNxCEzd6IfqTwUQcNXgEtmmQ6DlRrC1hrSrBnCZPokRrDHjw=="
     },
-    "yaml@2.8.0": {
-      "integrity": "sha512-4lLa/EcQCB0cJkyts+FpIRx5G/llPxfP6VQU5KByHEhLxY3IJCH0f0Hy1MHI8sClTvsIb8qwRJ6R/ZdlDJ/leQ==",
+    "yaml@2.8.1": {
+      "integrity": "sha512-lcYcMxX2PO9XMGvAJkJ3OsNMw+/7FKes7/hgerGUYWIoWu5j/+YQqcZr5JnPZWzOsEBgMbSbiSTn/dv/69Mkpw==",
       "bin": true
     },
-    "zod@3.25.67": {
-      "integrity": "sha512-idA2YXwpCdqUSKRCACDE6ItZD9TZzy3OZMtpfLoh6oPR47lipysRrJfjzMqFxQ3uJuUPyUeWe1r9vLH33xO/Qw=="
+    "zod@4.1.13": {
+      "integrity": "sha512-AvvthqfqrAhNH9dnfmrfKzX5upOdjUVJYFqNSlkmGf64gRaTzlPwz99IHYnVs28qYAybvAlBV+H7pn0saFY4Ig=="
     }
   },
   "remote": {
@@ -304,13 +285,13 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@oak/oak@^17.1.4",
-      "jsr:@std/assert@^1.0.13",
+      "jsr:@oak/oak@^17.2.0",
+      "jsr:@std/assert@^1.0.16",
       "jsr:@std/io@~0.225.2",
-      "jsr:@std/path@^1.1.0",
-      "jsr:@std/testing@^1.0.14",
-      "npm:@asteasolutions/zod-to-openapi@^7.3.4",
-      "npm:zod@^3.25.67"
+      "jsr:@std/path@^1.1.3",
+      "jsr:@std/testing@^1.0.16",
+      "npm:@asteasolutions/zod-to-openapi@^8.1.0",
+      "npm:zod@^4.1.13"
     ]
   }
 }
