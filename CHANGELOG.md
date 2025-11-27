@@ -1,6 +1,6 @@
 ## [0.16.1] - 2025-11-27
 
-## Added
+### Added
 
 - several more symbols from `z` is re-exported
 
