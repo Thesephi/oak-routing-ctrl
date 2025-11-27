@@ -1,10 +1,20 @@
+## [0.16.1] - 2025-11-27
+
+## Added
+
+- several more symbols from `z` is re-exported
+
 ## [0.16.0] - 2025-11-27
+
+### Changed
 
 - upgraded dependencies: `npm:@asteasolutions/zod-to-openapi@^8.1.0`,
   `jsr:@oak/oak@^17.2.0`, `jsr:@std/assert@^1.0.16`, `jsr:@std/io@^0.225.2`,
   `jsr:@std/path@^1.1.3`, `jsr:@std/testing@^1.0.16`, `npm:zod@^4.1.13`
 
 ## [0.15.2] - 2025-06-29
+
+### Changed
 
 - upgraded dependencies: `npm:@asteasolutions/zod-to-openapi@^7.3.4`,
   `jsr:@std/path@^1.1.0`, `jsr:@std/testing@^1.0.14`, `npm:zod@^3.25.67`
