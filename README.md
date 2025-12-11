@@ -480,9 +480,20 @@ https://jsr.io/@dklab/oak-routing-ctrl/doc
 
 ### Tests
 
+#### Unit tests
+
 ```bash
 deno test -A --coverage=cov_profile
 deno coverage cov_profile
+```
+
+#### end-to-end tests
+
+```bash
+# manually cd into the e2e test directory & run the test
+cd e2e_tests
+deno test --allow-import --allow-env=DEBUG --allow-net=0.0.0.0,127.0.0.1
+# or alternatively, simply run `deno task e2e-test` from the project root
 ```
 
 [![test coverage](https://codecov.io/gh/Thesephi/oak-routing-ctrl/graphs/tree.svg?token=BA3M9P6410)](https://codecov.io/github/Thesephi/oak-routing-ctrl)

@@ -1,3 +1,18 @@
+## [1.0.0] - 2026-03-30
+
+### Fixed
+
+- when sending a request with `application/json` content-type header, but the
+  request body is empty, the handler no longer crashes (it 'sees' the request
+  body as an empty object instead)
+
+### Changed
+
+- upgraded dependencies: `npm:@asteasolutions/zod-to-openapi@^8.5.0`,
+  `jsr:@oak/oak@^17.2.0`, `jsr:@std/assert@^1.0.19`, `jsr:@std/io@^0.225.3`,
+  `jsr:@std/path@^1.1.4`, `jsr:@std/testing@^1.0.17`, `npm:zod@^4.3.6`,
+  `https://deno.land/x/superoak@5.0.0/mod.ts`
+
 ## [0.16.1] - 2025-11-27
 
 ### Added

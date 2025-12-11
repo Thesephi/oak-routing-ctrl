@@ -143,10 +143,22 @@ function getEnhancedHandler(
         ctx.request.headers.get("Content-Type") === "application/json" &&
         (e as Error).message?.includes("Unexpected end of JSON input")
       ) {
-        // we ignore this parsing error because the client was sending
-        // a weird combination of method & content-type header, but here to
-        // the "Japanese engineering mindset":
+        // we ignore this parsing error & return an empty object as the parsed body
+        // even though the client was sending a weird combination of
+        // method & content-type header; this here is to
+        // practice the "Japanese engineering mindset":
         // https://www.500eboard.co/forums/threads/engineers-japanese-vs-german.14695/
+        parsedReqBody = {};
+      } else if (
+        ["PUT", "POST", "PATCH"].includes(ctx.request.method) &&
+        ctx.request.headers.get("Content-Type") === "application/json" &&
+        (e as Error).message?.includes("Unexpected end of JSON input") &&
+        !(await ctx.request.body.text())
+      ) {
+        // the json parsing failed due to an empty request body. This is
+        // considered a weird combination of request content-type header & body,
+        // which we can also ignore & return an empty object instead (similar to above)
+        parsedReqBody = {};
       } else {
         // for other scenarios, we trigger the error back to userland
         return ctx.throw(
