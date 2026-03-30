@@ -2,9 +2,9 @@
 
 ### Fixed
 
-- when sending a request with `application/json` content-type header, but the
-  request body is empty, the handler no longer crashes (it 'sees' the request
-  body as an empty object instead)
+- when client sends a request with `application/json` content-type header, but
+  the request body is empty, the handler no longer crashes (it 'sees' the
+  request body as an empty object instead)
 
 ### Changed
 
