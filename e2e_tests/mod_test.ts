@@ -1,5 +1,5 @@
-import { superoak } from "https://deno.land/x/superoak@5.0.0/mod.ts";
-import { Application } from "jsr:@oak/oak/application";
+import { superoak } from "superoak";
+import { Application } from "@oak/oak/application";
 import {
   Controller,
   ControllerMethodArgs,
@@ -8,7 +8,7 @@ import {
   Put,
   useOakServer,
 } from "../mod.ts";
-import { assertEquals } from "jsr:@std/assert";
+import { assertEquals } from "@std/assert";
 
 @Controller("/v1")
 class MyController {
