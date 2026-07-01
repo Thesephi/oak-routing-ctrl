@@ -1,3 +1,14 @@
+## [1.1.0] - 2026-07-01
+
+### Added
+
+- support for `z.looseObject` in the exported subset of schemas
+
+### Changed
+
+- upgraded dependencies: `jsr:@std/path@^1.1.5`, `jsr:@std/testing@^1.0.19`,
+  `npm:zod@^4.4.3`
+
 ## [1.0.0] - 2026-03-30
 
 ### Fixed

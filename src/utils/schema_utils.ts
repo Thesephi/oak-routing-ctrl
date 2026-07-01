@@ -42,6 +42,7 @@ extendZodWithOpenApi(slowTypedZ);
 type SubsetOfZ = Pick<
   typeof slowTypedZ,
   | "object"
+  | "looseObject"
   | "array"
   | "string"
   | "number"
