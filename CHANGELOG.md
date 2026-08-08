@@ -1,3 +1,23 @@
+## [Unreleased]
+
+### Changed
+
+- upgraded dependencies: `npm:@asteasolutions/zod-to-openapi@^9.1.0`,
+  `jsr:@std/path@^1.1.6`, `jsr:@std/testing@^1.0.20`
+- upgraded runtime from Deno v2.9.3 to v2.9.5
+
+## [1.1.1] - 2026-08-08
+
+### Fixed
+
+- type errors in `oasStore_test.ts` caused by `zod-to-openapi@^9.x` changing the
+  return type of `content["application/json"]` to include `ReferenceObject`;
+  added proper type narrowing and fixed a copy-paste bug where a test was
+  asserting on `record` instead of `patchedRecord`
+- mock state leakage in `useOakServer_multipaths_test.ts`: added `restore()`
+  calls before each spy setup to fix incompatibility with
+  `@std/testing/mock@1.0.20`
+
 ## [1.1.0] - 2026-07-01
 
 ### Added

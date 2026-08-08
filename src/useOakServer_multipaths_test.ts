@@ -17,7 +17,12 @@ import {
   Put,
   useOakServer,
 } from "../mod.ts";
-import { assertSpyCallArgs, assertSpyCalls, spy } from "@std/testing/mock";
+import {
+  assertSpyCallArgs,
+  assertSpyCalls,
+  restore,
+  spy,
+} from "@std/testing/mock";
 import { assertEquals } from "@std/assert";
 
 const spyTemplate = {
@@ -121,6 +126,7 @@ app.use((ctx) => {
  * - @Get("/foo/bar")
  */
 Deno.test("Overlapping paths, scenario 1", async () => {
+  restore();
   const handler1Spy = spy(spyTemplate, "handler1");
   const catchAllSpy = spy(spyTemplate, "catchAll");
 
@@ -156,6 +162,7 @@ Deno.test("Overlapping paths, scenario 1", async () => {
 });
 
 Deno.test("One @Post and Two @Get paths registered on handler1", async () => {
+  restore();
   const handler1Spy = spy(spyTemplate, "handler1");
   const catchAllSpy = spy(spyTemplate, "catchAll");
 
@@ -189,6 +196,7 @@ Deno.test("One @Post and Two @Get paths registered on handler1", async () => {
  * - @Get("/foo/:bar")
  */
 Deno.test("Overlapping paths, scenario 2", async () => {
+  restore();
   const handler2Spy = spy(spyTemplate, "handler2");
   const catchAllSpy = spy(spyTemplate, "catchAll");
 
@@ -227,6 +235,7 @@ Deno.test("Overlapping paths, scenario 2", async () => {
 });
 
 Deno.test("One @Post and Two @Get paths registered on handler2", async () => {
+  restore();
   const handler2Spy = spy(spyTemplate, "handler2");
   const catchAllSpy = spy(spyTemplate, "catchAll");
 
@@ -257,6 +266,7 @@ Deno.test("One @Post and Two @Get paths registered on handler2", async () => {
 });
 
 Deno.test("Similar paths that do not actually overlap - path 1", async () => {
+  restore();
   const handler3Spy = spy(spyTemplate, "handler3");
   const catchAllSpy = spy(spyTemplate, "catchAll");
 
@@ -287,6 +297,7 @@ Deno.test("Similar paths that do not actually overlap - path 1", async () => {
 });
 
 Deno.test("Similar paths that do not actually overlap - path 2", async () => {
+  restore();
   const handler3Spy = spy(spyTemplate, "handler3");
   const catchAllSpy = spy(spyTemplate, "catchAll");
 
@@ -317,6 +328,7 @@ Deno.test("Similar paths that do not actually overlap - path 2", async () => {
 });
 
 Deno.test("[PATCH] /test/handler4", async () => {
+  restore();
   const handler4Spy = spy(spyTemplate, "handler4");
   const catchAllSpy = spy(spyTemplate, "catchAll");
 
@@ -345,6 +357,7 @@ Deno.test("[PATCH] /test/handler4", async () => {
 });
 
 Deno.test("[PATCH] /test/handler4/:bar", async () => {
+  restore();
   const handler4Spy = spy(spyTemplate, "handler4");
   const catchAllSpy = spy(spyTemplate, "catchAll");
 

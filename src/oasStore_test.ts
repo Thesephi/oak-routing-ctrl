@@ -41,11 +41,14 @@ Deno.test("store entry creation & update", () => {
     },
   });
 
-  const record = oasStore.get(getRouteId("FILLED_LATER", fnName, method, path));
+  const entryPath = getRouteId("FILLED_LATER", fnName, method, path);
+  const record = oasStore.get(entryPath);
   assertEquals(record?.method, method);
   assertEquals(record?.path, getOasCompatPath(path));
   assertInstanceOf(
-    record?.request?.body?.content?.["application/json"]?.schema,
+    (record?.request?.body?.content?.["application/json"] as {
+      schema?: unknown;
+    } | undefined)?.schema,
     ZodObject,
   );
 
@@ -56,7 +59,9 @@ Deno.test("store entry creation & update", () => {
   assertEquals(patchedRecord?.method, method);
   assertEquals(patchedRecord?.path, getOasCompatPath(patchedPath));
   assertInstanceOf(
-    record?.request?.body?.content?.["application/json"]?.schema,
+    (patchedRecord?.request?.body?.content?.["application/json"] as {
+      schema?: unknown;
+    } | undefined)?.schema,
     ZodObject,
   );
 });

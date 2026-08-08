@@ -49,13 +49,14 @@ Follow the order below to publish a new `oak-routing-ctrl` library version:
   - the release version must match the most recent value found in `CHANGELOG.md`
   - if unsure which release version to use, you must ask the user
   - if the release branch is not yet created, create & switch to it
+- Ensure that `CHANGELOG.md` mentions the latest changes (as per git diff)
 - Commit current code & create a release PR on GitHub
   - the release commit always has this format:
     `vx.x.x - see CHANGELOG for details`
-- Once the PR is approved & merged to `master`, switch to `master`
+- Once the PR is approved & merged to `main`, switch to `main`
 - Run `deno publish --dry-run` to ensure everything is appropriate, e.g. the
   value of the field `version` in `deno.jsonc` and the git tag, and the
   corresponding release note in CHANGELOG.md, all must be consistent with one
   another
-- Create a new git tag on `master` branch following the format `vx.x.x`. This
-  will trigger the library publishing GitHub workflow
+- Create a new git tag on `main` branch following the format `vx.x.x`. This will
+  trigger the library publishing GitHub workflow
