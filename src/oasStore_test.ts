@@ -1,6 +1,7 @@
 import { z } from "./utils/schema_utils.ts";
 import { assertEquals, assertInstanceOf } from "@std/assert";
 import { ZodObject } from "zod";
+import type { ZodMediaTypeObject } from "@asteasolutions/zod-to-openapi";
 import { oasStore, patchOasPath, updateOas } from "./oasStore.ts";
 import { _internal } from "./oasStore.ts";
 
@@ -46,9 +47,8 @@ Deno.test("store entry creation & update", () => {
   assertEquals(record?.method, method);
   assertEquals(record?.path, getOasCompatPath(path));
   assertInstanceOf(
-    (record?.request?.body?.content?.["application/json"] as {
-      schema?: unknown;
-    } | undefined)?.schema,
+    (record?.request?.body?.content?.["application/json"] as ZodMediaTypeObject)
+      ?.schema,
     ZodObject,
   );
 
@@ -59,9 +59,8 @@ Deno.test("store entry creation & update", () => {
   assertEquals(patchedRecord?.method, method);
   assertEquals(patchedRecord?.path, getOasCompatPath(patchedPath));
   assertInstanceOf(
-    (patchedRecord?.request?.body?.content?.["application/json"] as {
-      schema?: unknown;
-    } | undefined)?.schema,
+    (patchedRecord?.request?.body?.content
+      ?.["application/json"] as ZodMediaTypeObject)?.schema,
     ZodObject,
   );
 });
