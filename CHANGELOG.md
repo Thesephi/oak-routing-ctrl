@@ -1,3 +1,11 @@
+## [1.1.1] - 2026-08-08
+
+### Changed
+
+- upgraded dependencies: `npm:@asteasolutions/zod-to-openapi@^9.1.0`,
+  `jsr:@std/path@^1.1.6`, `jsr:@std/testing@^1.0.20`
+- upgraded runtime from Deno v2.9.3 to v2.9.5
+
 ## [1.1.0] - 2026-07-01
 
 ### Added
